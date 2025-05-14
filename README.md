@@ -112,7 +112,7 @@
 
 ## 📫 Contact Me
 
-Hariom Soni – [LinkedIn](https://www.linkedin.com/hariomsonihs) • [Email](mailto:hariomsoni0818.com)
+Hariom Soni – [LinkedIn](https://www.linkedin.com/in/hariomsonihs) • [Email](mailto:hariomsoni0818.com)
 
 ---
 
