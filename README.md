@@ -85,8 +85,8 @@
 > *(Add screenshots in `assets/screenshots/` folder and link here)*
 
 <p float="left">
-  <img src="assets/screenshots/home.png" width="250"/>
-  <img src="assets/screenshots/vocab_list.png" width="250"/>
+  <img src="https://github.com/hariomsonihs/VocabDoctorApp/blob/master/ui_1.jpg" width="250"/>
+  <img src="https://github.com/hariomsonihs/VocabDoctorApp/blob/master/ui_2.jpg" width="250"/>
   <img src="assets/screenshots/grammar_details.png" width="250"/>
 </p>
 
