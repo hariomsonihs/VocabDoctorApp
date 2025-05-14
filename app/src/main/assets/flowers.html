@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flower Dictionary</title>
+    <style>
+        :root {
+            --primary-color: #9c27b0;
+            --secondary-color: #7b1fa2;
+            --accent-color: #e91e63;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --danger-color: #e74c3c;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            user-select:none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header-stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: scale(1.05);
+        }
+
+        .search-container {
+            margin: 30px auto;
+            max-width: 600px;
+            position: relative;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        #search {
+            width: 100%;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        #search:focus {
+            outline: none;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .category-tab {
+            padding: 10px 20px;
+            background-color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-tab:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-tab.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .flowers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .flower-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .flower-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .flower-image {
+            height: 180px;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .flower-card:hover .flower-image {
+            transform: scale(1.05);
+        }
+
+        .flower-info {
+            padding: 20px;
+        }
+
+        .flower-name {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            color: var(--dark-color);
+        }
+
+        .hindi-name {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .flower-scientific {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .flower-category {
+            display: inline-block;
+            padding: 3px 10px;
+            background-color: var(--light-color);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .flower-season {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            margin-left: 5px;
+        }
+
+        .flower-description {
+            font-size: 0.95rem;
+            color: #555;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .flower-icons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .flower-icon {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            transition: transform 0.3s ease;
+        }
+
+        .flower-icon:hover {
+            transform: scale(1.2);
+        }
+
+        .no-results {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 50px;
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        .category-count {
+            margin-left: 5px;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .flowers-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .flowers-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-stats {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+        }
+
+        /* Animation classes */
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Color coding for categories */
+        .annual { background-color: #d4edda; color: #155724; }
+        .perennial { background-color: #cce5ff; color: #004085; }
+        .bulb { background-color: #d1ecf1; color: #0c5460; }
+        .shrub { background-color: #fff3cd; color: #856404; }
+        .tree { background-color: #f8d7da; color: #721c24; }
+        .vine { background-color: #e2e3e5; color: #383d41; }
+        .succulent { background-color: #d1f1e1; color: #0c6e4e; }
+
+        /* Color coding for seasons */
+        .spring { background-color: #ffcce5; color: #cc0066; }
+        .summer { background-color: #ffddcc; color: #ff6600; }
+        .autumn { background-color: #ffe6cc; color: #cc7a00; }
+        .winter { background-color: #ccffff; color: #006666; }
+        .year-round { background-color: #e6ffe6; color: #006600; }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<header>
+    <div class="container">
+        <h1>Flower Dictionary</h1>
+        <p>Discover the beauty and diversity of flowers</p>
+        <div class="header-stats">
+            <div class="stat-box pulse">
+                <i class="fas fa-spa"></i> Total Flowers: <span id="total-count">0</span>
+            </div>
+            <div class="stat-box">
+                <i class="fas fa-list"></i> Categories: <span id="category-count">0</span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="search-container">
+        <input type="text" id="search" placeholder="Search for flowers...">
+        <i class="fas fa-search search-icon"></i>
+    </div>
+
+    <div class="category-tabs">
+        <button class="category-tab active" data-category="all">All Flowers</button>
+        <button class="category-tab" data-category="annual">Annuals <span class="category-count">0</span></button>
+        <button class="category-tab" data-category="perennial">Perennials <span class="category-count">0</span></button>
+        <button class="category-tab" data-category="bulb">Bulbs <span class="category-count">0</span></button>
+        <button class="category-tab" data-category="shrub">Shrubs <span class="category-count">0</span></button>
+        <button class="category-tab" data-category="tree">Trees <span class="category-count">0</span></button>
+        <button class="category-tab" data-category="vine">Vines <span class="category-count">0</span></button>
+        <button class="category-tab" data-category="succulent">Succulents <span class="category-count">0</span></button>
+    </div>
+
+    <div class="flowers-grid" id="flowers-container">
+        <!-- Flower cards will be inserted here by JavaScript -->
+        <div class="no-results">
+            <i class="fas fa-spinner fa-spin"></i> Loading flowers...
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>© 2025 Vocab Doctor App. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
+<script>
+    // Flower data
+    const flowers = [
+    {
+        "name": "Rose",
+        "hindi": "गुलाब",
+        "scientific": "Rosa",
+        "category": "shrub",
+        "season": "summer",
+        "description": "Roses are woody perennial flowering plants with over three hundred species. They come in many colors and are prized for their beauty and fragrance.",
+        "image": "https://images.pexels.com/photos/56866/garden-rose-red-pink-56866.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-heart", "fa-spa", "fa-smile"]
+    },
+    {
+        "name": "Lotus",
+        "hindi": "कमल",
+        "scientific": "Nelumbo nucifera",
+        "category": "aquatic",
+        "season": "monsoon",
+        "description": "The lotus is an aquatic plant with cultural significance in many Asian religions, known for growing in muddy water but producing beautiful flowers.",
+        "image": "https://images.pexels.com/photos/2302908/pexels-photo-2302908.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-water", "fa-spa", "fa-leaf"]
+    },
+    {
+        "name": "Marigold",
+        "hindi": "गेंदा",
+        "scientific": "Tagetes",
+        "category": "annual",
+        "season": "winter",
+        "description": "Marigolds are popular garden flowers with bright yellow, orange and red blooms, often used in festivals and religious ceremonies.",
+        "image": "https://images.pexels.com/photos/3524048/pexels-photo-3524048.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-sun", "fa-festival", "fa-flower"]
+    },
+    {
+        "name": "Jasmine",
+        "hindi": "चमेली",
+        "scientific": "Jasminum",
+        "category": "shrub",
+        "season": "summer",
+        "description": "Jasmine is a fragrant flower used in perfumes and teas, with small white or yellow star-shaped blooms that open at night.",
+        "image": "https://images.pexels.com/photos/7683632/pexels-photo-7683632.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-moon", "fa-spa", "fa-smile"]
+    },
+    {
+        "name": "Sunflower",
+        "hindi": "सूरजमुखी",
+        "scientific": "Helianthus annuus",
+        "category": "annual",
+        "season": "summer",
+        "description": "Sunflowers are tall annual plants with large, bright yellow flower heads that track the sun's movement across the sky.",
+        "image": "https://images.pexels.com/photos/33044/sunflower-sun-summer-yellow.jpg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-sun", "fa-seedling", "fa-smile"]
+    },
+    {
+        "name": "Hibiscus",
+        "hindi": "गुड़हल",
+        "scientific": "Hibiscus rosa-sinensis",
+        "category": "shrub",
+        "season": "summer",
+        "description": "Hibiscus flowers are large, trumpet-shaped blooms in vibrant colors, used both ornamentally and for making herbal teas.",
+        "image": "https://images.pexels.com/photos/922764/pexels-photo-922764.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-utensils", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Lily",
+        "hindi": "कुमुदिनी",
+        "scientific": "Lilium",
+        "category": "bulb",
+        "season": "spring",
+        "description": "Lilies are elegant flowers with large, fragrant blooms that come in various colors, often associated with purity and refined beauty.",
+        "image": "https://images.pexels.com/photos/2375010/pexels-photo-2375010.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-star", "fa-spa", "fa-smile"]
+    },
+    {
+        "name": "Tulip",
+        "hindi": "ट्यूलिप",
+        "scientific": "Tulipa",
+        "category": "bulb",
+        "season": "spring",
+        "description": "Tulips are bulbous spring-blooming flowers with cup-shaped blooms in almost every color, symbolizing perfect love.",
+        "image": "https://images.pexels.com/photos/1883385/pexels-photo-1883385.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-wine-glass-alt", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Daffodil",
+        "hindi": "नरगिस",
+        "scientific": "Narcissus",
+        "category": "bulb",
+        "season": "spring",
+        "description": "Daffodils are cheerful yellow spring flowers with trumpet-shaped centers surrounded by six petal-like tepals.",
+        "image": "https://images.pexels.com/photos/1009681/pexels-photo-1009681.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-trumpet", "fa-spa", "fa-smile"]
+    },
+    {
+        "name": "Orchid",
+        "hindi": "ऑर्किड",
+        "scientific": "Orchidaceae",
+        "category": "epiphyte",
+        "season": "spring",
+        "description": "Orchids are exotic, delicate flowers with complex structures, representing luxury, beauty and strength in many cultures.",
+        "image": "https://images.pexels.com/photos/1038008/pexels-photo-1038008.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-gem", "fa-spa", "fa-leaf"]
+    },
+    {
+        "name": "Chrysanthemum",
+        "hindi": "गुलदाउदी",
+        "scientific": "Chrysanthemum",
+        "category": "perennial",
+        "season": "autumn",
+        "description": "Chrysanthemums are showy flowers with many layered petals, symbolizing longevity and joy in many Asian cultures.",
+        "image": "https://images.pexels.com/photos/1158783/pexels-photo-1158783.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-layer-group", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Daisy",
+        "hindi": "गुलबहार",
+        "scientific": "Bellis perennis",
+        "category": "perennial",
+        "season": "spring",
+        "description": "Daisies are simple, cheerful flowers with white petals and yellow centers, symbolizing innocence and purity.",
+        "image": "https://images.pexels.com/photos/67857/daisy-flower-spring-marguerite-67857.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-sun", "fa-spa", "fa-smile"]
+    },
+    {
+        "name": "Lavender",
+        "hindi": "लैवेंडर",
+        "scientific": "Lavandula",
+        "category": "herb",
+        "season": "summer",
+        "description": "Lavender is a fragrant herb with purple flower spikes, widely used in aromatherapy and for its calming properties.",
+        "image": "https://images.pexels.com/photos/207518/pexels-photo-207518.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-spa", "fa-leaf", "fa-smile"]
+    },
+    {
+        "name": "Magnolia",
+        "hindi": "चंपा",
+        "scientific": "Magnolia",
+        "category": "tree",
+        "season": "spring",
+        "description": "Magnolias are ancient flowering trees with large, fragrant blooms that appear before the leaves in spring.",
+        "image": "https://images.pexels.com/photos/1117031/pexels-photo-1117031.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-tree", "fa-spa", "fa-leaf"]
+    },
+    {
+        "name": "Poppy",
+        "hindi": "पोस्त",
+        "scientific": "Papaver",
+        "category": "annual",
+        "season": "spring",
+        "description": "Poppies are delicate flowers with papery petals, known for their vibrant red color and association with remembrance.",
+        "image": "https://images.pexels.com/photos/70741/cereals-field-ripe-poppy-70741.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-pagelines", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Peony",
+        "hindi": "पियोनी",
+        "scientific": "Paeonia",
+        "category": "perennial",
+        "season": "spring",
+        "description": "Peonies are lush, fragrant flowers with many petals, symbolizing prosperity, good fortune and happy marriage.",
+        "image": "https://images.pexels.com/photos/58899/pexels-photo-58899.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-gem", "fa-spa", "fa-smile"]
+    },
+    {
+        "name": "Carnation",
+        "hindi": "लौंग",
+        "scientific": "Dianthus caryophyllus",
+        "category": "perennial",
+        "season": "spring",
+        "description": "Carnations are long-lasting flowers with ruffled petals, available in many colors and symbolizing fascination and distinction.",
+        "image": "https://images.pexels.com/photos/136255/pexels-photo-136255.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-pagelines", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Begonia",
+        "hindi": "बेगोनिया",
+        "scientific": "Begonia",
+        "category": "annual",
+        "season": "summer",
+        "description": "Begonias are colorful flowers with asymmetrical leaves, popular for both their foliage and blooms in gardens and containers.",
+        "image": "https://images.pexels.com/photos/2251822/pexels-photo-2251822.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-leaf", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Camellia",
+        "hindi": "कैमेलिया",
+        "scientific": "Camellia",
+        "category": "shrub",
+        "season": "winter",
+        "description": "Camellias are glossy-leaved shrubs with rose-like flowers, prized for their winter blooms and use in making tea.",
+        "image": "https://images.pexels.com/photos/31970944/pexels-photo-31970944/free-photo-of-close-up-of-a-vibrant-red-camellia-blossom.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-coffee", "fa-spa", "fa-leaf"]
+    },
+    {
+        "name": "Zinnia",
+        "hindi": "ज़िनिया",
+        "scientific": "Zinnia",
+        "category": "annual",
+        "season": "summer",
+        "description": "Zinnias are bright, daisy-like flowers that bloom profusely throughout summer, attracting butterflies to gardens.",
+        "image": "https://images.pexels.com/photos/787552/pexels-photo-787552.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-butterfly", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Petunia",
+        "hindi": "पेटुनिया",
+        "scientific": "Petunia",
+        "category": "annual",
+        "season": "summer",
+        "description": "Petunias are popular bedding plants with trumpet-shaped flowers in vibrant colors, blooming throughout summer.",
+        "image": "https://images.unsplash.com/photo-1524678606370-a47ad25cb82e?crop&w=80&q=80",
+        "icons": ["fa-music", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Gardenia",
+        "hindi": "गार्डेनिया",
+        "scientific": "Gardenia",
+        "category": "shrub",
+        "season": "summer",
+        "description": "Gardenias are fragrant white flowers with waxy petals, symbolizing purity and sweetness in the language of flowers.",
+        "image": "https://images.unsplash.com/photo-1553570739-330b8db85629?crop&w=80&q=80",
+        "icons": ["fa-spa", "fa-smile", "fa-flower"]
+    },
+    {
+        "name": "Snapdragon",
+        "hindi": "स्नैपड्रैगन",
+        "scientific": "Antirrhinum",
+        "category": "annual",
+        "season": "spring",
+        "description": "Snapdragons are colorful flowers with dragon-shaped blooms that 'snap' open when squeezed, symbolizing grace and strength.",
+        "image": "https://images.unsplash.com/photo-1607544880248-7c5ad1bba73c?crop&w=80&q=80",
+        "icons": ["fa-dragon", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Dahlia",
+        "hindi": "डालिया",
+        "scientific": "Dahlia",
+        "category": "tuber",
+        "season": "summer",
+        "description": "Dahlias are showy flowers with intricate geometric petal arrangements, available in nearly every color except blue.",
+        "image": "https://images.unsplash.com/photo-1565182999561-5af174dc14da?crop&w=80&q=80",
+        "icons": ["fa-shapes", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Geranium",
+        "hindi": "जिरेनियम",
+        "scientific": "Pelargonium",
+        "category": "perennial",
+        "season": "summer",
+        "description": "Geraniums are popular garden plants with clusters of colorful flowers and fragrant leaves, blooming throughout summer.",
+        "image": "https://images.unsplash.com/photo-1578601636414-b4bdcfa7c350?crop&w=80&q=80",
+        "icons": ["fa-leaf", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Bluebell",
+        "hindi": "ब्लूबेल",
+        "scientific": "Hyacinthoides",
+        "category": "bulb",
+        "season": "spring",
+        "description": "Bluebells are delicate, bell-shaped flowers that create blue carpets in woodlands during spring.",
+        "image": "https://images.unsplash.com/photo-1610465541947-4557f572f526?crop&w=80&q=80",
+        "icons": ["fa-bell", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Crocus",
+        "hindi": "केसर",
+        "scientific": "Crocus",
+        "category": "bulb",
+        "season": "spring",
+        "description": "Crocuses are among the first flowers to bloom in spring, with cup-shaped flowers in purple, white and yellow.",
+        "image": "https://images.unsplash.com/photo-1615732261760-1f5d91c2455e?crop&w=80&q=80",
+        "icons": ["fa-earlybird", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Hydrangea",
+        "hindi": "हाइड्रेंजिया",
+        "scientific": "Hydrangea",
+        "category": "shrub",
+        "season": "summer",
+        "description": "Hydrangeas are large, showy flower clusters that can change color based on soil pH, symbolizing gratitude and heartfelt emotions.",
+        "image": "https://images.unsplash.com/photo-1587049633317-1708d657cfce?crop&w=80&q=80",
+        "icons": ["fa-vial", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Iris",
+        "hindi": "नलिनी",
+        "scientific": "Iris",
+        "category": "rhizome",
+        "season": "spring",
+        "description": "Irises are elegant flowers with distinctive upright petals and falls, named after the Greek goddess of the rainbow.",
+        "image": "https://images.unsplash.com/photo-1580201092670-a0a6a6cafbb1?crop&w=80&q=80",
+        "icons": ["fa-rainbow", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Pansy",
+        "hindi": "बनफूल",
+        "scientific": "Viola tricolor",
+        "category": "annual",
+        "season": "spring",
+        "description": "Pansies are cheerful flowers with 'faces' in bright colors, capable of blooming even in cool weather.",
+        "image": "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?crop&w=80&q=80",
+        "icons": ["fa-smile", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Aster",
+        "hindi": "एस्टर",
+        "scientific": "Aster",
+        "category": "perennial",
+        "season": "autumn",
+        "description": "Asters are daisy-like flowers that bloom in late summer and fall, providing nectar for pollinators when other flowers fade.",
+        "image": "https://images.unsplash.com/photo-1601758124510-52d02ddb7cbd?crop&w=80&q=80",
+        "icons": ["fa-bee", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Foxglove",
+        "hindi": "फॉक्सग्लव",
+        "scientific": "Digitalis",
+        "category": "biennial",
+        "season": "summer",
+        "description": "Foxgloves are tall spikes of tubular flowers that are highly attractive to bees but contain toxic compounds.",
+        "image": "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?crop&w=80&q=80",
+        "icons": ["fa-exclamation-triangle", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Anemone",
+        "hindi": "रातरानी",
+        "scientific": "Anemone",
+        "category": "perennial",
+        "season": "spring",
+        "description": "Anemones are delicate flowers with poppy-like blooms, also known as windflowers for their tendency to sway in breezes.",
+        "image": "https://images.unsplash.com/photo-1519683109079-d5f539e1542f?crop&w=80&q=80",
+        "icons": ["fa-wind", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Bougainvillea",
+        "hindi": "बूगनविलिया",
+        "scientific": "Bougainvillea",
+        "category": "climber",
+        "season": "summer",
+        "description": "Bougainvillea is a vigorous climber with colorful papery bracts that surround small white flowers, thriving in hot climates.",
+        "image": "https://images.unsplash.com/photo-1587049633317-1708d657cfce?crop&w=80&q=80",
+        "icons": ["fa-vine", "fa-spa", "fa-leaf"]
+    },
+    {
+        "name": "Buttercup",
+        "hindi": "माखन फूल",
+        "scientific": "Ranunculus",
+        "category": "perennial",
+        "season": "spring",
+        "description": "Buttercups are bright yellow flowers with glossy petals that seem to glow, often found in meadows and fields.",
+        "image": "https://images.unsplash.com/photo-1606041008023-472dfb5e530f?crop&w=80&q=80",
+        "icons": ["fa-sun", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Cosmos",
+        "hindi": "कॉसमॉस",
+        "scientific": "Cosmos",
+        "category": "annual",
+        "season": "summer",
+        "description": "Cosmos are daisy-like flowers with delicate, feathery foliage that bloom abundantly and attract butterflies.",
+        "image": "https://images.unsplash.com/photo-1579003499219-f55cddc18f6b?crop&w=80&q=80",
+        "icons": ["fa-feather-alt", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Delphinium",
+        "hindi": "डेल्फीनियम",
+        "scientific": "Delphinium",
+        "category": "perennial",
+        "season": "summer",
+        "description": "Delphiniums are tall spikes of blue, purple or white flowers that add vertical interest to gardens.",
+        "image": "https://images.unsplash.com/photo-1610465541947-4557f572f526?crop&w=80&q=80",
+        "icons": ["fa-mountain", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Forget-me-not",
+        "hindi": "नन्ही कली",
+        "scientific": "Myosotis",
+        "category": "biennial",
+        "season": "spring",
+        "description": "Forget-me-nots are tiny blue flowers with yellow centers, symbolizing true love and remembrance.",
+        "image": "https://images.unsplash.com/photo-1615732261760-1f5d91c2455e?crop&w=80&q=80",
+        "icons": ["fa-heart", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Freesia",
+        "hindi": "फ्रीज़िया",
+        "scientific": "Freesia",
+        "category": "bulb",
+        "season": "spring",
+        "description": "Freesias are highly fragrant flowers with funnel-shaped blooms on one side of slender stems, popular in perfumes.",
+        "image": "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?crop&w=80&q=80",
+        "icons": ["fa-spa", "fa-wind", "fa-flower"]
+    },
+    {
+        "name": "Gladiolus",
+        "hindi": "ग्लैडियोलस",
+        "scientific": "Gladiolus",
+        "category": "corm",
+        "season": "summer",
+        "description": "Gladioli are tall flower spikes with multiple blooms, symbolizing strength of character and remembrance.",
+        "image": "https://images.unsplash.com/photo-1565182999561-5af174dc14da?crop&w=80&q=80",
+        "icons": ["fa-chess-rook", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Heather",
+        "hindi": "हीदर",
+        "scientific": "Calluna",
+        "category": "shrub",
+        "season": "summer",
+        "description": "Heather is a low-growing shrub with tiny bell-shaped flowers that cover moors and heaths in purple blooms.",
+        "image": "https://images.unsplash.com/photo-1595475227216-c3a5a068c9a4?crop&w=80&q=80",
+        "icons": ["fa-bell", "fa-spa", "fa-leaf"]
+    },
+    {
+        "name": "Hollyhock",
+        "hindi": "हॉलीहॉक",
+        "scientific": "Alcea",
+        "category": "biennial",
+        "season": "summer",
+        "description": "Hollyhocks are tall cottage garden plants with large, showy flowers along their stems, attracting hummingbirds.",
+        "image": "https://images.unsplash.com/photo-1578601636414-b4bdcfa7c350?crop&w=80&q=80",
+        "icons": ["fa-arrow-up", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Hyacinth",
+        "hindi": "सुंबुल",
+        "scientific": "Hyacinthus",
+        "category": "bulb",
+        "season": "spring",
+        "description": "Hyacinths are highly fragrant spring bulbs with dense spikes of star-shaped flowers in vibrant colors.",
+        "image": "https://images.unsplash.com/photo-1615368144593-0e6a7c7251b0?crop&w=80&q=80",
+        "icons": ["fa-star", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Impatiens",
+        "hindi": "इम्पेशियन्स",
+        "scientific": "Impatiens",
+        "category": "annual",
+        "season": "summer",
+        "description": "Impatiens are shade-loving plants with brightly colored flowers that seem to 'pop' when seed pods are touched.",
+        "image": "https://images.unsplash.com/photo-1524678606370-a47ad25cb82e?crop&w=80&q=80",
+        "icons": ["fa-bolt", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Lantana",
+        "hindi": "राईमुनिया",
+        "scientific": "Lantana",
+        "category": "shrub",
+        "season": "summer",
+        "description": "Lantanas are heat-loving shrubs with clusters of small, multicolored flowers that change hue as they mature.",
+        "image": "https://images.unsplash.com/photo-1580201092670-a0a6a6cafbb1?crop&w=80&q=80",
+        "icons": ["fa-fire", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Lilac",
+        "hindi": "बकाइन",
+        "scientific": "Syringa",
+        "category": "shrub",
+        "season": "spring",
+        "description": "Lilacs are beloved for their fragrant clusters of purple, white or pink flowers that signal the arrival of spring.",
+        "image": "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?crop&w=80&q=80",
+        "icons": ["fa-spa", "fa-wind", "fa-flower"]
+    },
+    {
+        "name": "Morning Glory",
+        "hindi": "नीलकमल",
+        "scientific": "Ipomoea",
+        "category": "climber",
+        "season": "summer",
+        "description": "Morning glories are fast-growing vines with trumpet-shaped flowers that open in morning and close by afternoon.",
+        "image": "https://images.unsplash.com/photo-1601758124510-52d02ddb7cbd?crop&w=80&q=80",
+        "icons": ["fa-clock", "fa-spa", "fa-vine"]
+    },
+    {
+        "name": "Nasturtium",
+        "hindi": "नास्टर्शियम",
+        "scientific": "Tropaeolum",
+        "category": "annual",
+        "season": "summer",
+        "description": "Nasturtiums are edible flowers with bright, peppery blooms and lily pad-like leaves, great for companion planting.",
+        "image": "https://images.unsplash.com/photo-1598880940080-ff9a29891b85?crop&w=80&q=80",
+        "icons": ["fa-utensils", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Periwinkle",
+        "hindi": "सदाबहार",
+        "scientific": "Catharanthus",
+        "category": "perennial",
+        "season": "summer",
+        "description": "Periwinkles are low-growing plants with glossy leaves and simple five-petaled flowers, blooming continuously in warm climates.",
+        "image": "https://images.unsplash.com/photo-1519683109079-d5f539e1542f?crop&w=80&q=80",
+        "icons": ["fa-infinity", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Phlox",
+        "hindi": "फ्लॉक्स",
+        "scientific": "Phlox",
+        "category": "perennial",
+        "season": "summer",
+        "description": "Phlox are fragrant flowers that form colorful mounds or carpets, attracting butterflies with their nectar.",
+        "image": "https://images.unsplash.com/photo-1587049633317-1708d657cfce?crop&w=80&q=80",
+        "icons": ["fa-butterfly", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Primrose",
+        "hindi": "प्रिमरोज़",
+        "scientific": "Primula",
+        "category": "perennial",
+        "season": "spring",
+        "description": "Primroses are among the first flowers of spring, with rosettes of colorful blooms in shady locations.",
+        "image": "https://images.unsplash.com/photo-1606041008023-472dfb5e530f?crop&w=80&q=80",
+        "icons": ["fa-earlybird", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Ranunculus",
+        "hindi": "रननकुलस",
+        "scientific": "Ranunculus",
+        "category": "bulb",
+        "season": "spring",
+        "description": "Ranunculus are rose-like flowers with layer upon layer of delicate, paper-thin petals in vibrant colors.",
+        "image": "https://images.unsplash.com/photo-1579003499219-f55cddc18f6b?crop&w=80&q=80",
+        "icons": ["fa-layer-group", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Sweet Pea",
+        "hindi": "मटर फूल",
+        "scientific": "Lathyrus odoratus",
+        "category": "climber",
+        "season": "spring",
+        "description": "Sweet peas are fragrant climbing flowers with delicate wings and tendrils, available in many pastel shades.",
+        "image": "https://images.unsplash.com/photo-1610465541947-4557f572f526?crop&w=80&q=80",
+        "icons": ["fa-vine", "fa-spa", "fa-wind"]
+    },
+    {
+        "name": "Verbena",
+        "hindi": "वर्बीना",
+        "scientific": "Verbena",
+        "category": "annual",
+        "season": "summer",
+        "description": "Verbenas are drought-tolerant plants with clusters of small, vibrant flowers that attract butterflies.",
+        "image": "https://images.unsplash.com/photo-1615732261760-1f5d91c2455e?crop&w=80&q=80",
+        "icons": ["fa-butterfly", "fa-spa", "fa-flower"]
+    },
+    {
+        "name": "Wisteria",
+        "hindi": "विस्टेरिया",
+        "scientific": "Wisteria",
+        "category": "climber",
+        "season": "spring",
+        "description": "Wisteria is a climbing vine known for its beautiful hanging clusters of purple, blue or white flowers and sweet fragrance.",
+        "image": "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?crop&w=80&q=80",
+        "icons": ["fa-vine", "fa-spa", "fa-leaf"]
+    }
+    ];
+
+    // DOM elements
+    const flowersContainer = document.getElementById('flowers-container');
+    const searchInput = document.getElementById('search');
+    const categoryTabs = document.querySelectorAll('.category-tab');
+    const totalCountElement = document.getElementById('total-count');
+    const categoryCountElement = document.getElementById('category-count');
+
+    // Initialize the page
+    function init() {
+        displayFlowers(flowers);
+        updateCounts();
+        setupEventListeners();
+    }
+
+    // Display flowers in the grid
+    function displayFlowers(flowersToDisplay) {
+        flowersContainer.innerHTML = '';
+
+        if (flowersToDisplay.length === 0) {
+            flowersContainer.innerHTML = `
+                <div class="no-results">
+                    <i class="fas fa-search"></i> No flowers found matching your search.
+                </div>
+            `;
+            return;
+        }
+
+        flowersToDisplay.forEach(flower => {
+            const flowerCard = document.createElement('div');
+            flowerCard.className = `flower-card fade-in ${flower.category}`;
+            flowerCard.innerHTML = `
+                <img src="${flower.image}" alt="${flower.name}" class="flower-image">
+                <div class="flower-info">
+                    <h3 class="flower-name">${flower.name}</h3>
+                    <p class="hindi-name">${flower.hindi}</p>
+                    <p class="flower-scientific">${flower.scientific}</p>
+                    <span class="flower-category ${flower.category}">${formatCategory(flower.category)}</span>
+                    <span class="flower-season ${flower.season}">${formatSeason(flower.season)}</span>
+                    <p class="flower-description">${flower.description}</p>
+                    <div class="flower-icons">
+                        ${flower.icons.map(icon => `<i class="fas ${icon} flower-icon"></i>`).join('')}
+                    </div>
+                </div>
+            `;
+            flowersContainer.appendChild(flowerCard);
+        });
+    }
+
+    // Format category name for display
+    function formatCategory(category) {
+        return category.charAt(0).toUpperCase() + category.slice(1);
+    }
+
+    // Format season name for display
+    function formatSeason(season) {
+        if (season === 'year-round') return 'Year Round';
+        return season.charAt(0).toUpperCase() + season.slice(1);
+    }
+
+    // Update total and category counts
+    function updateCounts() {
+        totalCountElement.textContent = flowers.length;
+
+        // Count flowers in each category
+        const categoryCounts = {
+            annual: flowers.filter(f => f.category === 'annual').length,
+            perennial: flowers.filter(f => f.category === 'perennial').length,
+            bulb: flowers.filter(f => f.category === 'bulb').length,
+            shrub: flowers.filter(f => f.category === 'shrub').length,
+            tree: flowers.filter(f => f.category === 'tree').length,
+            vine: flowers.filter(f => f.category === 'vine').length,
+            succulent: flowers.filter(f => f.category === 'succulent').length
+        };
+
+        // Update category counts in tabs
+        categoryTabs.forEach(tab => {
+            const category = tab.dataset.category;
+            if (category !== 'all') {
+                const countElement = tab.querySelector('.category-count');
+                countElement.textContent = categoryCounts[category];
+            }
+        });
+
+        // Count unique categories
+        const uniqueCategories = new Set(flowers.map(f => f.category));
+        categoryCountElement.textContent = uniqueCategories.size;
+    }
+
+    // Filter flowers based on search and category
+    function filterFlowers() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const activeCategory = document.querySelector('.category-tab.active').dataset.category;
+
+        let filteredFlowers = flowers;
+
+        // Filter by category
+        if (activeCategory !== 'all') {
+            filteredFlowers = filteredFlowers.filter(flower => flower.category === activeCategory);
+        }
+
+        // Filter by search term
+        if (searchTerm) {
+            filteredFlowers = filteredFlowers.filter(flower =>
+                flower.name.toLowerCase().includes(searchTerm) ||
+                flower.hindi.toLowerCase().includes(searchTerm) ||
+                flower.scientific.toLowerCase().includes(searchTerm) ||
+                flower.description.toLowerCase().includes(searchTerm) ||
+                flower.season.toLowerCase().includes(searchTerm)
+            );
+        }
+
+        displayFlowers(filteredFlowers);
+    }
+
+    // Set up event listeners
+    function setupEventListeners() {
+        // Search input
+        searchInput.addEventListener('input', filterFlowers);
+
+        // Category tabs
+        categoryTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                categoryTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                filterFlowers();
+            });
+        });
+    }
+
+    // Initialize the app when DOM is loaded
+    document.addEventListener('DOMContentLoaded', init);
+</script>

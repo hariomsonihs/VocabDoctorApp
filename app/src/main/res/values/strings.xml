@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Vocab Doctor</string>
+    <string name="app_logo_desc">Vocab Logo</string>
+    <string name="exit_app_title">Exit Vocab Doctor?</string>
+    <string name="exit_app_message">Are you sure you want to exit the app?</string>
+    <string name="yes">Yes, Exit</string>
+    <string name="no">No, Stay</string>
+</resources>

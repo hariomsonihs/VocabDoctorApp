@@ -1,0 +1,645 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    android:id="@+id/main"
+    tools:context=".MainActivity">
+
+    <!-- Modern Professional Toolbar -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:background="@drawable/toolbar_gradient_background"
+        android:elevation="8dp"
+        android:clipToPadding="false"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:background="@drawable/toolbar_rounded_background"
+            android:clipToPadding="true">
+
+            <!-- Left-aligned text group with shadow -->
+            <LinearLayout
+                android:id="@+id/text_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent">
+
+                <!-- Main Title with modern typography -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Vocab Doctor"
+                    android:textColor="#FFFFFF"
+                    android:textSize="26sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-medium"
+                    android:shadowColor="#40000000"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="4" />
+
+                <!-- Subtitle with subtle styling -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Your Dictionary App"
+                    android:textColor="#E0E0E0"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-light"
+                    android:layout_marginTop="4dp"
+                    android:alpha="0.9" />
+            </LinearLayout>
+
+            <!-- Right-aligned logo with circular background -->
+            <ImageView
+                android:id="@+id/logo_image"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/logo"
+                android:contentDescription="@string/app_logo_desc"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/circle_logo_background"
+                android:padding="6dp"
+                android:scaleType="centerCrop"
+                android:elevation="4dp" />
+        </RelativeLayout>
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <!-- Content remains the same -->
+    <ScrollView
+        android:layout_marginTop="18dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Stats Section -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Your Dictionary"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+            <!-- Horizontal Divider Line -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/horizontal_line_gradient"
+                android:elevation="2dp"
+                android:layerType="software" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:orientation="vertical">
+
+                <!-- First Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="6dp"
+                    android:weightSum="3">
+
+                    <!-- Phrasal Verbs Card -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_phrasal_verbs"
+                        android:layout_width="12dp"
+                        android:layout_height="128dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="@color/card_bg_3"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="16dp">
+
+                            <ImageView
+                                android:layout_width="38dp"
+                                android:layout_height="38dp"
+                                android:layout_gravity="center_horizontal"
+                                android:src="@drawable/ic_phrasal_verbs" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:text="Phrasal Verbs"
+                                android:textColor="@color/black"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="2K+"
+                                android:textColor="@color/purple_700"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Idioms Card -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_idioms"
+                        android:layout_width="12dp"
+                        android:layout_height="128dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="@color/card_bg_2"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="16dp">
+
+                            <ImageView
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:layout_gravity="center_horizontal"
+                                android:src="@drawable/ic_idioms" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:gravity="center"
+                                android:text="Idioms"
+                                android:textStyle="bold"
+                                android:textColor="@color/black"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="2K+"
+                                android:textColor="@color/purple_700"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Proverbs Card -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_proverbs"
+                        android:layout_width="12dp"
+                        android:layout_height="128dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="@color/card_bg_1"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="16dp">
+
+                            <ImageView
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:layout_gravity="center_horizontal"
+                                android:src="@drawable/ic_proverbs" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:gravity="center"
+                                android:text="Proverbs"
+                                android:textStyle="bold"
+                                android:textColor="@color/black"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="500+"
+                                android:textColor="@color/purple_700"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+                <!-- Second Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="6dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <!-- Daily Sentences Card -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_daily_sentences"
+                        android:layout_width="8dp"
+                        android:layout_height="128dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="@color/card_bg_1"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="16dp">
+
+                            <ImageView
+                                android:layout_width="38dp"
+                                android:layout_height="38dp"
+                                android:layout_gravity="center_horizontal"
+                                android:src="@drawable/ic_daily_sentences" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:gravity="center"
+                                android:text="Daily Sentences"
+                                android:textStyle="bold"
+                                android:textColor="@color/black"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="1K+"
+                                android:textColor="@color/purple_700"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Word of the Day Card -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_verbs"
+                        android:layout_width="8dp"
+                        android:layout_height="128dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="@color/card_bg_2"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="16dp">
+
+                            <ImageView
+                                android:layout_width="38dp"
+                                android:layout_height="38dp"
+                                android:layout_gravity="center_horizontal"
+                                android:src="@drawable/ic_proverbs" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:gravity="center"
+                                android:text="Verbs"
+                                android:textStyle="bold"
+                                android:textColor="@color/black"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="365+"
+                                android:textColor="@color/purple_700"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Synonyms Card -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_synonyms"
+                        android:layout_width="8dp"
+                        android:layout_height="128dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="@color/card_bg_3"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="16dp">
+
+                            <ImageView
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:layout_gravity="center_horizontal"
+                                android:src="@drawable/ic_daily_sentences" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:text="Synonyms"
+                                android:textColor="@color/black"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="10K+"
+                                android:textColor="@color/purple_700"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+                <!-- Third Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <!-- Antonyms Card -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_antonyms"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="@color/card_bg_2"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="16dp">
+
+                            <ImageView
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:layout_gravity="center_horizontal"
+                                android:src="@drawable/ic_daily_sentences" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:gravity="center"
+                                android:text="Antonyms"
+                                android:textStyle="bold"
+                                android:textColor="@color/black"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="8K+"
+                                android:textColor="@color/purple_700"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Common Phrases Card -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_common_phrases"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="@color/card_bg_3"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="16dp">
+
+                            <ImageView
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:layout_gravity="center_horizontal"
+                                android:src="@drawable/ic_daily_sentences" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:gravity="center"
+                                android:text="Common Phrases"
+                                android:textStyle="bold"
+                                android:textColor="@color/black"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="2000+"
+                                android:textColor="@color/purple_700"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+                <!-- Horizontal Divider Line -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/horizontal_line_gradient"
+                    android:elevation="2dp"
+                    android:layerType="software" />
+
+                <!-- Learn Useful Words Card -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="51dp"
+                    app:cardBackgroundColor="@color/card_bg_1"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Our Useful Apps!"
+                            android:textColor="@color/black"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <!-- App Icons Row -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:orientation="horizontal"
+                            android:gravity="center_horizontal"
+                            android:weightSum="3">
+
+                            <!-- App 1 -->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
+                                    android:src="@drawable/notesaura_logo" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:text="NotesAura"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/black"
+                                    android:textSize="12sp"/>
+                            </LinearLayout>
+
+                            <!-- App 2 -->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
+                                    android:src="@drawable/c_logo"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:text="C Guide"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/black"
+                                    android:textSize="12sp"/>
+                            </LinearLayout>
+
+                            <!-- App 3 -->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
+                                    android:src="@drawable/todone_logo"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:text="ToDone"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/black"
+                                    android:textSize="12sp"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/btnLearnNow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="16dp"
+                            android:backgroundTint="@color/purple_500"
+                            android:text="VISIT NOW..."
+                            android:textAllCaps="false"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom Navigation -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bottom_nav_background"
+        app:itemIconTint="@color/bottom_nav_colors"
+        app:itemTextColor="@color/bottom_nav_colors"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_nav_menu"
+        android:elevation="12dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp" />
+
+</RelativeLayout>

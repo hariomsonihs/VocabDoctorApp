@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noun (संज्ञा) - Grammar App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --light: #f8f9fa;
+            --dark: #2d3436;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --info: #0984e3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 100%;
+            width: 100%;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 1s ease;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 6vw, 2.5rem);
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            color: var(--dark);
+            opacity: 0.8;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+        }
+
+        h2 i {
+            color: var(--accent);
+        }
+
+        .definition {
+            font-size: clamp(0.95rem, 2.5vw, 1rem);
+            margin-bottom: 1rem;
+            padding-left: 0.8rem;
+            border-left: 3px solid var(--secondary);
+        }
+
+        .hindi {
+            color: #e84393;
+            font-weight: 500;
+        }
+
+        .english {
+            color: var(--info);
+            font-weight: 500;
+        }
+
+        ul {
+            list-style-type: none;
+            margin-bottom: 1rem;
+        }
+
+        ul li {
+            padding: 0.4rem 0;
+            padding-left: 1.2rem;
+            position: relative;
+            font-size: clamp(0.9rem, 2.5vw, 0.95rem);
+        }
+
+        ul li::before {
+            content: '•';
+            color: var(--accent);
+            font-size: 1.2rem;
+            position: absolute;
+            left: 0;
+            top: 0.2rem;
+        }
+
+        .example {
+            background: rgba(106, 176, 76, 0.1);
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin: 0.8rem 0;
+            border-left: 3px solid var(--success);
+        }
+
+        .example-title {
+            font-weight: bold;
+            color: var(--success);
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: clamp(0.95rem, 2.5vw, 1rem);
+        }
+
+        .type-card {
+            background: rgba(253, 121, 168, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .type-card:hover {
+            background: rgba(253, 121, 168, 0.2);
+            transform: scale(1.01);
+        }
+
+        .type-title {
+            color: var(--accent);
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: clamp(1.2rem, 3.5vw, 1.4rem);
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, rgba(108, 92, 231, 0.2) 0%, rgba(108, 92, 231, 0) 100%);
+            padding: 0.15rem 0.3rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .feature-box {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: clamp(2rem, 5vw, 2.2rem);
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+
+        .feature-title {
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            margin-bottom: 0.4rem;
+            color: var(--dark);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            color: var(--dark);
+            opacity: 0.7;
+            font-size: clamp(0.8rem, 2.5vw, 0.85rem);
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0.5rem;
+            }
+
+            h1 {
+                font-size: clamp(1.8rem, 5.5vw, 2rem);
+            }
+
+            .subtitle {
+                font-size: clamp(0.9rem, 2.8vw, 1rem);
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+
+            .card {
+                padding: 1rem;
+                border-radius: 10px;
+            }
+
+            h2 {
+                font-size: clamp(1.3rem, 3.8vw, 1.5rem);
+            }
+
+            .definition {
+                font-size: clamp(0.9rem, 2.3vw, 0.95rem);
+                padding-left: 0.5rem;
+            }
+
+            .type-card {
+                padding: 0.8rem;
+                border-radius: 8px;
+            }
+
+            .type-title {
+                font-size: clamp(1.1rem, 3.2vw, 1.2rem);
+            }
+
+            .feature-box {
+                padding: 0.8rem;
+            }
+
+            .feature-icon {
+                font-size: clamp(1.8rem, 4.5vw, 2rem);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0.3rem;
+            }
+
+            h1 {
+                font-size: clamp(1.5rem, 5vw, 1.8rem);
+            }
+
+            .card {
+                padding: 0.8rem;
+                margin-bottom: 1rem;
+            }
+
+            .grid {
+                gap: 0.5rem;
+            }
+
+            ul li {
+                font-size: clamp(0.85rem, 2.3vw, 0.9rem);
+                padding-left: 1rem;
+            }
+
+            .example {
+                padding: 0.6rem;
+            }
+
+            footer {
+                padding: 0.8rem;
+                font-size: clamp(0.75rem, 2.3vw, 0.8rem);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header class="animate">
+        <h1>Noun <span class="hindi">(संज्ञा)</span></h1>
+        <p class="subtitle">The naming words that help us identify people, places, things, and ideas</p>
+    </header>
+
+    <section class="card animate delay-1">
+        <h2><i class="fas fa-book-open"></i> Definition / परिभाषा</h2>
+        <div class="definition">
+            <p class="english">A noun is a word that names a person, place, thing, or idea. It can function as the subject or object of a verb, the object of a preposition, or an appositive. Nouns are fundamental in grammar as they provide the foundation for constructing meaningful sentences.</p>
+            <p class="hindi">संज्ञा वह शब्द है जो किसी व्यक्ति, स्थान, वस्तु या विचार का नाम बताता है। यह क्रिया के कर्ता या कर्म के रूप में, संबंध सूचक शब्द के कर्म के रूप में, या समानाधिकरण के रूप में कार्य कर सकता है। संज्ञा व्याकरण में मूलभूत है क्योंकि यह अर्थपूर्ण वाक्य रचना का आधार प्रदान करती है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Example</div>
+                <p class="english">In "<span class="highlight">Rahul</span> loves <span class="highlight">books</span>", <span class="highlight">Rahul</span> and <span class="highlight">books</span> are nouns.</p>
+                <p class="hindi">"राहुल को किताबें पसंद हैं" में, <span class="highlight">राहुल</span> और <span class="highlight">किताबें</span> संज्ञा हैं।</p>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="feature-box floating">
+                <div class="feature-icon"><i class="fas fa-user"></i></div>
+                <h3 class="feature-title">Person</h3>
+                <p class="hindi">व्यक्ति</p>
+                <p>Rahul, teacher, doctor, Priya, engineer</p>
+            </div>
+
+            <div class="feature-box floating" style="animation-delay: 0.3s;">
+                <div class="feature-icon"><i class="fas fa-map-marker-alt"></i></div>
+                <h3 class="feature-title">Place</h3>
+                <p class="hindi">स्थान</p>
+                <p>Delhi, school, park, Mumbai, temple</p>
+            </div>
+
+            <div class="feature-box floating" style="animation-delay: 0.6s;">
+                <div class="feature-icon"><i class="fas fa-box-open"></i></div>
+                <h3 class="feature-title">Thing</h3>
+                <p class="hindi">वस्तु</p>
+                <p>book, computer, tree, car, table</p>
+            </div>
+
+            <div class="feature-box floating" style="animation-delay: 0.9s;">
+                <div class="feature-icon"><i class="fas fa-lightbulb"></i></div>
+                <h3 class="feature-title">Idea</h3>
+                <p class="hindi">विचार</p>
+                <p>freedom, love, happiness, courage, wisdom</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-2">
+        <h2><i class="fas fa-layer-group"></i> Types of Nouns / संज्ञा के प्रकार</h2>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-user-tag"></i> Proper Noun (व्यक्तिवाचक संज्ञा)</h3>
+            <p class="english">A proper noun is the name of a particular person, place, or thing. It always begins with a capital letter and refers to a unique entity, such as a specific person or location.</p>
+            <p class="hindi">व्यक्तिवाचक संज्ञा किसी विशेष व्यक्ति, स्थान या वस्तु का नाम होती है। यह हमेशा बड़े अक्षर से शुरू होती है और एक विशिष्ट इकाई, जैसे किसी विशेष व्यक्ति या स्थान को संदर्भित करती है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">India, Delhi, Ganges, Rahul, Monday, Taj Mahal, Diwali</span></li>
+                    <li><span class="hindi">भारत, दिल्ली, गंगा, राहुल, सोमवार, ताजमहल, दीवाली</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-users"></i> Common Noun (जातिवाचक संज्ञा)</h3>
+            <p class="english">A common noun is a name given in common to every person, place, or thing of the same class or kind. It does not begin with a capital letter unless it starts a sentence and represents a general category.</p>
+            <p class="hindi">जातिवाचक संज्ञा एक ही वर्ग या प्रकार के प्रत्येक व्यक्ति, स्थान या वस्तु को दिया गया सामान्य नाम है। यह वाक्य की शुरुआत में होने तक बड़े अक्षर से शुरू नहीं होती और एक सामान्य श्रेणी को दर्शाती है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">country, city, river, boy, day, school, flower</span></li>
+                    <li><span class="hindi">देश, शहर, नदी, लड़का, दिन, स्कूल, फूल</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-cubes"></i> Collective Noun (समूहवाचक संज्ञा)</h3>
+            <p class="english">A collective noun is the name of a number of persons or things taken together and spoken of as one whole, often describing a group or collection acting as a single unit.</p>
+            <p class="hindi">समूहवाचक संज्ञा कई व्यक्तियों या वस्तुओं को एक साथ लेकर उनके समूह को दिया गया नाम है, जो अक्सर एक समूह या संग्रह को एक इकाई के रूप में दर्शाता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">team, army, fleet, bunch, herd, crowd, family</span></li>
+                    <li><span class="hindi">टीम, सेना, बेड़ा, गुच्छा, झुंड, भीड़, परिवार</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-flask"></i> Material Noun (द्रव्यवाचक संज्ञा)</h3>
+            <p class="english">A material noun is the name of a material or substance of which things are made. These nouns are usually uncountable and refer to raw materials.</p>
+            <p class="hindi">द्रव्यवाचक संज्ञा किसी पदार्थ या सामग्री का नाम है जिससे चीजें बनी होती हैं। ये संज्ञाएँ आमतौर पर अगणनीय होती हैं और कच्चे माल को संदर्भित करती हैं।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">gold, silver, milk, wood, cotton, iron, water</span></li>
+                    <li><span class="hindi">सोना, चाँदी, दूध, लकड़ी, कपास, लोहा, पानी</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-brain"></i> Abstract Noun (भाववाचक संज्ञा)</h3>
+            <p class="english">An abstract noun is the name of a quality, action, or state considered apart from the object to which it belongs, often describing intangible concepts.</p>
+            <p class="hindi">भाववाचक संज्ञा किसी गुण, क्रिया या अवस्था का नाम है जिसे उस वस्तु से अलग माना जाता है जिससे वह संबंधित है, जो अक्सर अमूर्त अवधारणाओं को दर्शाती है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">honesty, laughter, childhood, sleep, beauty, bravery, knowledge</span></li>
+                    <li><span class="hindi">ईमानदारी, हँसी, बचपन, नींद, सुंदरता, बहादुरी, ज्ञान</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-3">
+        <h2><i class="fas fa-lightbulb"></i> Key Points About Nouns / संज्ञा के बारे में मुख्य बिंदु</h2>
+        <ul>
+            <li><span class="english">All names are nouns.</span> <span class="hindi">सभी नाम संज्ञा होते हैं।</span></li>
+            <li><span class="english">Nouns can be singular or plural.</span> <span class="hindi">संज्ञा एकवचन या बहुवचन हो सकती है।</span></li>
+            <li><span class="english">Nouns can be countable or uncountable.</span> <span class="hindi">संज्ञा गणनीय या अगणनीय हो सकती है।</span></li>
+            <li><span class="english">Nouns can function as subjects, objects, or complements in sentences.</span> <span class="hindi">संज्ञा वाक्यों में कर्ता, कर्म या पूरक के रूप में कार्य कर सकती है।</span></li>
+            <li><span class="english">Some nouns have different meanings in singular and plural forms.</span> <span class="hindi">कुछ संज्ञाओं के एकवचन और बहुवचन रूपों में अलग-अलग अर्थ होते हैं।</span></li>
+            <li><span class="english">Nouns can be modified by adjectives.</span> <span class="hindi">संज्ञाओं को विशेषणों द्वारा संशोधित किया जा सकता है।</span></li>
+            <li><span class="english">Some nouns are always plural (e.g., scissors, trousers).</span> <span class="hindi">कुछ संज्ञाएँ हमेशा बहुवचन में होती हैं (जैसे, कैंची, पतलून)।</span></li>
+            <li><span class="english">Nouns can have gender (masculine, feminine, neuter) in some languages.</span> <span class="hindi">संज्ञाओं का लिंग (पुल्लिंग, स्त्रीलिंग, नपुंसक) कुछ भाषाओं में हो सकता है।</span></li>
+            <li><span class="english">Compound nouns combine two or more words (e.g., toothbrush, mother-in-law).</span> <span class="hindi">संयुक्त संज्ञाएँ दो या अधिक शब्दों को जोड़ती हैं (जैसे, टूथब्रश, सास)।</span></li>
+            <li><span class="english">Nouns can change form based on grammatical case (e.g., nominative, accusative).</span> <span class="hindi">संज्ञाएँ व्याकरणिक कारक (जैसे, कर्ता, कर्म) के आधार पर रूप बदल सकती हैं।</span></li>
+        </ul>
+    </section>
+
+    <section class="card animate delay-4">
+        <h2><i class="fas fa-question-circle"></i> How to Identify Nouns / संज्ञा की पहचान कैसे करें</h2>
+        <ul>
+            <li><span class="english">Ask "what?" or "who?" to find the noun in a sentence.</span> <span class="hindi">वाक्य में संज्ञा खोजने के लिए "क्या?" या "कौन?" पूछें।</span></li>
+            <li><span class="english">Look for words that name people, places, things, or ideas.</span> <span class="hindi">उन शब्दों को देखें जो लोगों, स्थानों, वस्तुओं या विचारों का नाम बताते हैं।</span></li>
+            <li><span class="english">Words that can be preceded by articles (a, an, the) are often nouns.</span> <span class="hindi">जिन शब्दों से पहले उपपद (a, an, the) लग सकते हैं, वे अक्सर संज्ञा होते हैं।</span></li>
+            <li><span class="english">Words that can be made plural (by adding -s, -es) are usually nouns.</span> <span class="hindi">जिन शब्दों को बहुवचन बनाया जा सकता है (-s, -es जोड़कर), वे आमतौर पर संज्ञा होते हैं।</span></li>
+            <li><span class="english">Check if the word can be replaced by a pronoun (he, she, it, they).</span> <span class="hindi">जाँच करें कि क्या शब्द को सर्वनाम (वह, वे, यह) से प्रतिस्थापित किया जा सकता है।</span></li>
+        </ul>
+
+        <div class="example">
+            <div class="example-title"><i class="fas fa-star"></i> Practice Examples</div>
+            <p class="english">Identify the nouns in these sentences:</p>
+            <p class="hindi">इन वाक्यों में संज्ञा पहचानें:</p>
+            <ul>
+                <li><span class="english">The <span class="highlight">teacher</span> gave the <span class="highlight">students</span> an interesting <span class="highlight">assignment</span> about <span class="highlight">India</span>.</span></li>
+                <li><span class="hindi"><span class="highlight">शिक्षक</span> ने <span class="highlight">छात्रों</span> को <span class="highlight">भारत</span> के बारे में एक दिलचस्प <span class="highlight">कार्य</span> दिया।</span></li>
+                <li><span class="english"><span class="highlight">Honesty</span> is the best <span class="highlight">policy</span>.</span></li>
+                <li><span class="hindi"><span class="highlight">ईमानदारी</span> सबसे अच्छी <span class="highlight">नीति</span> है।</span></li>
+                <li><span class="english">The <span class="highlight">team</span> won the <span class="highlight">trophy</span> with great <span class="highlight">effort</span>.</span></li>
+                <li><span class="hindi"><span class="highlight">टीम</span> ने बहुत <span class="highlight">प्रयास</span> से <span class="highlight">ट्रॉफी</span> जीती।</span></li>
+            </ul>
+        </div>
+
+        <div class="example">
+            <div class="example-title"><i class="fas fa-lightbulb"></i> Tip for Beginners</div>
+            <p class="english">To practice identifying nouns, read a short paragraph and underline every word that names something you can picture or feel, like a person, place, thing, or idea. Then, check if it fits the noun criteria (e.g., can it be plural, or does it take an article like "the"?).</p>
+            <p class="hindi">संज्ञा की पहचान का अभ्यास करने के लिए, एक छोटा पैराग्राफ पढ़ें और हर उस शब्द को रेखांकित करें जो किसी ऐसी चीज का नाम बताता हो जिसे आप चित्रित या महसूस कर सकते हैं, जैसे व्यक्ति, स्थान, वस्तु या विचार। फिर, जाँच करें कि क्या यह संज्ञा के मापदंड में फिट बैठता है (उदाहरण के लिए, क्या इसे बहुवचन बनाया जा सकता है, या क्या यह "the" जैसे उपपद को लेता है?)।</p>
+        </div>
+    </section>
+
+    <section class="card animate delay-4">
+        <h2><i class="fas fa-exclamation-circle"></i> Common Mistakes with Nouns / संज्ञा के साथ सामान्य गलतियाँ</h2>
+        <ul>
+            <li><span class="english">Confusing proper and common nouns (e.g., writing "india" instead of "India").</span> <span class="hindi">व्यक्तिवाचक और जातिवाचक संज्ञा में भ्रम (उदाहरण, "भारत" के बजाय "भारत" लिखना)।</span></li>
+            <li><span class="english">Using singular nouns when plural is needed (e.g., "I have two cat" instead of "cats").</span> <span class="hindi">जब बहुवचन की आवश्यकता हो तब एकवचन संज्ञा का उपयोग (उदाहरण, "मेरे पास दो बिल्ली" के बजाय "बिल्लियाँ")।</span></li>
+            <li><span class="english">Misusing uncountable nouns (e.g., saying "informations" instead of "information").</span> <span class="hindi">अगणनीय संज्ञाओं का गलत उपयोग (उदाहरण, "जानकारियाँ" के बजाय "जानकारी")।</span></li>
+            <li><span class="english">Forgetting to capitalize proper nouns in the middle of sentences.</span> <span class="hindi">वाक्य के बीच में व्यक्तिवाचक संज्ञा को बड़े अक्षर से शुरू न करना।</span></li>
+            <li><span class="english">Using collective nouns with incorrect verb agreement (e.g., "The team are" instead of "The team is").</span> <span class="hindi">समूहवाचक संज्ञा के साथ गलत क्रिया समझौता (उदाहरण, "टीम हैं" के बजाय "टीम है")।</span></li>
+        </ul>
+        <div class="example">
+            <div class="example-title"><i class="fas fa-star"></i> Correct the Mistakes</div>
+            <p class="english">Incorrect: "I visited delhi and saw ganges." Correct: "I visited <span class="highlight">Delhi</span> and saw <span class="highlight">Ganges</span>."</p>
+            <p class="hindi">गलत: "मैंने दिल्ली का दौरा किया और गंगा देखा।" सही: "मैंने <span class="highlight">दिल्ली</span> का दौरा किया और <span class="highlight">गंगा</span> देखा।"</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Vocab Doctor App - Comprehensive Noun Guide</p>
+        <p>Master English and Hindi grammar with interactive, engaging lessons</p>
+    </footer>
+</div>
+</body>
+</html>

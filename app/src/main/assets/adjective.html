@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adjective (विशेषण) - Grammar App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --light: #f8f9fa;
+            --dark: #2d3436;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --info: #0984e3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 100%;
+            width: 100%;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 1s ease;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 6vw, 2.5rem);
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            color: var(--dark);
+            opacity: 0.8;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+        }
+
+        h2 i {
+            color: var(--accent);
+        }
+
+        .definition {
+            font-size: clamp(0.95rem, 2.5vw, 1rem);
+            margin-bottom: 1rem;
+            padding-left: 0.8rem;
+            border-left: 3px solid var(--secondary);
+        }
+
+        .hindi {
+            color: #e84393;
+            font-weight: 500;
+        }
+
+        .english {
+            color: var(--info);
+            font-weight: 500;
+        }
+
+        ul {
+            list-style-type: none;
+            margin-bottom: 1rem;
+        }
+
+        ul li {
+            padding: 0.4rem 0;
+            padding-left: 1.2rem;
+            position: relative;
+            font-size: clamp(0.9rem, 2.5vw, 0.95rem);
+        }
+
+        ul li::before {
+            content: '•';
+            color: var(--accent);
+            font-size: 1.2rem;
+            position: absolute;
+            left: 0;
+            top: 0.2rem;
+        }
+
+        .example {
+            background: rgba(106, 176, 76, 0.1);
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin: 0.8rem 0;
+            border-left: 3px solid var(--success);
+        }
+
+        .example-title {
+            font-weight: bold;
+            color: var(--success);
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: clamp(0.95rem, 2.5vw, 1rem);
+        }
+
+        .type-card {
+            background: rgba(253, 121, 168, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .type-card:hover {
+            background: rgba(253, 121, 168, 0.2);
+            transform: scale(1.01);
+        }
+
+        .type-title {
+            color: var(--accent);
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: clamp(1.2rem, 3.5vw, 1.4rem);
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, rgba(108, 92, 231, 0.2) 0%, rgba(108, 92, 231, 0) 100%);
+            padding: 0.15rem 0.3rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .feature-box {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: clamp(2rem, 5vw, 2.2rem);
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+
+        .feature-title {
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            margin-bottom: 0.4rem;
+            color: var(--dark);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            color: var(--dark);
+            opacity: 0.7;
+            font-size: clamp(0.8rem, 2.5vw, 0.85rem);
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0.5rem;
+            }
+
+            h1 {
+                font-size: clamp(1.8rem, 5.5vw, 2rem);
+            }
+
+            .subtitle {
+                font-size: clamp(0.9rem, 2.8vw, 1rem);
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+
+            .card {
+                padding: 1rem;
+                border-radius: 10px;
+            }
+
+            h2 {
+                font-size: clamp(1.3rem, 3.8vw, 1.5rem);
+            }
+
+            .definition {
+                font-size: clamp(0.9rem, 2.3vw, 0.95rem);
+                padding-left: 0.5rem;
+            }
+
+            .type-card {
+                padding: 0.8rem;
+                border-radius: 8px;
+            }
+
+            .type-title {
+                font-size: clamp(1.1rem, 3.2vw, 1.2rem);
+            }
+
+            .feature-box {
+                padding: 0.8rem;
+            }
+
+            .feature-icon {
+                font-size: clamp(1.8rem, 4.5vw, 2rem);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0.3rem;
+            }
+
+            h1 {
+                font-size: clamp(1.5rem, 5vw, 1.8rem);
+            }
+
+            .card {
+                padding: 0.8rem;
+                margin-bottom: 1rem;
+            }
+
+            .grid {
+                gap: 0.5rem;
+            }
+
+            ul li {
+                font-size: clamp(0.85rem, 2.3vw, 0.9rem);
+                padding-left: 1rem;
+            }
+
+            .example {
+                padding: 0.6rem;
+            }
+
+            footer {
+                padding: 0.8rem;
+                font-size: clamp(0.75rem, 2.3vw, 0.8rem);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header class="animate">
+        <h1>Adjective <span class="hindi">(विशेषण)</span></h1>
+        <p class="subtitle">Words that describe or modify nouns to add detail and clarity</p>
+    </header>
+
+    <section class="card animate delay-1">
+        <h2><i class="fas fa-book-open"></i> Definition / परिभाषा</h2>
+        <div class="definition">
+            <p class="english">An adjective is a word that describes or modifies a noun, indicating its quality, quantity, or extent. Adjectives add detail to sentences, making them more vivid and precise.</p>
+            <p class="hindi">विशेषण वह शब्द है जो संज्ञा का वर्णन करता है या उसे संशोधित करता है, उसकी गुणवत्ता, मात्रा या सीमा को दर्शाता है। विशेषण वाक्यों में विवरण जोड़ते हैं, जिससे वे अधिक जीवंत और सटीक बनते हैं।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Example</div>
+                <p class="english">In "The <span class="highlight">beautiful</span> garden blooms", <span class="highlight">beautiful</span> is an adjective describing the garden.</p>
+                <p class="hindi">"<span class="highlight">सुंदर</span> बगीचा खिलता है" में, <span class="highlight">सुंदर</span> एक विशेषण है जो बगीचे का वर्णन करता है।</p>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="feature-box floating">
+                <div class="feature-icon"><i class="fas fa-paint-brush"></i></div>
+                <h3 class="feature-title">Descriptive</h3>
+                <p class="hindi">वर्णनात्मक</p>
+                <p>beautiful, big, happy</p>
+            </div>
+
+            <div class="feature-box floating" style="animation-delay: 0.3s;">
+                <div class="feature-icon"><i class="fas fa-hand-point-right"></i></div>
+                <h3 class="feature-title">Demonstrative</h3>
+                <p class="hindi">संकेतवाचक</p>
+                <p>this, that, these, those</p>
+            </div>
+
+            <div class="feature-box floating" style="animation-delay: 0.6s;">
+                <div class="feature-icon"><i class="fas fa-lock"></i></div>
+                <h3 class="feature-title">Possessive</h3>
+                <p class="hindi">स्वामिवाचक</p>
+                <p>my, your, his, her</p>
+            </div>
+
+            <div class="feature-box floating" style="animation-delay: 0.9s;">
+                <div class="feature-icon"><i class="fas fa-calculator"></i></div>
+                <h3 class="feature-title">Quantitative</h3>
+                <p class="hindi">मात्रात्मक</p>
+                <p>some, many, few</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-2">
+        <h2><i class="fas fa-layer-group"></i> Types of Adjectives / विशेषण के प्रकार</h2>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-paint-brush"></i> Descriptive Adjective (वर्णनात्मक विशेषण)</h3>
+            <p class="english">A descriptive adjective describes the quality, quantity, or extent of a noun, such as its appearance or character.</p>
+            <p class="hindi">वर्णनात्मक विशेषण संज्ञा की गुणवत्ता, मात्रा या सीमा का वर्णन करता है, जैसे उसका स्वरूप या चरित्र।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">beautiful, tall, happy, red, strong</span></li>
+                    <li><span class="hindi">सुंदर, लंबा, खुश, लाल, मजबूत</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-calculator"></i> Quantitative Adjective (मात्रात्मक विशेषण)</h3>
+            <p class="english">A quantitative adjective indicates the quantity or amount of a noun, often answering "how much" or "how many."</p>
+            <p class="hindi">मात्रात्मक विशेषण संज्ञा की मात्रा या राशि को दर्शाता है, जो अक्सर "कितना" या "कितने" का जवाब देता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">some, many, few, several, all</span></li>
+                    <li><span class="hindi">कुछ, कई, थोड़ा, अनेक, सभी</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-hand-point-right"></i> Demonstrative Adjective (संकेतवाचक विशेषण)</h3>
+            <p class="english">A demonstrative adjective points to a specific noun and indicates its position relative to the speaker.</p>
+            <p class="hindi">संकेतवाचक विशेषण किसी विशिष्ट संज्ञा की ओर इशारा करता है और वक्ता के सापेक्ष उसकी स्थिति दर्शाता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">this, that, these, those</span></li>
+                    <li><span class="hindi">यह, वह, ये, वे</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-lock"></i> Possessive Adjective (स्वामिवाचक विशेषण)</h3>
+            <p class="english">A possessive adjective shows ownership or possession and modifies a noun to indicate who it belongs to.</p>
+            <p class="hindi">स्वामिवाचक विशेषण स्वामित्व या कब्जा दिखाता है और संज्ञा को संशोधित कर यह दर्शाता है कि वह किसका है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">my, your, his, her, its, our, their</span></li>
+                    <li><span class="hindi">मेरा, तुम्हारा, उसका, उसकी, इसका, हमारा, उनका</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-question"></i> Interrogative Adjective (प्रश्नवाचक विशेषण)</h3>
+            <p class="english">An interrogative adjective is used to ask questions about a noun, modifying it to inquire about its identity or quantity.</p>
+            <p class="hindi">प्रश्नवाचक विशेषण संज्ञा के बारे में सवाल पूछने के लिए उपयोग होता है, जो उसकी पहचान या मात्रा के बारे में पूछताछ करता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">which, what, whose</span></li>
+                    <li><span class="hindi">कौन सा, क्या, किसका</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-flag"></i> Proper Adjective (विशेष्य विशेषण)</h3>
+            <p class="english">A proper adjective is derived from a proper noun and describes a noun by relating it to a specific person, place, or thing.</p>
+            <p class="hindi">विशेष्य विशेषण व्यक्तिवाचक संज्ञा से व्युत्पन्न होता है और संज्ञा का वर्णन किसी विशिष्ट व्यक्ति, स्थान या वस्तु से संबंधित करके करता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">Indian, American, Shakespearean</span></li>
+                    <li><span class="hindi">भारतीय, अमेरिकी, शेक्सपियरियन</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-sort-numeric-up"></i> Numeral Adjective (संख्यावाचक विशेषण)</h3>
+            <p class="english">A numeral adjective indicates the number or order of a noun, such as cardinal (one, two) or ordinal (first, second).</p>
+            <p class="hindi">संख्यावाचक विशेषण संज्ञा की संख्या या क्रम को दर्शाता है, जैसे मूल (एक, दो) या क्रमवाचक (पहला, दूसरा)।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">one, two, first, second, several</span></li>
+                    <li><span class="hindi">एक, दो, पहला, दूसरा, कई</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-3">
+        <h2><i class="fas fa-lightbulb"></i> Key Points About Adjectives / विशेषण के बारे में मुख्य बिंदु</h2>
+        <ul>
+            <li><span class="english">Adjectives describe or modify nouns to provide more information.</span> <span class="hindi">विशेषण संज्ञाओं का वर्णन या संशोधन करते हैं ताकि अधिक जानकारी मिले।</span></li>
+            <li><span class="english">Adjectives usually come before nouns in English (e.g., "big house").</span> <span class="hindi">अंग्रेजी में विशेषण आमतौर पर संज्ञा से पहले आते हैं (उदाहरण, "बड़ा घर")।</span></li>
+            <li><span class="english">Adjectives can show degrees of comparison (e.g., big, bigger, biggest).</span> <span class="hindi">विशेषण तुलना की डिग्री दिखा सकते हैं (उदाहरण, बड़ा, बड़ा, सबसे बड़ा)।</span></li>
+            <li><span class="english">Multiple adjectives follow a specific order (e.g., quantity, quality, size).</span> <span class="hindi">एक से अधिक विशेषण एक विशिष्ट क्रम का पालन करते हैं (उदाहरण, मात्रा, गुणवत्ता, आकार)।</span></li>
+            <li><span class="english">Some adjectives are formed from proper nouns (e.g., Indian culture).</span> <span class="hindi">कुछ विशेषण व्यक्तिवाचक संज्ञाओं से बनते हैं (उदाहरण, भारतीय संस्कृति)।</span></li>
+            <li><span class="english">Adjectives do not change form based on the number or gender of the noun in English.</span> <span class="hindi">अंग्रेजी में विशेषण संज्ञा की संख्या या लिंग के आधार पर रूप नहीं बदलते।</span></li>
+            <li><span class="english">In Hindi, adjectives may change to agree with the noun’s gender and number.</span> <span class="hindi">हिन्दी में, विशेषण संज्ञा के लिंग और संख्या के साथ सहमत होने के लिए बदल सकते हैं।</span></li>
+            <li><span class="english">Adjectives can be used attributively (before noun) or predicatively (after verb).</span> <span class="hindi">विशेषण विशेषतावाचक (संज्ञा से पहले) या विधेयवाचक (क्रिया के बाद) हो सकते हैं।</span></li>
+            <li><span class="english">Some words act as adjectives or pronouns depending on context (e.g., "this").</span> <span class="hindi">कुछ शब्द संदर्भ के आधार पर विशेषण या सर्वनाम के रूप में कार्य करते हैं (उदाहरण, "यह")।</span></li>
+            <li><span class="english">Incorrect adjective use can make sentences unclear or redundant.</span> <span class="hindi">विशेषण का गलत उपयोग वाक्यों को अस्पष्ट या अतिरिक्त बना सकता है।</span></li>
+        </ul>
+    </section>
+
+    <section class="card animate delay-4">
+        <h2><i class="fas fa-question-circle"></i> How to Identify Adjectives / विशेषण की पहचान कैसे करें</h2>
+        <ul>
+            <li><span class="english">Look for words that describe or modify a noun in a sentence.</span> <span class="hindi">वाक्य में संज्ञा का वर्णन या संशोधन करने वाले शब्दों को देखें।</span></li>
+            <li><span class="english">Check if the word answers "what kind?", "how many?", or "which one?" about a noun.</span> <span class="hindi">जाँच करें कि क्या शब्द संज्ञा के बारे में "कैसा?", "कितने?", या "कौन सा?" का जवाब देता है।</span></li>
+            <li><span class="english">Identify words that come before a noun or after a linking verb (e.g., is, seems).</span> <span class="hindi">ऐसे शब्दों की पहचान करें जो संज्ञा से पहले या संयोजक क्रिया (जैसे, है, लगता है) के बाद आते हैं।</span></li>
+            <li><span class="english">Look for words that can form comparatives or superlatives (e.g., big, bigger, biggest).</span> <span class="hindi">ऐसे शब्दों को देखें जो तुलनात्मक या अतिशयोक्ति रूप बना सकते हैं (उदाहरण, बड़ा, बड़ा, सबसे बड़ा)।</span></li>
+            <li><span class="english">Check if the word can be removed without changing the sentence’s core meaning.</span> <span class="hindi">जाँच करें कि क्या शब्द को हटाने से वाक्य का मूल अर्थ अपरिवर्तित रहता है।</span></li>
+        </ul>
+
+        <div class="example">
+            <div class="example-title"><i class="fas fa-star"></i> Practice Examples</div>
+            <p class="english">Identify the adjectives in these sentences:</p>
+            <p class="hindi">इन वाक्यों में विशेषण पहचानें:</p>
+            <ul>
+                <li><span class="english">The <span class="highlight">tall</span> boy won the <span class="highlight">first</span> prize.</span></li>
+                <li><span class="hindi"><span class="highlight">लंबा</span> लड़का <span class="highlight">प्रथम</span> पुरस्कार जीता।</span></li>
+                <li><span class="english">This <span class="highlight">beautiful</span> garden is <span class="highlight">peaceful</span>.</span></li>
+                <li><span class="hindi">यह <span class="highlight">सुंदर</span> बगीचा <span class="highlight">शांत</span> है।</span></li>
+                <li><span class="english"><span class="highlight">My</span> book has <span class="highlight">many</span> pages.</span></li>
+                <li><span class="hindi"><span class="highlight">मेरी</span> किताब में <span class="highlight">कई</span> पृष्ठ हैं।</span></li>
+            </ul>
+        </div>
+
+        <div class="example">
+            <div class="example-title"><i class="fas fa-lightbulb"></i> Tip for Beginners</div>
+            <p class="english">To practice identifying adjectives, read a sentence and find words that add details to a person, place, or thing. Try removing the word to see if the sentence still makes sense but loses some description.</p>
+            <p class="hindi">विशेषण की पहचान का अभ्यास करने के लिए, एक वाक्य पढ़ें और ऐसे शब्दों को ढूंढें जो किसी व्यक्ति, स्थान या वस्तु में विवरण जोड़ते हों। शब्द को हटाने की कोशिश करें यह देखने के लिए कि क्या वाक्य अभी भी अर्थपूर्ण है लेकिन कुछ वर्णन खो देता है।</p>
+        </div>
+    </section>
+
+    <section class="card animate delay-4">
+        <h2><i class="fas fa-exclamation-circle"></i> Common Mistakes with Adjectives / विशेषण के साथ सामान्य गलतियाँ</h2>
+        <ul>
+            <li><span class="english">Using incorrect order of adjectives (e.g., "red big car" instead of "big red car").</span> <span class="hindi">विशेषणों का गलत क्रम उपयोग करना (उदाहरण, "लाल बड़ा कार" के बजाय "बड़ा लाल कार")।</span></li>
+            <li><span class="english">Using wrong comparison forms (e.g., "more better" instead of "better").</span> <span class="hindi">गलत तुलनात्मक रूपों का उपयोग (उदाहरण, "अधिक बेहतर" के बजाय "बेहतर")।</span></li>
+            <li><span class="english">Confusing adjectives with adverbs (e.g., "She sings good" instead of "well").</span> <span class="hindi">विशेषण और क्रिया विशेषण में भ्रम (उदाहरण, "वह अच्छा गाती है" के बजाय "अच्छी तरह")।</span></li>
+            <li><span class="english">Overusing adjectives, making sentences redundant (e.g., "beautiful lovely garden").</span> <span class="hindi">विशेषणों का अत्यधिक उपयोग, जिससे वाक्य अतिरिक्त हो जाते हैं (उदाहरण, "सुंदर प्यारा बगीचा")।</span></li>
+            <li><span class="english">Not matching Hindi adjectives with noun gender/number (e.g., "sundar ladka" instead of "sundar ladki" for a girl).</span> <span class="hindi">हिन्दी विशेषणों को संज्ञा के लिंग/संख्या के साथ मेल न करना (उदाहरण, लड़की के लिए "सुंदर लड़का" के बजाय "सुंदर लड़की")।</span></li>
+        </ul>
+        <div class="example">
+            <div class="example-title"><i class="fas fa-star"></i> Correct the Mistakes</div>
+            <p class="english">Incorrect: "A red big house." Correct: "A <span class="highlight">big red</span> house."</p>
+            <p class="hindi">गलत: "एक लाल बड़ा घर।" सही: "एक <span class="highlight">बड़ा लाल</span> घर।"</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Vocab Doctor App - Comprehensive Adjective Guide</p>
+        <p>Master English and Hindi grammar with interactive, engaging lessons</p>
+    </footer>
+</div>
+</body>
+</html>

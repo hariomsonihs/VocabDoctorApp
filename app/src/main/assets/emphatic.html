@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emphatic with Do/Does/Did (जोर देने वाला Do/Does/Did) - Grammar App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --light: #f8f9fa;
+            --dark: #2d3436;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --info: #0984e3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 100%;
+            width: 100%;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 1s ease;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 6vw, 2.5rem);
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            color: var(--dark);
+            opacity: 0.8;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+        }
+
+        h2 i {
+            color: var(--accent);
+        }
+
+        .definition {
+            font-size: clamp(0.95rem, 2.5vw, 1rem);
+            margin-bottom: 1rem;
+            padding-left: 0.8rem;
+            border-left: 3px solid var(--secondary);
+        }
+
+        .hindi {
+            color: #e84393;
+            font-weight: 500;
+        }
+
+        .english {
+            color: var(--info);
+            font-weight: 500;
+        }
+
+        ul {
+            list-style-type: none;
+            margin-bottom: 1rem;
+        }
+
+        ul li {
+            padding: 0.4rem 0;
+            padding-left: 1.2rem;
+            position: relative;
+            font-size: clamp(0.9rem, 2.5vw, 0.95rem);
+        }
+
+        ul li::before {
+            content: '•';
+            color: var(--accent);
+            font-size: 1.2rem;
+            position: absolute;
+            left: 0;
+            top: 0.2rem;
+        }
+
+        .example {
+            background: rgba(106, 176, 76, 0.1);
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin: 0.8rem 0;
+            border-left: 3px solid var(--success);
+        }
+
+        .example-title {
+            font-weight: bold;
+            color: var(--success);
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: clamp(0.95rem, 2.5vw, 1rem);
+        }
+
+        .type-card {
+            background: rgba(253, 121, 168, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .type-card:hover {
+            background: rgba(253, 121, 168, 0.2);
+            transform: scale(1.01);
+        }
+
+        .type-title {
+            color: var(--accent);
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: clamp(1.2rem, 3.5vw, 1.4rem);
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, rgba(108, 92, 231, 0.2) 0%, rgba(108, 92, 231, 0) 100%);
+            padding: 0.15rem 0.3rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .feature-box {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: clamp(2rem, 5vw, 2.2rem);
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+
+        .feature-title {
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            margin-bottom: 0.4rem;
+            color: var(--dark);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            color: var(--dark);
+            opacity: 0.7;
+            font-size: clamp(0.8rem, 2.5vw, 0.85rem);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0.5rem;
+            }
+
+            h1 {
+                font-size: clamp(1.8rem, 5.5vw, 2rem);
+            }
+
+            .subtitle {
+                font-size: clamp(0.9rem, 2.8vw, 1rem);
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+
+            .card {
+                padding: 1rem;
+                border-radius: 10px;
+            }
+
+            h2 {
+                font-size: clamp(1.3rem, 3.8vw, 1.5rem);
+            }
+
+            .definition {
+                font-size: clamp(0.9rem, 2.3vw, 0.95rem);
+                padding-left: 0.5rem;
+            }
+
+            .type-card {
+                padding: 0.8rem;
+                border-radius: 8px;
+            }
+
+            .type-title {
+                font-size: clamp(1.1rem, 3.2vw, 1.2rem);
+            }
+
+            .feature-box {
+                padding: 0.8rem;
+            }
+
+            .feature-icon {
+                font-size: clamp(1.8rem, 4.5vw, 2rem);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0.3rem;
+            }
+
+            h1 {
+                font-size: clamp(1.5rem, 5vw, 1.8rem);
+            }
+
+            .card {
+                padding: 0.8rem;
+                margin-bottom: 1rem;
+            }
+
+            .grid {
+                gap: 0.5rem;
+            }
+
+            ul li {
+                font-size: clamp(0.85rem, 2.3vw, 0.9rem);
+                padding-left: 1rem;
+            }
+
+            .example {
+                padding: 0.6rem;
+            }
+
+            footer {
+                padding: 0.8rem;
+                font-size: clamp(0.75rem, 2.3vw, 0.8rem);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header class="animate">
+        <h1>Emphatic with Do/Does/Did <span class="hindi">(जोर देने वाला Do/Does/Did)</span></h1>
+        <p class="subtitle">Auxiliary verbs used to add emphasis, contradict, or persuade</p>
+    </header>
+
+    <section class="card animate delay-1">
+        <h2><i class="fas fa-book-open"></i> Definition / परिभाषा</h2>
+        <div class="definition">
+            <p class="english">Emphatic <span class="highlight">do</span>, <span class="highlight">does</span>, and <span class="highlight">did</span> are auxiliary verbs used to add emphasis, contradict a statement, or persuade in affirmative sentences. They stress the action or truth of the main verb.</p>
+            <p class="hindi"><span class="highlight">Do</span>, <span class="highlight">does</span>, और <span class="highlight">did</span> सहायक क्रिया हैं जो सकारात्मक वाक्यों में जोर देने, विरोध करने, या आग्रह करने के लिए उपयोग होती हैं। ये मुख्य क्रिया की क्रिया या सत्यता पर बल देते हैं।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Example</div>
+                <p class="english">In "<span class="highlight">I do</span> love coffee," <span class="highlight">do</span> emphasizes the speaker’s strong feeling.</p>
+                <p class="hindi">"मैं <span class="highlight">do</span> कॉफी से प्यार करता हूँ" में <span class="highlight">do</span> बोलने वाले की गहरी भावना पर जोर देता है।</p>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="feature-box floating">
+                <div class="feature-icon"><i class="fas fa-exclamation"></i></div>
+                <h3 class="feature-title">Emphasis</h3>
+                <p class="hindi">जोर देना</p>
+                <p>Stress action</p>
+            </div>
+            <div class="feature-box floating" style="animation-delay: 0.3s;">
+                <div class="feature-icon"><i class="fas fa-exchange-alt"></i></div>
+                <h3 class="feature-title">Contradiction</h3>
+                <p class="hindi">विरोध करना</p>
+                <p>Correct statement</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-2">
+        <h2><i class="fas fa-layer-group"></i> Characteristics / विशेषताएँ</h2>
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-info-circle"></i> Key Characteristics</h3>
+            <p class="english">Emphatic <span class="highlight">do/does/did</span> have distinct features that set them apart from regular auxiliary uses.</p>
+            <p class="hindi">जोर देने वाला <span class="highlight">do/does/did</span> की कुछ खास विशेषताएँ हैं जो इन्हें सामान्य सहायक उपयोग से अलग करती हैं।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Characteristics</div>
+                <ul>
+                    <li><span class="english">Used in affirmative sentences for emphasis (e.g., I <span class="highlight">do</span> agree).</span> <span class="hindi">सकारात्मक वाक्यों में जोर के लिए उपयोग (जैसे, मैं <span class="highlight">do</span> सहमत हूँ)।</span></li>
+                    <li><span class="english">Followed by base verb (e.g., She <span class="highlight">does</span> sing).</span> <span class="hindi">मूल क्रिया के साथ उपयोग (जैसे, वह <span class="highlight">does</span> गाती है)।</span></li>
+                    <li><span class="english">Varies by tense: <span class="highlight">do</span> (base), <span class="highlight">does</span> (third person singular), <span class="highlight">did</span> (past).</span> <span class="hindi">काल के अनुसार बदलता है: <span class="highlight">do</span> (मूल), <span class="highlight">does</span> (तीसरा एकवचन), <span class="highlight">did</span> (भूतकाल)।</span></li>
+                    <li><span class="english">Used to contradict or persuade (e.g., You <span class="highlight">did</span> see it!).</span> <span class="hindi">विरोध या आग्रह के लिए उपयोग (जैसे, तुमने <span class="highlight">did</span> इसे देखा!)।</span></li>
+                    <li><span class="english">Not used in questions or negatives for emphasis (e.g., not "Do you do like?").</span> <span class="hindi">प्रश्नों या नकारात्मक में जोर के लिए उपयोग नहीं (जैसे, "Do you do like?" नहीं)।</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-3">
+        <h2><i class="fas fa-list"></i> Uses and Rules / उपयोग और नियम</h2>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-exclamation"></i> Do (मूल जोर)</h3>
+            <p class="english">Used with I, you, we, they in present tense to emphasize or contradict.</p>
+            <p class="hindi"><span class="highlight">Do</span> का उपयोग I, you, we, they के साथ वर्तमान काल में जोर देने या विरोध करने के लिए होता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Uses and Rules</div>
+                <ul>
+                    <li><span class="english">Emphasis: I <span class="highlight">do</span> want to come.</span> <span class="hindi">जोर: मैं <span class="highlight">do</span> आना चाहता हूँ।</span></li>
+                    <li><span class="english">Contradiction: "You don’t care!" "I <span class="highlight">do</span> care!"</span> <span class="hindi">विरोध: "तुम्हें परवाह नहीं!" "मुझे <span class="highlight">do</span> परवाह है!"</span></li>
+                    <li><span class="english">Rules: Present tense; base verb follows; used with plural/first/second person.</span> <span class="hindi">नियम: वर्तमान काल; मूल क्रिया के साथ; बहुवचन/प्रथम/द्वितीय पुरुष के साथ।</span></li>
+                    <li><span class="english">Position: Before main verb (e.g., I <span class="highlight">do</span> believe).</span> <span class="hindi">स्थान: मुख्य क्रिया से पहले (जैसे, मैं <span class="highlight">do</span> विश्वास करता हूँ)।</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-exclamation"></i> Does (तीसरा एकवचन जोर)</h3>
+            <p class="english">Used with he, she, it in present tense to emphasize or contradict.</p>
+            <p class="hindi"><span class="highlight">Does</span> का उपयोग he, she, it के साथ वर्तमान काल में जोर देने या विरोध करने के लिए होता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Uses and Rules</div>
+                <ul>
+                    <li><span class="english">Emphasis: She <span class="highlight">does</span> work hard.</span> <span class="hindi">जोर: वह <span class="highlight">does</span> मेहनत करती है।</span></li>
+                    <li><span class="english">Contradiction: "He doesn’t know!" "He <span class="highlight">does</span> know!"</span> <span class="hindi">विरोध: "उसे नहीं पता!" "उसे <span class="highlight">does</span> पता है!"</span></li>
+                    <li><span class="english">Rules: Present tense; base verb follows; used with third person singular.</span> <span class="hindi">नियम: वर्तमान काल; मूल क्रिया के साथ; तीसरा एकवचन के साथ।</span></li>
+                    <li><span class="english">Position: Before main verb (e.g., She <span class="highlight">does</span> understand).</span> <span class="hindi">स्थान: मुख्य क्रिया से पहले (जैसे, वह <span class="highlight">does</span> समझती है)।</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-exclamation"></i> Did (भूतकाल जोर)</h3>
+            <p class="english">Used in past tense with all subjects to emphasize or contradict.</p>
+            <p class="hindi"><span class="highlight">Did</span> का उपयोग भूतकाल में सभी कर्ताओं के साथ जोर देने या विरोध करने के लिए होता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Uses and Rules</div>
+                <ul>
+                    <li><span class="english">Emphasis: I <span class="highlight">did</span> finish my work.</span> <span class="hindi">जोर: मैंने <span class="highlight">did</span> अपना काम पूरा किया।</span></li>
+                    <li><span class="english">Contradiction: "You didn’t call!" "I <span class="highlight">did</span> call!"</span> <span class="hindi">विरोध: "तुमने फोन नहीं किया!" "मैंने <span class="highlight">did</span> फोन किया!"</span></li>
+                    <li><span class="english">Rules: Past tense; base verb follows; used with all subjects.</span> <span class="hindi">नियम: भूतकाल; मूल क्रिया के साथ; सभी कर्ताओं के साथ।</span></li>
+                    <li><span class="english">Position: Before main verb (e.g., We <span class="highlight">did</span> try).</span> <span class="hindi">स्थान: मुख्य क्रिया से पहले (जैसे, हमने <span class="highlight">did</span> कोशिश की)।</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-4">
+        <h2><i class="fas fa-arrows-alt"></i> Position in Sentences / वाक्यों में स्थिति</h2>
+        <p class="english">Emphatic <span class="highlight">do/does/did</span> are placed before the main verb in affirmative sentences, but their position varies with adverbs or in responses.</p>
+        <p class="hindi">जोर देने वाला <span class="highlight">do/does/did</span> सकारात्मक वाक्यों में मुख्य क्रिया से पहले आता है, लेकिन क्रिया-विशेषण या जवाबों में इसकी जगह बदल सकती है।</p>
+        <div class="example">
+            <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+            <ul>
+                <li><span class="english">Statement: I <span class="highlight">do</span> like to read.</span> <span class="hindi">कथन: मैं <span class="highlight">do</span> पढ़ना पसंद करता हूँ।</span></li>
+                <li><span class="english">With Adverb: She <span class="highlight">does</span> always try.</span> <span class="hindi">क्रिया-विशेषण के साथ: वह हमेशा <span class="highlight">does</span> कोशिश करती है।</span></li>
+                <li><span class="english">Response: "You didn’t!" "I <span class="highlight">did</span>!"</span> <span class="hindi">जवाब: "तुमने नहीं किया!" "मैंने <span class="highlight">did</span> किया!"</span></li>
+                <li><span class="english">With Infinitive: I <span class="highlight">do</span> want to help.</span> <span class="hindi">अनिश्चित क्रिया के साथ: मैं <span class="highlight">do</span> मदद करना चाहता हूँ।</span></li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="card animate delay-3">
+        <h2><i class="fas fa-not-equal"></i> Comparison with Non-Emphatic Forms / गैर-जोरदार रूपों से तुलना</h2>
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-balance-scale"></i> Emphatic vs. Non-Emphatic</h3>
+            <p class="english">Emphatic forms add stress or contradiction, while non-emphatic forms are neutral.</p>
+            <p class="hindi">जोर देने वाले रूप जोर या विरोध जोड़ते हैं, जबकि गैर-जोरदार रूप तटस्थ होते हैं।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">Non-Emphatic: I like tea. Emphatic: I <span class="highlight">do</span> like tea!</span> <span class="hindi">गैर-जोरदार: मुझे चाय पसंद है। जोरदार: मुझे <span class="highlight">do</span> चाय पसंद है!</span></li>
+                    <li><span class="english">Non-Emphatic: She works hard. Emphatic: She <span class="highlight">does</span> work hard!</span> <span class="hindi">गैर-जोरदार: वह मेहनत करती है। जोरदार: वह <span class="highlight">does</span> मेहनत करती है!</span></li>
+                    <li><span class="english">Non-Emphatic: We finished. Emphatic: We <span class="highlight">did</span> finish!</span> <span class="hindi">गैर-जोरदार: हमने पूरा किया। जोरदार: हमने <span class="highlight">did</span> पूरा किया!</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-4">
+        <h2><i class="fas fa-volume-up"></i> Tone and Context / लहजा और संदर्भ</h2>
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-comment"></i> How Emphatic Forms Affect Tone</h3>
+            <p class="english">Emphatic <span class="highlight">do/does/did</span> change the tone to assertive, defensive, or persuasive based on context.</p>
+            <p class="hindi">जोर देने वाला <span class="highlight">do/does/did</span> संदर्भ के आधार पर लहजे को दृढ़, रक्षात्मक, या आग्रही बनाता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">Assertive: I <span class="highlight">do</span> know the answer! (Confident)</span> <span class="hindi">दृढ़: मैं <span class="highlight">do</span> जवाब जानता हूँ! (आत्मविश्वास)</span></li>
+                    <li><span class="english">Defensive: I <span class="highlight">did</span> lock the door! (Contradicting)</span> <span class="hindi">रक्षात्मक: मैंने <span class="highlight">did</span> दरवाजा बंद किया! (विरोध)</span></li>
+                    <li><span class="english">Persuasive: You <span class="highlight">do</span> need to try this! (Encouraging)</span> <span class="hindi">आग्रही: तुम्हें <span class="highlight">do</span> इसे आजमाना चाहिए! (प्रोत्साहन)</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-3">
+        <h2><i class="fas fa-lightbulb"></i> Key Points / मुख्य बातें</h2>
+        <ul>
+            <li><span class="english">Used in affirmative sentences to emphasize, contradict, or persuade.</span> <span class="hindi">सकारात्मक वाक्यों में जोर देने, विरोध करने, या आग्रह करने के लिए उपयोग।</span></li>
+            <li><span class="english">Varies by tense: <span class="highlight">do</span> (I/you/we/they), <span class="highlight">does</span> (he/she/it), <span class="highlight">did</span> (past).</span> <span class="hindi">काल के अनुसार: <span class="highlight">do</span> (I/you/we/they), <span class="highlight">does</span> (he/she/it), <span class="highlight">did</span> (भूतकाल)।</span></li>
+            <li><span class="english">Always followed by base verb, no -ing or to.</span> <span class="hindi">हमेशा मूल क्रिया के साथ, न -ing न to।</span></li>
+            <li><span class="english">Not used in questions or negatives for emphasis.</span> <span class="hindi">प्रश्नों या नकारात्मक में जोर के लिए उपयोग नहीं।</span></li>
+            <li><span class="english">Changes tone to assertive, defensive, or persuasive.</span> <span class="hindi">लहजे को दृढ़, रक्षात्मक, या आग्रही बनाता है।</span></li>
+            <li><span class="english">Avoid overuse to prevent sounding unnatural.</span> <span class="hindi">अप्राकृतिक लगने से बचने के लिए अति उपयोग न करें।</span></li>
+        </ul>
+    </section>
+
+    <section class="card animate delay-4">
+        <h2><i class="fas fa-question-circle"></i> How to Identify / पहचान कैसे करें</h2>
+        <ul>
+            <li><span class="english">Look for <span class="highlight">do/does/did</span> before a base verb in affirmative sentences.</span> <span class="hindi"><span class="highlight">Do/does/did</span> को सकारात्मक वाक्यों में मूल क्रिया से पहले देखें।</span></li>
+            <li><span class="english">Check if it adds emphasis, contradicts, or persuades.</span> <span class="hindi">देखें कि यह जोर देता है, विरोध करता है, या आग्रह करता है।</span></li>
+            <li><span class="english">Ensure it matches tense and subject (e.g., <span class="highlight">does</span> for he/she/it).</span> <span class="hindi">सुनिश्चित करें कि यह काल और कर्ता से मेल खाता है (जैसे, <span class="highlight">does</span> he/she/it के लिए)।</span></li>
+            <li><span class="english">Test by removing it; the sentence should be less forceful.</span> <span class="hindi">इसे हटाकर देखें; वाक्य कम बलशाली होना चाहिए।</span></li>
+        </ul>
+
+        <div class="example">
+            <div class="example-title"><i class="fas fa-star"></i> Practice Examples</div>
+            <p class="english">Identify the emphatic <span class="highlight">do/does/did</span> and their purpose in these sentences:</p>
+            <p class="hindi">इन वाक्यों में जोर देने वाला <span class="highlight">do/does/did</span> और उनके उद्देश्य की पहचान करें:</p>
+            <ul>
+                <li><span class="english">I <span class="highlight">do</span> believe you!</span> <span class="hindi">मैं <span class="highlight">do</span> तुम पर विश्वास करता हूँ!</span></li>
+                <li><span class="english">She <span class="highlight">does</span> care about her grades.</span> <span class="hindi">वह अपनी ग्रेड्स की <span class="highlight">does</span> परवाह करती है।</span></li>
+                <li><span class="english">We <span class="highlight">did</span> finish the project on time!</span> <span class="hindi">हमने समय पर प्रोजेक्ट <span class="highlight">did</span> पूरा किया!</span></li>
+                <li><span class="english">He <span class="highlight">does</span> know the truth.</span> <span class="hindi">उसे <span class="highlight">does</span> सच्चाई पता है।</span></li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="card animate delay-3">
+        <h2><i class="fas fa-exclamation-circle"></i> Common Mistakes / सामान्य गलतियाँ</h2>
+        <ul>
+            <li><span class="english">Using in questions for emphasis (e.g., "Do you do like it?" instead of "Do you like it?").</span> <span class="hindi">प्रश्नों में जोर के लिए उपयोग (जैसे, "Do you do like it?" के बजाय "Do you like it?")।</span></li>
+            <li><span class="english">Using with wrong subject (e.g., "He do work" instead of "He <span class="highlight">does</span> work").</span> <span class="hindi">गलत कर्ता के साथ उपयोग (जैसे, "He do work" के बजाय "He <span class="highlight">does</span> work")।</span></li>
+            <li><span class="english">Overusing in neutral sentences (e.g., "I <span class="highlight">do</span> eat daily" unnecessarily).</span> <span class="hindi">तटस्थ वाक्यों में अति उपयोग (जैसे, "मैं <span class="highlight">do</span> रोज खाता हूँ" बेवजह)।</span></li>
+            <li><span class="english">Using with non-base verbs (e.g., "I <span class="highlight">do</span> eating" instead of "I <span class="highlight">do</span> eat").</span> <span class="hindi">गैर-मूल क्रिया के साथ उपयोग (जैसे, "I <span class="highlight">do</span> eating" के बजाय "I <span class="highlight">do</span> eat")।</span></li>
+        </ul>
+        <div class="example">
+            <div class="example-title"><i class="fas fa-star"></i> Correct the Mistakes</div>
+            <p class="english">Incorrect: "He do care." Correct: "He <span class="highlight">does</span> care."</p>
+            <p class="hindi">गलत: "वह do परवाह करता है।" सही: "वह <span class="highlight">does</span> परवाह करता है।"</p>
+            <p class="english">Incorrect: "I <span class="highlight">do</span> working hard." Correct: "I <span class="highlight">do</span> work hard."</p>
+            <p class="hindi">गलत: "मैं <span class="highlight">do</span> मेहनत कर रहा हूँ।" सही: "मैं <span class="highlight">do</span> मेहनत करता हूँ।"</p>
+        </div>
+    </section>
+
+    <section class="card animate delay-4">
+        <h2><i class="fas fa-briefcase"></i> Practical Applications / व्यावहारिक उपयोग</h2>
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-pen"></i> Using Emphatic Forms in Real Life</h3>
+            <p class="english">Emphatic <span class="highlight">do/does/did</span> are used in conversations, arguments, and writing to stress points or clarify intentions.</p>
+            <p class="hindi">जोर देने वाला <span class="highlight">do/does/did</span> बातचीत, तर्क, और लेखन में बिंदुओं पर जोर देने या इरादों को स्पष्ट करने के लिए उपयोग होता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">Conversation: "You don’t listen!" "I <span class="highlight">do</span> listen!"</span> <span class="hindi">बातचीत: "तुम सुनते नहीं!" "मैं <span class="highlight">do</span> सुनता हूँ!"</span></li>
+                    <li><span class="english">Argument: She <span class="highlight">does</span> deserve the award!</span> <span class="hindi">तर्क: वह <span class="highlight">does</span> पुरस्कार की हकदार है!</span></li>
+                    <li><span class="english">Writing: We <span class="highlight">did</span> achieve our goals.</span> <span class="hindi">लेखन: हमने <span class="highlight">did</span> अपने लक्ष्य हासिल किए।</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Vocab Doctor App - Comprehensive Emphatic Do/Does/Did Guide</p>
+        <p>Master English and Hindi grammar with interactive, engaging lessons</p>
+    </footer>
+</div>
+
+</body>
+</html>

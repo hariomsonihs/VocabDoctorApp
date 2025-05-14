@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modals (मोडल्स) - Grammar App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --light: #f8f9fa;
+            --dark: #2d3436;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --info: #0984e3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 100%;
+            width: 100%;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 1s ease;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 6vw, 2.5rem);
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            color: var(--dark);
+            opacity: 0.8;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+        }
+
+        h2 i {
+            color: var(--accent);
+        }
+
+        .definition {
+            font-size: clamp(0.95rem, 2.5vw, 1rem);
+            margin-bottom: 1rem;
+            padding-left: 0.8rem;
+            border-left: 3px solid var(--secondary);
+        }
+
+        .hindi {
+            color: #e84393;
+            font-weight: 500;
+        }
+
+        .english {
+            color: var(--info);
+            font-weight: 500;
+        }
+
+        ul {
+            list-style-type: none;
+            margin-bottom: 1rem;
+        }
+
+        ul li {
+            padding: 0.4rem 0;
+            padding-left: 1.2rem;
+            position: relative;
+            font-size: clamp(0.9rem, 2.5vw, 0.95rem);
+        }
+
+        ul li::before {
+            content: '•';
+            color: var(--accent);
+            font-size: 1.2rem;
+            position: absolute;
+            left: 0;
+            top: 0.2rem;
+        }
+
+        .example {
+            background: rgba(106, 176, 76, 0.1);
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin: 0.8rem 0;
+            border-left: 3px solid var(--success);
+        }
+
+        .example-title {
+            font-weight: bold;
+            color: var(--success);
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: clamp(0.95rem, 2.5vw, 1rem);
+        }
+
+        .type-card {
+            background: rgba(253, 121, 168, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .type-card:hover {
+            background: rgba(253, 121, 168, 0.2);
+            transform: scale(1.01);
+        }
+
+        .type-title {
+            color: var(--accent);
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: clamp(1.2rem, 3.5vw, 1.4rem);
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, rgba(108, 92, 231, 0.2) 0%, rgba(108, 92, 231, 0) 100%);
+            padding: 0.15rem 0.3rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .feature-box {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: clamp(2rem, 5vw, 2.2rem);
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+
+        .feature-title {
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            margin-bottom: 0.4rem;
+            color: var(--dark);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            color: var(--dark);
+            opacity: 0.7;
+            font-size: clamp(0.8rem, 2.5vw, 0.85rem);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0.5rem;
+            }
+
+            h1 {
+                font-size: clamp(1.8rem, 5.5vw, 2rem);
+            }
+
+            .subtitle {
+                font-size: clamp(0.9rem, 2.8vw, 1rem);
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+
+            .card {
+                padding: 1rem;
+                border-radius: 10px;
+            }
+
+            h2 {
+                font-size: clamp(1.3rem, 3.8vw, 1.5rem);
+            }
+
+            .definition {
+                font-size: clamp(0.9rem, 2.3vw, 0.95rem);
+                padding-left: 0.5rem;
+            }
+
+            .type-card {
+                padding: 0.8rem;
+                border-radius: 8px;
+            }
+
+            .type-title {
+                font-size: clamp(1.1rem, 3.2vw, 1.2rem);
+            }
+
+            .feature-box {
+                padding: 0.8rem;
+            }
+
+            .feature-icon {
+                font-size: clamp(1.8rem, 4.5vw, 2rem);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0.3rem;
+            }
+
+            h1 {
+                font-size: clamp(1.5rem, 5vw, 1.8rem);
+            }
+
+            .card {
+                padding: 0.8rem;
+                margin-bottom: 1rem;
+            }
+
+            .grid {
+                gap: 0.5rem;
+            }
+
+            ul li {
+                font-size: clamp(0.85rem, 2.3vw, 0.9rem);
+                padding-left: 1rem;
+            }
+
+            .example {
+                padding: 0.6rem;
+            }
+
+            footer {
+                padding: 0.8rem;
+                font-size: clamp(0.75rem, 2.3vw, 0.8rem);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header class="animate">
+        <h1>Modals <span class="hindi">(मोडल्स)</span></h1>
+        <p class="subtitle">Auxiliary verbs that express necessity, possibility, ability, or permission</p>
+    </header>
+
+    <section class="card animate delay-1">
+        <h2><i class="fas fa-book-open"></i> Definition / परिभाषा</h2>
+        <div class="definition">
+            <p class="english">Modal auxiliaries are helping verbs that modify the main verb to express meanings such as ability, permission, possibility, necessity, or obligation. They are always followed by the base form of the verb.</p>
+            <p class="hindi">मोडल्स सहायक क्रिया हैं जो मुख्य क्रिया को बदलकर क्षमता, अनुमति, संभावना, आवश्यकता या दायित्व जैसे अर्थ व्यक्त करती हैं। ये हमेशा क्रिया के मूल रूप के साथ आती हैं।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Example</div>
+                <p class="english">In "<span class="highlight">She can</span> sing beautifully," <span class="highlight">can</span> shows her ability to sing.</p>
+                <p class="hindi">"वह <span class="highlight">can</span> खूबसूरती से गा सकती है" में <span class="highlight">can</span> उसकी गाने की क्षमता दिखाता है।</p>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="feature-box floating">
+                <div class="feature-icon"><i class="fas fa-check-circle"></i></div>
+                <h3 class="feature-title">Key Feature</h3>
+                <p class="hindi">मुख्य विशेषता</p>
+                <p>Base verb follows</p>
+            </div>
+            <div class="feature-box floating" style="animation-delay: 0.3s;">
+                <div class="feature-icon"><i class="fas fa-question-circle"></i></div>
+                <h3 class="feature-title">No Inflection</h3>
+                <p class="hindi">कोई रूप बदलाव नहीं</p>
+                <p>No -s, -ed, -ing</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-2">
+        <h2><i class="fas fa-layer-group"></i> Characteristics of Modals / मोडल्स की विशेषताएँ</h2>
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-info-circle"></i> Key Characteristics</h3>
+            <p class="english">Modals have unique features that distinguish them from other verbs.</p>
+            <p class="hindi">मोडल्स की कुछ खास विशेषताएँ होती हैं जो इन्हें अन्य क्रियाओं से अलग करती हैं।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Characteristics</div>
+                <ul>
+                    <li><span class="english">Followed by base verb (e.g., can go, must study).</span> <span class="hindi">मूल क्रिया के साथ उपयोग (जैसे, can go, must study)।</span></li>
+                    <li><span class="english">No inflection: No -s, -ed, or -ing forms (e.g., not cans or canning).</span> <span class="hindi">कोई रूप बदलाव नहीं: -s, -ed, या -ing रूप नहीं (जैसे, cans या canning नहीं)।</span></li>
+                    <li><span class="english">Express mood: Ability, possibility, necessity, etc.</span> <span class="hindi">भाव व्यक्त करते हैं: क्षमता, संभावना, आवश्यकता आदि।</span></li>
+                    <li><span class="english">No infinitive or participle forms (e.g., no to can or canning).</span> <span class="hindi">कोई अनिश्चित या कृदंत रूप नहीं (जैसे, to can या canning नहीं)।</span></li>
+                    <li><span class="english">Used in questions and negatives without do (e.g., Can you? not Do you can?).</span> <span class="hindi">प्रश्नों और नकारात्मक में बिना do के उपयोग (जैसे, Can you? न कि Do you can?)।</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-3">
+        <h2><i class="fas fa-list"></i> Types and Uses of Modals / मोडल्स के प्रकार और उपयोग</h2>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-running"></i> Can (क्षमता, अनुमति)</h3>
+            <p class="english">Expresses ability, permission, or possibility.</p>
+            <p class="hindi">"Can" क्षमता, अनुमति या संभावना दिखाता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Uses and Rules</div>
+                <ul>
+                    <li><span class="english">Ability: I <span class="highlight">can</span> swim.</span> <span class="hindi">क्षमता: मैं <span class="highlight">can</span> तैर सकता हूँ।</span></li>
+                    <li><span class="english">Permission: You <span class="highlight">can</span> leave now.</span> <span class="hindi">अनुमति: तुम अब <span class="highlight">can</span> जा सकते हो।</span></li>
+                    <li><span class="english">Possibility: It <span class="highlight">can</span> rain later.</span> <span class="hindi">संभावना: बाद में बारिश <span class="highlight">can</span> हो सकती है।</span></li>
+                    <li><span class="english">Rules: Used in present/future; followed by base verb.</span> <span class="hindi">नियम: वर्तमान/भविष्य में उपयोग; मूल क्रिया के साथ।</span></li>
+                    <li><span class="english">Position: Before main verb (e.g., Can you help?).</span> <span class="hindi">स्थान: मुख्य क्रिया से पहले (जैसे, Can you help?)।</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-question"></i> May (अनुमति, संभावना)</h3>
+            <p class="english">Expresses permission or possibility, often more formal than can.</p>
+            <p class="hindi">"May" अनुमति या संभावना दिखाता है, जो can से अधिक औपचारिक है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Uses and Rules</div>
+                <ul>
+                    <li><span class="english">Permission: You <span class="highlight">may</span> enter.</span> <span class="hindi">अनुमति: तुम <span class="highlight">may</span> अंदर आ सकते हो।</span></li>
+                    <li><span class="english">Possibility: It <span class="highlight">may</span> snow tonight.</span> <span class="hindi">संभावना: आज रात बर्फबारी <span class="highlight">may</span> हो सकती है।</span></li>
+                    <li><span class="english">Rules: Formal; used in present/future; base verb follows.</span> <span class="hindi">नियम: औपचारिक; वर्तमान/भविष्य में; मूल क्रिया के साथ।</span></li>
+                    <li><span class="english">Position: Before main verb (e.g., May I speak?).</span> <span class="hindi">स्थान: मुख्य क्रिया से पहले (जैसे, May I speak?)।</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-arrow-right"></i> Shall (भविष्य, सुझाव)</h3>
+            <p class="english">Expresses future action or suggestion, mostly formal or with I/we.</p>
+            <p class="hindi">"Shall" भविष्य की क्रिया या सुझाव दिखाता है, ज्यादातर औपचारिक या I/we के साथ।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Uses and Rules</div>
+                <ul>
+                    <li><span class="english">Future: We <span class="highlight">shall</span> meet tomorrow.</span> <span class="hindi">भविष्य: हम कल <span class="highlight">shall</span> मिलेंगे।</span></li>
+                    <li><span class="english">Suggestion: <span class="highlight">Shall</span> we dance?</span> <span class="hindi">सुझाव: <span class="highlight">Shall</span> हम नाचें?</span></li>
+                    <li><span class="english">Rules: Formal; used with I/we; base verb follows.</span> <span class="hindi">नियम: औपचारिक; I/we के साथ; मूल क्रिया के साथ।</span></li>
+                    <li><span class="english">Position: Before main verb (e.g., Shall I call?).</span> <span class="hindi">स्थान: मुख्य क्रिया से पहले (जैसे, Shall I call?)।</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-clock"></i> Will (भविष्य, इच्छा)</h3>
+            <p class="english">Expresses future action, intention, or prediction.</p>
+            <p class="hindi">"Will" भविष्य, इच्छा या भविष्यवाणी दिखाता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Uses and Rules</div>
+                <ul>
+                    <li><span class="english">Future: I <span class="highlight">will</span> call you.</span> <span class="hindi">भविष्य: मैं तुम्हें <span class="highlight">will</span> फोन करूँगा।</span></li>
+                    <li><span class="english">Intention: She <span class="highlight">will</span> try harder.</span> <span class="hindi">इच्छा: वह और मेहनत <span class="highlight">will</span> करेगी।</span></li>
+                    <li><span class="english">Rules: Used in present/future; base verb follows.</span> <span class="hindi">नियम: वर्तमान/भविष्य में; मूल क्रिया के साथ।</span></li>
+                    <li><span class="english">Position: Before main verb (e.g., Will you join?).</span> <span class="hindi">स्थान: मुख्य क्रिया से पहले (जैसे, Will you join?)।</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-running"></i> Could (क्षमता, संभावना)</h3>
+            <p class="english">Past of can; expresses ability, possibility, or polite requests.</p>
+            <p class="hindi">"Could" can का भूतकाल है; क्षमता, संभावना या विनम्र अनुरोध दिखाता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Uses and Rules</div>
+                <ul>
+                    <li><span class="english">Past Ability: I <span class="highlight">could</span> run fast.</span> <span class="hindi">पिछली क्षमता: मैं तेज <span class="highlight">could</span> दौड़ सकता था।</span></li>
+                    <li><span class="english">Possibility: It <span class="highlight">could</span> rain.</span> <span class="hindi">संभावना: बारिश <span class="highlight">could</span> हो सकती है।</span></li>
+                    <li><span class="english">Request: <span class="highlight">Could</span> you help?</span> <span class="hindi">अनुरोध: <span class="highlight">Could</span> तुम मदद कर सकते हो?</span></li>
+                    <li><span class="english">Rules: Polite; past/present; base verb follows.</span> <span class="hindi">नियम: विनम्र; भूतकाल/वर्तमान; मूल क्रिया के साथ।</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-question"></i> Might (संभावना)</h3>
+            <p class="english">Past of may; expresses possibility or uncertainty, less likely than may.</p>
+            <p class="hindi">"Might" may का भूतकाल है; संभावना या अनिश्चितता दिखाता है, may से कम संभावना।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Uses and Rules</div>
+                <ul>
+                    <li><span class="english">Possibility: She <span class="highlight">might</span> come.</span> <span class="hindi">संभावना: वह <span class="highlight">might</span> आ सकती है।</span></li>
+                    <li><span class="english">Past: He <span class="highlight">might</span> have left.</span> <span class="hindi">भूतकाल: वह <span class="highlight">might</span> चला गया हो।</span></li>
+                    <li><span class="english">Rules: Less certain; past/present; base verb follows.</span> <span class="hindi">नियम: कम निश्चित; भूतकाल/वर्तमान; मूल क्रिया के साथ।</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-exclamation"></i> Should (सुझाव, दायित्व)</h3>
+            <p class="english">Expresses advice, recommendation, or expectation.</p>
+            <p class="hindi">"Should" सुझाव, सलाह या अपेक्षा दिखाता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Uses and Rules</div>
+                <ul>
+                    <li><span class="english">Advice: You <span class="highlight">should</span> study.</span> <span class="hindi">सलाह: तुम्हें <span class="highlight">should</span> पढ़ना चाहिए।</span></li>
+                    <li><span class="english">Expectation: He <span class="highlight">should</span> be here soon.</span> <span class="hindi">अपेक्षा: वह जल्दी <span class="highlight">should</span> यहाँ होगा।</span></li>
+                    <li><span class="english">Rules: Present/future; base verb follows.</span> <span class="hindi">नियम: वर्तमान/भविष्य; मूल क्रिया के साथ।</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-hand-point-right"></i> Would (इच्छा, आदत)</h3>
+            <p class="english">Past of will; expresses hypothetical situations, habits, or polite requests.</p>
+            <p class="hindi">"Would" will का भूतकाल है; काल्पनिक स्थिति, आदत या विनम्र अनुरोध दिखाता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Uses and Rules</div>
+                <ul>
+                    <li><span class="english">Hypothetical: I <span class="highlight">would</span> travel if I had money.</span> <span class="hindi">काल्पनिक: मैं <span class="highlight">would</span> घूमता अगर मेरे पास पैसे होते।</span></li>
+                    <li><span class="english">Past Habit: She <span class="highlight">would</span> sing daily.</span> <span class="hindi">पिछली आदत: वह रोज <span class="highlight">would</span> गाती थी।</span></li>
+                    <li><span class="english">Request: <span class="highlight">Would</span> you mind?</span> <span class="hindi">अनुरोध: <span class="highlight">Would</span> तुम्हें आपत्ति है?</span></li>
+                    <li><span class="english">Rules: Polite; past/present; base verb follows.</span> <span class="hindi">नियम: विनम्र; भूतकाल/वर्तमान; मूल क्रिया के साथ।</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-exclamation-circle"></i> Must (आवश्यकता, निष्कर्ष)</h3>
+            <p class="english">Expresses necessity, obligation, or logical conclusion.</p>
+            <p class="hindi">"Must" आवश्यकता, दायित्व या तार्किक निष्कर्ष दिखाता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Uses and Rules</div>
+                <ul>
+                    <li><span class="english">Necessity: You <span class="highlight">must</span> wear a helmet.</span> <span class="hindi">आवश्यकता: तुम्हें <span class="highlight">must</span> हेलमेट पहनना चाहिए।</span></li>
+                    <li><span class="english">Conclusion: She <span class="highlight">must</span> be tired.</span> <span class="hindi">निष्कर्ष: वह <span class="highlight">must</span> थकी हुई होगी।</span></li>
+                    <li><span class="english">Rules: Strong obligation; present; base verb follows.</span> <span class="hindi">नियम: मजबूत दायित्व; वर्तमान; मूल क्रिया के साथ।</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-balance-scale"></i> Ought To (दायित्व, सलाह)</h3>
+            <p class="english">Expresses moral obligation or advice, similar to should.</p>
+            <p class="hindi">"Ought to" नैतिक दायित्व या सलाह दिखाता है, should के समान।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Uses and Rules</div>
+                <ul>
+                    <li><span class="english">Obligation: We <span class="highlight">ought to</span> help others.</span> <span class="hindi">दायित्व: हमें दूसरों की मदद <span class="highlight">ought to</span> करनी चाहिए।</span></li>
+                    <li><span class="english">Advice: You <span class="highlight">ought to</span> apologize.</span> <span class="hindi">सलाह: तुम्हें माफी <span class="highlight">ought to</span> माँगनी चाहिए।</span></li>
+                    <li><span class="english">Rules: Formal; base verb follows; often with to.</span> <span class="hindi">नियम: औपचारिक; मूल क्रिया के साथ; अक्सर to के साथ।</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-history"></i> Used To (पिछली आदत)</h3>
+            <p class="english">Expresses past habits or states that no longer exist.</p>
+            <p class="hindi">"Used to" ऐसी पिछली आदत या स्थिति दिखाता है जो अब नहीं है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Uses and Rules</div>
+                <ul>
+                    <li><span class="english">Past Habit: I <span class="highlight">used to</span> live in Delhi.</span> <span class="hindi">पिछली आदत: मैं दिल्ली में <span class="highlight">used to</span> रहता था।</span></li>
+                    <li><span class="english">Past State: It <span class="highlight">used to</span> be quiet here.</span> <span class="hindi">पिछली स्थिति: यहाँ पहले शांति <span class="highlight">used to</span> थी।</span></li>
+                    <li><span class="english">Rules: Past only; base verb follows.</span> <span class="hindi">नियम: केवल भूतकाल; मूल क्रिया के साथ।</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-exclamation"></i> Need (आवश्यकता)</h3>
+            <p class="english">Expresses necessity; can act as a modal or regular verb.</p>
+            <p class="hindi">"Need" आवश्यकता दिखाता है; मोडल या सामान्य क्रिया के रूप में उपयोग हो सकता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Uses and Rules</div>
+                <ul>
+                    <li><span class="english">Modal: You <span class="highlight">need</span> not come.</span> <span class="hindi">मोडल: तुम्हें <span class="highlight">need</span> नहीं आना।</span></li>
+                    <li><span class="english">Regular Verb: You <span class="highlight">need</span> to study.</span> <span class="hindi">सामान्य क्रिया: तुम्हें पढ़ाई <span class="highlight">need</span> है।</span></li>
+                    <li><span class="english">Rules: Modal in negatives/questions; rare in affirmative.</span> <span class="hindi">नियम: नकारात्मक/प्रश्नों में मोडल; सकारात्मक में कम।</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-bolt"></i> Dare (साहस)</h3>
+            <p class="english">Expresses courage; can act as a modal or regular verb.</p>
+            <p class="hindi">"Dare" साहस दिखाता है; मोडल या सामान्य क्रिया के रूप में उपयोग हो सकता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Uses and Rules</div>
+                <ul>
+                    <li><span class="english">Modal: How <span class="highlight">dare</span> you speak?</span> <span class="hindi">मोडल: तुम <span class="highlight">dare</span> कैसे बोल सकते हो?</span></li>
+                    <li><span class="english">Regular Verb: I <span class="highlight">dare</span> to dream.</span> <span class="hindi">सामान्य क्रिया: मैं सपने देखने की <span class="highlight">dare</span> करता हूँ।</span></li>
+                    <li><span class="english">Rules: Modal in questions/negatives; base verb follows.</span> <span class="hindi">नियम: प्रश्न/नकारात्मक में मोडल; मूल क्रिया के साथ।</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-4">
+        <h2><i class="fas fa-link"></i> Semi-Modals / अर्ध-मोडल्स</h2>
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-plug"></i> Common Semi-Modals</h3>
+            <p class="english">Semi-modals are verbs that function like modals but have more flexible forms.</p>
+            <p class="hindi">अर्ध-मोडल्स ऐसी क्रिया हैं जो मोडल्स की तरह काम करती हैं लेकिन इनके रूप अधिक लचीले होते हैं।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">Have to: I <span class="highlight">have to</span> go.</span> <span class="hindi">मुझे <span class="highlight">have to</span> जाना है।</span></li>
+                    <li><span class="english">Be able to: She is <span class="highlight">able to</span> solve it.</span> <span class="hindi">वह इसे हल करने में <span class="highlight">able to</span> है।</span></li>
+                    <li><span class="english">Rules: Can take -s, -ed, -ing; used in all tenses.</span> <span class="hindi">नियम: -s, -ed, -ing ले सकते हैं; सभी काल में उपयोग।</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-3">
+        <h2><i class="fas fa-arrows-alt"></i> Position of Modals in Sentences / वाक्यों में मोडल्स की स्थिति</h2>
+        <p class="english">Modals are placed before the main verb, but their position varies in questions, negatives, or with adverbs.</p>
+        <p class="hindi">मोडल्स मुख्य क्रिया से पहले आते हैं, लेकिन प्रश्न, नकारात्मक, या क्रिया-विशेषण के साथ उनकी जगह बदल सकती है।</p>
+        <div class="example">
+            <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+            <ul>
+                <li><span class="english">Statement: She <span class="highlight">can</span> sing.</span> <span class="hindi">कथन: वह <span class="highlight">can</span> गा सकती है।</span></li>
+                <li><span class="english">Question: <span class="highlight">Can</span> she sing?</span> <span class="hindi">प्रश्न: क्या वह <span class="highlight">can</span> गा सकती है?</span></li>
+                <li><span class="english">Negative: She <span class="highlight">cannot</span> sing.</span> <span class="hindi">नकारात्मक: वह <span class="highlight">cannot</span> गा सकती।</span></li>
+                <li><span class="english">With Adverb: She <span class="highlight">can</span> always sing.</span> <span class="hindi">क्रिया-विशेषण के साथ: वह हमेशा <span class="highlight">can</span> गा सकती है।</span></li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="card animate delay-4">
+        <h2><i class="fas fa-lightbulb"></i> Key Points About Modals / मोडल्स के बारे में मुख्य बातें</h2>
+        <ul>
+            <li><span class="english">Modals express ability, permission, possibility, necessity, etc.</span> <span class="hindi">मोडल्स क्षमता, अनुमति, संभावना, आवश्यकता आदि दिखाते हैं।</span></li>
+            <li><span class="english">Always followed by base verb, no to or -ing.</span> <span class="hindi">हमेशा मूल क्रिया के साथ, न to न -ing।</span></li>
+            <li><span class="english">No inflection: No -s, -ed forms.</span> <span class="hindi">कोई रूप बदलाव नहीं: -s, -ed रूप नहीं।</span></li>
+            <li><span class="english">Used in questions/negatives without do.</span> <span class="hindi">प्रश्न/नकारात्मक में बिना do के उपयोग।</span></li>
+            <li><span class="english">Some modals (e.g., can, may) have past forms (could, might).</span> <span class="hindi">कुछ मोडल्स (जैसे, can, may) के भूतकाल रूप (could, might) हैं।</span></li>
+            <li><span class="english">Semi-modals like have to are more flexible in tense.</span> <span class="hindi">Have to जैसे अर्ध-मोडल्स काल में अधिक लचीले हैं।</span></li>
+            <li><span class="english">Context determines meaning (e.g., can for ability or permission).</span> <span class="hindi">संदर्भ से अर्थ तय होता है (जैसे, can क्षमता या अनुमति के लिए)।</span></li>
+        </ul>
+    </section>
+
+    <section class="card animate delay-3">
+        <h2><i class="fas fa-question-circle"></i> How to Identify Modals / मोडल्स की पहचान कैसे करें</h2>
+        <ul>
+            <li><span class="english">Look for can, may, shall, etc., before a base verb.</span> <span class="hindi">Can, may, shall आदि को मूल क्रिया से पहले देखें।</span></li>
+            <li><span class="english">Check if the verb expresses ability, possibility, etc.</span> <span class="hindi">देखें कि क्रिया क्षमता, संभावना आदि व्यक्त करती है।</span></li>
+            <li><span class="english">Ensure no -s, -ed, or -ing on the modal.</span> <span class="hindi">सुनिश्चित करें कि मोडल पर -s, -ed, या -ing नहीं है।</span></li>
+            <li><span class="english">Test by replacing with another modal; meaning should change.</span> <span class="hindi">दूसरे मोडल से बदलकर देखें; अर्थ बदलना चाहिए।</span></li>
+        </ul>
+
+        <div class="example">
+            <div class="example-title"><i class="fas fa-star"></i> Practice Examples</div>
+            <p class="english">Identify the modals and their meaning in these sentences:</p>
+            <p class="hindi">इन वाक्यों में मोडल्स और उनके अर्थ की पहचान करें:</p>
+            <ul>
+                <li><span class="english">She <span class="highlight">can</span> dance well.</span> <span class="hindi">वह अच्छा <span class="highlight">can</span> नाच सकती है।</span></li>
+                <li><span class="english">You <span class="highlight">must</span> finish your homework.</span> <span class="hindi">तुम्हें अपना होमवर्क <span class="highlight">must</span> पूरा करना है।</span></li>
+                <li><span class="english"><span class="highlight">Might</span> it rain later?</span> <span class="hindi">क्या बाद में बारिश <span class="highlight">might</span> हो सकती है?</span></li>
+                <li><span class="english">I <span class="highlight">used to</span> play cricket.</span> <span class="hindi">मैं क्रिकेट <span class="highlight">used to</span> खेलता था।</span></li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="card animate delay-4">
+        <h2><i class="fas fa-exclamation-circle"></i> Common Mistakes with Modals / मोडल्स की सामान्य गलतियाँ</h2>
+        <ul>
+            <li><span class="english">Adding -s or -ing to modals (e.g., "She cans" instead of "She can").</span> <span class="hindi">मोडल्स में -s या -ing जोड़ना (जैसे, "She cans" के बजाय "She can")।</span></li>
+            <li><span class="english">Using to after modals (e.g., "I can to go" instead of "I can go").</span> <span class="hindi">मोडल्स के बाद to लगाना (जैसे, "I can to go" के बजाय "I can go")।</span></li>
+            <li><span class="english">Using do with modals (e.g., "Do you can?" instead of "Can you?").</span> <span class="hindi">मोडल्स के साथ do का उपयोग (जैसे, "Do you can?" के बजाय "Can you?")।</span></li>
+            <li><span class="english">Confusing modals (e.g., "May you help?" instead of "Can you help?").</span> <span class="hindi">मोडल्स में भ्रम (जैसे, "May you help?" के बजाय "Can you help?")।</span></li>
+        </ul>
+        <div class="example">
+            <div class="example-title"><i class="fas fa-star"></i> Correct the Mistakes</div>
+            <p class="english">Incorrect: "She must to study." Correct: "She <span class="highlight">must</span> study."</p>
+            <p class="hindi">गलत: "उसे must to study करना है।" सही: "उसे <span class="highlight">must</span> पढ़ना है।"</p>
+            <p class="english">Incorrect: "Do you can help?" Correct: "<span class="highlight">Can</span> you help?"</p>
+            <p class="hindi">गलत: "Do you can help?" सही: "<span class="highlight">Can</span> you help?"</p>
+        </div>
+    </section>
+
+    <section class="card animate delay-3">
+        <h2><i class="fas fa-briefcase"></i> Practical Applications / व्यावहारिक उपयोग</h2>
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-pen"></i> Using Modals in Real Life</h3>
+            <p class="english">Modals are used in various contexts like formal letters, conversations, and instructions.</p>
+            <p class="hindi">मोडल्स का उपयोग औपचारिक पत्र, बातचीत और निर्देशों में होता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">Formal Letter: I <span class="highlight">would</span> appreciate your response.</span> <span class="hindi">औपचारिक पत्र: मैं आपके जवाब की <span class="highlight">would</span> सराहना करूँगा।</span></li>
+                    <li><span class="english">Conversation: <span class="highlight">Can</span> you pass the salt?</span> <span class="hindi">बातचीत: <span class="highlight">Can</span> तुम नमक दे सकते हो?</span></li>
+                    <li><span class="english">Instruction: You <span class="highlight">must</span> wear a mask.</span> <span class="hindi">निर्देश: तुम्हें <span class="highlight">must</span> मास्क पहनना है।</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Vocab Doctor App - Comprehensive Modals Guide</p>
+        <p>Master English and Hindi grammar with interactive, engaging lessons</p>
+    </footer>
+</div>
+</body>
+</html>

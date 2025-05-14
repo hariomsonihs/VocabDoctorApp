@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animal Dictionary</title>
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #166088;
+            --accent-color: #4fc3a1;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --danger-color: #e74c3c;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            user-select:none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header-stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: scale(1.05);
+        }
+
+        .search-container {
+            margin: 30px auto;
+            max-width: 600px;
+            position: relative;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        #search {
+            width: 100%;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        #search:focus {
+            outline: none;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .category-tab {
+            padding: 10px 20px;
+            background-color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-tab:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-tab.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .animals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .animal-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .animal-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .animal-image {
+            height: 180px;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .animal-card:hover .animal-image {
+            transform: scale(1.05);
+        }
+
+        .animal-info {
+            padding: 20px;
+        }
+
+        .animal-name {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            color: var(--dark-color);
+        }
+
+        .hindi-name {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .animal-scientific {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .animal-category {
+            display: inline-block;
+            padding: 3px 10px;
+            background-color: var(--light-color);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .animal-description {
+            font-size: 0.95rem;
+            color: #555;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .animal-icons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .animal-icon {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            transition: transform 0.3s ease;
+        }
+
+        .animal-icon:hover {
+            transform: scale(1.2);
+        }
+
+        .no-results {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 50px;
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        .category-count {
+            margin-left: 5px;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .animals-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .animals-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-stats {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+        }
+
+        /* Animation classes */
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Color coding for categories */
+        .mammal { background-color: #d4edda; color: #155724; }
+        .bird { background-color: #cce5ff; color: #004085; }
+        .fish { background-color: #d1ecf1; color: #0c5460; }
+        .reptile { background-color: #fff3cd; color: #856404; }
+        .amphibian { background-color: #f8d7da; color: #721c24; }
+        .invertebrate { background-color: #e2e3e5; color: #383d41; }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<header>
+    <div class="container">
+        <h1>Animal Dictionary</h1>
+        <p>Explore the fascinating world of animals</p>
+        <div class="header-stats">
+            <div class="stat-box pulse">
+                <i class="fas fa-paw"></i> Total Animals: <span id="total-count">0</span>
+            </div>
+            <div class="stat-box">
+                <i class="fas fa-list"></i> Categories: <span id="category-count">0</span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="search-container">
+        <input type="text" id="search" placeholder="Search for animals...">
+        <i class="fas fa-search search-icon"></i>
+    </div>
+
+    <div class="category-tabs">
+        <button class="category-tab active" data-category="all">All Animals</button>
+        <button class="category-tab" data-category="mammal">Mammals <span class="category-count">0</span></button>
+        <button class="category-tab" data-category="bird">Birds <span class="category-count">0</span></button>
+        <button class="category-tab" data-category="fish">Fish <span class="category-count">0</span></button>
+        <button class="category-tab" data-category="reptile">Reptiles <span class="category-count">0</span></button>
+        <button class="category-tab" data-category="amphibian">Amphibians <span class="category-count">0</span></button>
+        <button class="category-tab" data-category="invertebrate">Invertebrates <span class="category-count">0</span></button>
+    </div>
+
+    <div class="animals-grid" id="animals-container">
+        <!-- Animal cards will be inserted here by JavaScript -->
+        <div class="no-results">
+            <i class="fas fa-spinner fa-spin"></i> Loading animals...
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>© 2025 Vocab Doctor App. All rights reserved.</p>
+</footer>
+
+<script>
+    // Animal data
+    const animals = [
+    {
+        "name": "African Elephant",
+        "hindi": "अफ्रीकी हाथी",
+        "scientific": "Loxodonta africana",
+        "category": "reptile",
+        "description": "The African elephant is the largest land animal, known for its long trunk and large ears, living in herds across savannas and forests.",
+        "image": "https://images.pexels.com/photos/1054667/pexels-photo-1054667.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-leaf", "fa-users"]
+    },
+    {
+        "name": "Blue Whale",
+        "hindi": "नीली व्हेल",
+        "scientific": "Balaenoptera musculus",
+        "category": "mammal",
+        "description": "The blue whale is the largest animal ever, a marine mammal that feeds on krill and roams the oceans.",
+        "image": "https://images.pexels.com/photos/4394253/pexels-photo-4394253.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-water", "fa-ship"]
+    },
+    {
+        "name": "Bengal Tiger",
+        "hindi": "बंगाल टाइगर",
+        "scientific": "Panthera tigris tigris",
+        "category": "mammal",
+        "description": "The Bengal tiger is a powerful carnivore native to India, known for its orange coat with black stripes.",
+        "image": "https://images.pexels.com/photos/1598377/pexels-photo-1598377.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-moon", "fa-skull"]
+    },
+    {
+        "name": "Giant Panda",
+        "hindi": "जायंट पांडा",
+        "scientific": "Ailuropoda melanoleuca",
+        "category": "mammal",
+        "description": "The giant panda is a bear species from China, famous for its black-and-white fur and bamboo diet.",
+        "image": "https://images.pexels.com/photos/1054663/pexels-photo-1054663.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-leaf", "fa-heart"]
+    },
+    {
+        "name": "Gray Wolf",
+        "hindi": "ग्रे वुल्फ",
+        "scientific": "Canis lupus",
+        "category": "mammal",
+        "description": "The gray wolf is a social carnivore that lives in packs, known for its howling and hunting prowess.",
+        "image": "https://images.pex HLS-photo-1054662.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-moon", "fa-users"]
+    },
+    {
+        "name": "Bottlenose Dolphin",
+        "hindi": "बॉटलनोज़ डॉल्फिन",
+        "scientific": "Tursiops truncatus",
+        "category": "mammal",
+        "description": "The bottlenose dolphin is a highly intelligent marine mammal known for its playful behavior and curved mouth.",
+        "image": "https://images.pexels.com/photos/64219/dolphin-marine-mammals-water-sea-64219.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-water", "fa-smile"]
+    },
+    {
+        "name": "Red Kangaroo",
+        "hindi": "लाल कंगारू",
+        "scientific": "Macropus rufus",
+        "category": "mammal",
+        "description": "The red kangaroo is the largest marsupial, native to Australia, known for its powerful hind legs and hopping.",
+        "image": "https://images.pexels.com/photos/1476006/pexels-photo-1476006.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-running", "fa-baby"]
+    },
+    {
+        "name": "Polar Bear",
+        "hindi": "ध्रुवीय भालू",
+        "scientific": "Ursus maritimus",
+        "category": "mammal",
+        "description": "The polar bear is an Arctic predator, adapted to cold climates with thick fur and a diet of seals.",
+        "image": "https://images.pexels.com/photos/162322/polar-bear-ice-arctic-white-162322.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-snowflake", "fa-skull"]
+    },
+    {
+        "name": "Black Rhinoceros",
+        "hindi": "काला गैंडा",
+        "scientific": "Diceros bicornis",
+        "category": "mammal",
+        "description": "The black rhinoceros is a herbivore native to Africa, known for its two horns and thick skin.",
+        "image": "https://images.pexels.com/photos/1216800/pexels-photo-1216800.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-leaf", "fa-shield-alt"]
+    },
+    {
+        "name": "Chimpanzee",
+        "hindi": "चिंपैंजी",
+        "scientific": "Pan troglodytes",
+        "category": "mammal",
+        "description": "The chimpanzee is a highly intelligent primate from Africa, known for tool use and complex social structures.",
+        "image": "https://images.pexels.com/photos/1123959/pexels-photo-1123959.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-brain", "fa-users"]
+    },
+    {
+        "name": "Siberian Husky",
+        "hindi": "साइबेरियन हस्की",
+        "scientific": "Canis lupus familiaris",
+        "category": "mammal",
+        "description": "The Siberian husky is a working dog breed from Siberia, known for its thick fur and sled-pulling ability.",
+        "image": "https://images.pexels.com/photos/220938/pexels-photo-220938.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-snowflake", "fa-running"]
+    },
+    {
+        "name": "Mountain Gorilla",
+        "hindi": "माउंटेन गोरिल्ला",
+        "scientific": "Gorilla beringei beringei",
+        "category": "mammal",
+        "description": "The mountain gorilla is a large primate from African forests, living in tight-knit family groups.",
+        "image": "https://images.pexels.com/photos/1325098/pexels-photo-1325098.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-leaf", "fa-users"]
+    },
+    {
+        "name": "Platypus",
+        "hindi": "प्लैटिपस",
+        "scientific": "Ornithorhynchus anatinus",
+        "category": "mammal",
+        "description": "The platypus is an egg-laying mammal from Australia, known for its duck-like bill and webbed feet.",
+        "image": "https://images.pexels.com/photos/162312/platypus-australia-wildlife-162312.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-water", "fa-egg"]
+    },
+    {
+        "name": "Echidna",
+        "hindi": "एकिडना",
+        "scientific": "Zaglossus spp.",
+        "category": "mammal",
+        "description": "The echidna is an egg-laying mammal from Australia, covered in spines and feeding on ants.",
+        "image": "https://cdn.pixabay.com/photo/2019/08/25/13/34/echidna-4429543_1280.jpg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-egg", "fa-shield-alt"]
+    },
+    {
+        "name": "Cheetah",
+        "hindi": "चीता",
+        "scientific": "Acinonyx jubatus",
+        "category": "mammal",
+        "description": "The cheetah is the fastest land animal, native to Africa, known for its slender body and spotted coat.",
+        "image": "https://images.pexels.com/photos/257513/pexels-photo-257513.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-running", "fa-skull"]
+    },
+    {
+        "name": "Orca",
+        "hindi": "ओर्का",
+        "scientific": "Orcinus orca",
+        "category": "mammal",
+        "description": "The orca, or killer whale, is a marine mammal known for its black-and-white coloring and complex social behaviors.",
+        "image": "https://images.pexels.com/photos/162215/orca-killer-whale-whale-orcinus-162215.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-water", "fa-users"]
+    },
+    {
+        "name": "Sloth Bear",
+        "hindi": "स्लॉथ भालू",
+        "scientific": "Melursus ursinus",
+        "category": "mammal",
+        "description": "The sloth bear is a nocturnal bear from India, known for its shaggy fur and insect-eating habits.",
+        "image": "https://cdn.pixabay.com/photo/2017/03/26/12/26/sloth-bear-2175327_1280.jpg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-moon", "fa-leaf"]
+    },
+    {
+        "name": "Manatee",
+        "hindi": "मैनाटी",
+        "scientific": "Trichechus spp.",
+        "category": "mammal",
+        "description": "The manatee is a gentle, herbivorous marine mammal, often called a sea cow, found in coastal waters.",
+        "image": "https://images.pexels.com/photos/162218/manatee-crystal-river-florida-wildlife-162218.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-water", "fa-leaf"]
+    },
+    {
+        "name": "Snow Leopard",
+        "hindi": "स्नो लेपर्ड",
+        "scientific": "Panthera uncia",
+        "category": "mammal",
+        "description": "The snow leopard is a elusive big cat from Central Asia, adapted to cold mountains with thick fur.",
+        "image": "https://images.pexels.com/photos/3571576/pexels-photo-3571576.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-snowflake", "fa-skull"]
+    },
+    {
+        "name": "Tasmanian Devil",
+        "hindi": "तस्मानियाई डेविल",
+        "scientific": "Sarcophilus harrisii",
+        "category": "mammal",
+        "description": "The Tasmanian devil is a small, carnivorous marsupial from Tasmania, known for its fierce temperament.",
+        "image": "https://cdn.pixabay.com/photo/2018/06/25/15/02/tasmanian-devil-3497112_1280.jpg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-skull", "fa-moon"]
+    },
+    {
+        "name": "African Lion",
+        "hindi": "अफ्रीकी शेर",
+        "scientific": "Panthera leo",
+        "category": "mammal",
+        "description": "The African lion is a large cat native to Africa, living in prides and known as the 'king of the jungle'.",
+        "image": "https://images.pexels.com/photos/530291/pexels-photo-530291.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-moon", "fa-crown"]
+    },
+    {
+        "name": "Harp Seal",
+        "hindi": "हार्प सील",
+        "scientific": "Pagophilus groenlandicus",
+        "category": "mammal",
+        "description": "The harp seal is an Arctic marine mammal, known for its white pups and migratory behavior.",
+        "image": "https://images.pexels.com/photos/162219/harp-seal-seal-pup-ice-162219.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-water", "fa-snowflake"]
+    },
+    {
+        "name": "Bactrian Camel",
+        "hindi": "बैक्ट्रियन ऊंट",
+        "scientific": "Camelus bactrianus",
+        "category": "mammal",
+        "description": "The Bactrian camel has two humps and is adapted to cold deserts, used for transport in Asia.",
+        "image": "https://cdn.pixabay.com/photo/2016/11/14/03/56/camel-1822479_1280.jpg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-leaf", "fa-shield-alt"]
+    },
+    {
+        "name": "Meerkat",
+        "hindi": "मीरकट",
+        "scientific": "Suricata suricatta",
+        "category": "mammal",
+        "description": "The meerkat is a small, social mammal from Africa, known for standing upright to watch for predators.",
+        "image": "https://images.pexels.com/photos/39857/meerkat-fur-wild-animal-39857.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-users", "fa-eye"]
+    },
+    {
+        "name": "Fennec Fox",
+        "hindi": "फेनेक लोमड़ी",
+        "scientific": "Vulpes zerda",
+        "category": "mammal",
+        "description": "The fennec fox is a small desert fox from North Africa, known for its large ears and nocturnal habits.",
+        "image": "https://images.pexels.com/photos/347143/pexels-photo-347143.jpeg?auto=-img/2017/03/26/12/26/sloth-bear-2175327_1280.jpg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-moon", "fa-ear"]
+    },
+    {
+        "name": "Narwhal",
+        "hindi": "नार्व्हेल",
+        "scientific": "Monodon monoceros",
+        "category": "mammal",
+        "description": "The narwhal is an Arctic whale known for its long, spiral tusk, often called the 'unicorn of the sea'.",
+        "image": "https://cdn.pixabay.com/photo/2018/07/08/13/23/narwhal-3523757_1280.jpg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-water", "fa-magic"]
+    },
+    {
+        "name": "Koala",
+        "hindi": "कोआला",
+        "scientific": "Phascolarctos cinereus",
+        "category": "mammal",
+        "description": "The koala is an Australian marsupial that lives in eucalyptus trees, feeding almost exclusively on their leaves.",
+        "image": "https://images.pexels.com/photos/162240/koala-162240.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-leaf", "fa-tree"]
+    },
+    {
+        "name": "Red Panda",
+        "hindi": "रेड पांडा",
+        "scientific": "Ailurus fulgens",
+        "category": "mammal",
+        "description": "The red panda is a small, arboreal mammal from the Himalayas, known for its reddish fur and bushy tail.",
+        "image": "https://images.pexels.com/photos/336172/pexels-photo-336172.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-tree", "fa-heart"]
+    },
+    {
+        "name": "Jaguar",
+        "hindi": "जगुआर",
+        "scientific": "Panthera onca",
+        "category": "mammal",
+        "description": "The jaguar is a powerful big cat from the Americas, known for its spotted coat and strong bite.",
+        "image": "https://images.pexels.com/photos/45911/jaguar-panthera-onca-big-cat-panther-45911.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-skull", "fa-moon"]
+    },
+    {
+        "name": "Armadillo",
+        "hindi": "आर्मडिलो",
+        "scientific": "Dasypus novemcinctus",
+        "category": "mammal",
+        "description": "The armadillo is a small mammal with bony plates, native to the Americas, known for rolling into a ball.",
+        "image": "https://images.pexels.com/photos/140379/armadillo-animal-wildlife-texas-140379.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-shield-alt", "fa-moon"]
+    },
+    {
+        "name": "Hippopotamus",
+        "hindi": "हिप्पोपोटामस",
+        "scientific": "Hippopotamus amphibius",
+        "category": "mammal",
+        "description": "The hippopotamus is a large, semi-aquatic herbivore from Africa, known for its massive jaws and territorial nature.",
+        "image": "https://images.pexels.com/photos/219791/pexels-photo-219791.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-water", "fa-skull"]
+    },
+    {
+        "name": "Giraffe",
+        "hindi": "जिराफ",
+        "scientific": "Giraffa camelopardalis",
+        "category": "mammal",
+        "description": "The giraffe is the tallest land animal, native to Africa, known for its long neck and spotted coat.",
+        "image": "https://images.pexels.com/photos/37833/giraffe-animal-africa-wild-37833.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-leaf", "fa-ruler"]
+    },
+    {
+        "name": "Zebra",
+        "hindi": "ज़ेबरा",
+        "scientific": "Equus quagga",
+        "category": "mammal",
+        "description": "The zebra is an African herbivore known for its black-and-white stripes, living in herds.",
+        "image": "https://images.pexels.com/photos/110645/zebra-animal-africa-wildlife-110645.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-leaf", "fa-running"]
+    },
+    {
+        "name": "Wolverine",
+        "hindi": "वॉल्वरिन",
+        "scientific": "Gulo gulo",
+        "category": "mammal",
+        "description": "The wolverine is a fierce, solitary carnivore from northern regions, known for its strength and tenacity.",
+        "image": "https://cdn.pixabay.com/photo/2016/03/27/22/22/wolverine-1283745_1280.jpg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-skull", "fa-snowflake"]
+    },
+    {
+        "name": "Hyena",
+        "hindi": "हाइना",
+        "scientific": "Crocuta crocuta",
+        "category": "mammal",
+        "description": "The hyena is a social carnivore from Africa, known for its distinctive laugh and scavenging habits.",
+        "image": "https://images.pexels.com/photos/1316296/pexels-photo-1316296.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-moon", "fa-users"]
+    },
+    {
+        "name": "Baboon",
+        "hindi": "बबून",
+        "scientific": "Papio spp.",
+        "category": "mammal",
+        "description": "The baboon is a large primate from Africa, living in troops and known for its colorful face and social behavior.",
+        "image": "https://images.pexels.com/photos/1054665/pexels-photo-1054665.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-users", "fa-brain"]
+    },
+    {
+        "name": "Lemur",
+        "hindi": "लीमर",
+        "scientific": "Lemur catta",
+        "category": "mammal",
+        "description": "The lemur is a primate from Madagascar, known for its long tail and large eyes, often active at night.",
+        "image": "https://images.pexels.com/photos/141496/lemur-ring-tailed-lemur-primate-madagascar-141496.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-moon", "fa-tree"]
+    },
+    {
+        "name": "Opossum",
+        "hindi": "ओपॉसम",
+        "scientific": "Didelphis virginiana",
+        "category": "mammal",
+        "description": "The opossum is a marsupial from the Americas, known for playing dead and carrying young in a pouch.",
+        "image": "https://cdn.pixabay.com/photo/2017/06/01/19/45/opossum-2364238_1280.jpg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-moon", "fa-baby"]
+    },
+    {
+        "name": "Porcupine",
+        "hindi": "साही",
+        "scientific": "Erethizon dorsatum",
+        "category": "mammal",
+        "description": "The porcupine is a rodent with sharp quills, native to various regions, using spines for defense.",
+        "image": "https://images.pexels.com/photos/162329/porcupine-animal-wildlife-quills-162329.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-shield-alt", "fa-leaf"]
+    },
+    {
+        "name": "Pangolin",
+        "hindi": "पैंगोलिन",
+        "scientific": "Manis spp.",
+        "category": "mammal",
+        "description": "The pangolin is a scaly mammal from Africa and Asia, known for its armor-like scales and insect diet.",
+        "image": "https://images.pexels.com/photos/1354968/pexels-photo-1354968.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-shield-alt", "fa-leaf"]
+    },
+    {
+        "name": "Okapi",
+        "hindi": "ओकापी",
+        "scientific": "Okapia johnstoni",
+        "category": "mammal",
+        "description": "The okapi is a forest-dwelling herbivore from Africa, resembling a zebra but related to giraffes.",
+        "image": "https://cdn.pixabay.com/photo/2019/09/05/11/29/okapi-4454686_1280.jpg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-leaf", "fa-tree"]
+    },
+    {
+        "name": "Saiga Antelope",
+        "hindi": "साइगा मृग",
+        "scientific": "Saiga tatarica",
+        "category": "mammal",
+        "description": "The saiga antelope is a critically endangered herbivore from Central Asia, known for its distinctive nose.",
+        "image": "https://cdn.pixabay.com/photo/2017/08/07/15/34/saiga-2604965_1280.jpg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-leaf", "fa-running"]
+    },
+    {
+        "name": "Tapir",
+        "hindi": "टैपिर",
+        "scientific": "Tapirus spp.",
+        "category": "mammal",
+        "description": "The tapir is a herbivorous mammal with a short trunk, found in Central and South America and Asia.",
+        "image": "https://images.pexels.com/photos/162324/tapir-animal-wildlife-zoo-162324.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-leaf", "fa-water"]
+    },
+    {
+        "name": "Aardvark",
+        "hindi": "आर्डवर्क",
+        "scientific": "Orycteropus afer",
+        "category": "mammal",
+        "description": "The aardvark is a nocturnal mammal from Africa, known for its long snout and termite-eating habits.",
+        "image": "https://cdn.pixabay.com/photo/2017/08/07/15/34/aardvark-2604964_1280.jpg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-moon", "fa-leaf"]
+    },
+    {
+        "name": "Dugong",
+        "hindi": "ड्यूगॉन्ग",
+        "scientific": "Dugong dugon",
+        "category": "mammal",
+        "description": "The dugong is a marine herbivore related to manatees, feeding on seagrass in coastal waters.",
+        "image": "https://cdn.pixabay.com/photo/2018/07/08/13/23/dugong-3523758_1280.jpg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-water", "fa-leaf"]
+    },
+    {
+        "name": "Wallaby",
+        "hindi": "वॉलबी",
+        "scientific": "Macropus spp.",
+        "category": "mammal",
+        "description": "The wallaby is a small marsupial from Australia, similar to a kangaroo, known for its hopping movement.",
+        "image": "https://images.pexels.com/photos/162242/wallaby-australia-wildlife-animal-162242.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-running", "fa-baby"]
+    },
+    {
+        "name": "Dingo",
+        "hindi": "डिंगो",
+        "scientific": "Canis lupus dingo",
+        "category": "mammal",
+        "description": "The dingo is a wild Australian dog, known for its lean build and hunting skills.",
+        "image": "https://images.pexels.com/photos/162243/dingo-australia-wildlife-animal-162243.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-skull", "fa-moon"]
+    },
+    {
+        "name": "Caracal",
+        "hindi": "कैराकल",
+        "scientific": "Caracal caracal",
+        "category": "mammal",
+        "description": "The caracal is a medium-sized wild cat from Africa and Asia, known for its tufted ears and agility.",
+        "image": "https://images.pexels.com/photos/3571557/pexels-photo-3571557.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-running", "fa-moon"]
+    },
+    {
+        "name": "Serval",
+        "hindi": "सर्वल",
+        "scientific": "Leptailurus serval",
+        "category": "mammal",
+        "description": "The serval is an African wild cat with long legs, known for its leaping ability to catch prey.",
+        "image": "https://images.pexels.com/photos/3571558/pexels-photo-3571558.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-running", "fa-moon"]
+    },
+    {
+        "name": "Bushbaby",
+        "hindi": "बुशबेबी",
+        "scientific": "Galago spp.",
+        "category": "mammal",
+        "description": "The bushbaby is a small, nocturnal primate from Africa, known for its large eyes and leaping ability.",
+        "image": "https://cdn.pixabay.com/photo/2017/08/07/15/34/bushbaby-2604963_1280.jpg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-moon", "fa-eye"]
+    },
+    {
+        "name": "Bison",
+        "hindi": "बाइसन",
+        "scientific": "Bison bison",
+        "category": "mammal",
+        "description26": "The bison is a large herbivore from North America, known for its massive size and curved horns.",
+        "image": "https://images.pexels.com/photos/161285/bison-animal-wildlife-american-161285.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-leaf", "fa-shield-alt"]
+    },
+    {
+        "name": "Musk Ox",
+        "hindi": "मस्क ऑक्स",
+        "scientific": "Ovibos moschatus",
+        "category": "mammal",
+        "description": "The musk ox is an Arctic mammal with a thick coat, known for forming defensive circles against predators.",
+        "image": "https://cdn.pixabay.com/photo/2017/03/27/22/22/musk-ox-1283746_1280.jpg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-snowflake", "fa-shield-alt"]
+    },
+    {
+        "name": "Clouded Leopard",
+        "hindi": "क्लाउडेड लेपर्ड",
+        "scientific": "Neofelis nebulosa",
+        "category": "mammal",
+        "description": "The clouded leopard is a secretive big cat from Asia, known for its cloud-like spots and arboreal habits.",
+        "image": "https://cdn.pixabay.com/photo/2017/08/07/15/34/clouded-leopard-2604962_1280.jpg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-tree", "fa-moon"]
+    },
+    {
+        "name": "Mandrill",
+        "hindi": "मैंड्रिल",
+        "scientific": "Mandrillus sphinx",
+        "category": "mammal",
+        "description": "The mandrill is a colorful primate from African rainforests, known for its vibrant face and social troops.",
+        "image": "https://images.pexels.com/photos/3571559/pexels-photo-3571559.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-users", "fa-paint-brush"]
+    },
+    {
+        "name": "Pronghorn",
+        "hindi": "प्रोंगहॉर्न",
+        "scientific": "Antilocapra americana",
+        "category": "mammal",
+        "description": "The pronghorn is a fast herbivore from North America, often called the American antelope.",
+        "image": "https://images.pexels.com/photos/162326/pronghorn-antelope-wildlife-animal-162326.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-running", "fa-leaf"]
+    },
+    {
+        "name": "Sun Bear",
+        "hindi": "सन बेयर",
+        "scientific": "Helarctos malayanus",
+        "category": "mammal",
+        "description": "The sun bear is the smallest bear species, native to Southeast Asia, known for its sun-like chest patch tolerability.",
+        "image": "https://cdn.pixabay.com/photo/2017/08/07/15/34/sun-bear-2604961_1280.jpg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-tree", "fa-moon"]
+    },
+    {
+        "name": "Vampire Bat",
+        "hindi": "वैम्पायर बैट",
+        "scientific": "Desmodus rotundus",
+        "category": "mammal",
+        "description": "The vampire bat is a small bat from the Americas, known for feeding on blood, usually from livestock.",
+        "image": "https://cdn.pixabay.com/photo/2017/08/07/15/34/vampire-bat-2604960_1280.jpg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-moon", "fa-tint"]
+    },
+    {
+        "name": "Kinkajou",
+        "hindi": "किंकाजू",
+        "scientific": "Potos flavus",
+        "category": "mammal",
+        "description": "The kinkajou is a nocturnal mammal from Central and South America, known for its prehensile tail.",
+        "image": "https://cdn.pixabay.com/photo/2017/08/07/15/34/kinkajou-2604959_1280.jpg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-moon", "fa-tree"]
+    },
+    {
+        "name": "Aye-Aye",
+        "hindi": "आई-आई",
+        "scientific": "Daubentonia madagascariensis",
+        "category": "mammal",
+        "description": "The aye-aye is a nocturnal primate from Madagascar, known for its long, thin fingers used for foraging.",
+        "image": "https://cdn.pixabay.com/photo/2017/08/07/15/34/aye-aye-2604958_1280.jpg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-moon", "fa-hand"]
+    },
+    {
+        "name": "Binturong",
+        "hindi": "बिंटुरॉन्ग",
+        "scientific": "Arctictis binturong",
+        "category": "mammal",
+        "description": "The binturong, or bearcat, is a bear-like mammal from Southeast Asia, known for its musky scent.",
+        "image": "https://cdn.pixabay.com/photo/2017/08/07/15/34/binturong-2604957_1280.jpg?auto=compress&cs=tinysrgb&w=600",
+        "icons": ["fa-paw", "fa-tree", "fa-moon"]
+    }
+    ];
+
+    // DOM elements
+    const animalsContainer = document.getElementById('animals-container');
+    const searchInput = document.getElementById('search');
+    const categoryTabs = document.querySelectorAll('.category-tab');
+    const totalCountElement = document.getElementById('total-count');
+    const categoryCountElement = document.getElementById('category-count');
+
+    // Initialize the page
+    function init() {
+        displayAnimals(animals);
+        updateCounts();
+        setupEventListeners();
+    }
+
+    // Display animals in the grid
+    function displayAnimals(animalsToDisplay) {
+        animalsContainer.innerHTML = '';
+
+        if (animalsToDisplay.length === 0) {
+            animalsContainer.innerHTML = `
+                <div class="no-results">
+                    <i class="fas fa-search"></i> No animals found matching your search.
+                </div>
+            `;
+            return;
+        }
+
+        animalsToDisplay.forEach(animal => {
+            const animalCard = document.createElement('div');
+            animalCard.className = `animal-card fade-in ${animal.category}`;
+            animalCard.innerHTML = `
+                <img src="${animal.image}" alt="${animal.name}" class="animal-image">
+                <div class="animal-info">
+                    <h3 class="animal-name">${animal.name}</h3>
+                    <p class="hindi-name">${animal.hindi}</p>
+                    <p class="animal-scientific">${animal.scientific}</p>
+                    <span class="animal-category ${animal.category}">${formatCategory(animal.category)}</span>
+                    <p class="animal-description">${animal.description}</p>
+                    <div class="animal-icons">
+                        ${animal.icons.map(icon => `<i class="fas ${icon} animal-icon"></i>`).join('')}
+                    </div>
+                </div>
+            `;
+            animalsContainer.appendChild(animalCard);
+        });
+    }
+
+    // Format category name for display
+    function formatCategory(category) {
+        return category.charAt(0).toUpperCase() + category.slice(1);
+    }
+
+    // Update total and category counts
+    function updateCounts() {
+        totalCountElement.textContent = animals.length;
+
+        // Count animals in each category
+        const categoryCounts = {
+            mammal: animals.filter(a => a.category === 'mammal').length,
+            bird: animals.filter(a => a.category === 'bird').length,
+            fish: animals.filter(a => a.category === 'fish').length,
+            reptile: animals.filter(a => a.category === 'reptile').length,
+            amphibian: animals.filter(a => a.category === 'amphibian').length,
+            invertebrate: animals.filter(a => a.category === 'invertebrate').length
+        };
+
+        // Update category counts in tabs
+        categoryTabs.forEach(tab => {
+            const category = tab.dataset.category;
+            if (category !== 'all') {
+                const countElement = tab.querySelector('.category-count');
+                countElement.textContent = categoryCounts[category];
+            }
+        });
+
+        // Count unique categories
+        const uniqueCategories = new Set(animals.map(a => a.category));
+        categoryCountElement.textContent = uniqueCategories.size;
+    }
+
+    // Filter animals based on search and category
+    function filterAnimals() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const activeCategory = document.querySelector('.category-tab.active').dataset.category;
+
+        let filteredAnimals = animals;
+
+        // Filter by category
+        if (activeCategory !== 'all') {
+            filteredAnimals = filteredAnimals.filter(animal => animal.category === activeCategory);
+        }
+
+        // Filter by search term
+        if (searchTerm) {
+            filteredAnimals = filteredAnimals.filter(animal =>
+                animal.name.toLowerCase().includes(searchTerm) ||
+                animal.hindi.toLowerCase().includes(searchTerm) ||
+                animal.scientific.toLowerCase().includes(searchTerm) ||
+                animal.description.toLowerCase().includes(searchTerm)
+            );
+        }
+
+        displayAnimals(filteredAnimals);
+    }
+
+    // Set up event listeners
+    function setupEventListeners() {
+        // Search input
+        searchInput.addEventListener('input', filterAnimals);
+
+        // Category tabs
+        categoryTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                categoryTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                filterAnimals();
+            });
+        });
+    }
+
+    // Initialize the app when DOM is loaded
+    document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

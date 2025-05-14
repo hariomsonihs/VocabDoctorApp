@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time & Tense (समय और काल) - Grammar App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --light: #f8f9fa;
+            --dark: #2d3436;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --info: #0984e3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 100%;
+            width: 100%;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 1s ease;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 6vw, 2.5rem);
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            color: var(--dark);
+            opacity: 0.8;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+        }
+
+        h2 i {
+            color: var(--accent);
+        }
+
+        .definition {
+            font-size: clamp(0.95rem, 2.5vw, 1rem);
+            margin-bottom: 1rem;
+            padding-left: 0.8rem;
+            border-left: 3px solid var(--secondary);
+        }
+
+        .hindi {
+            color: #e84393;
+            font-weight: 500;
+        }
+
+        .english {
+            color: var(--info);
+            font-weight: 500;
+        }
+
+        ul {
+            list-style-type: none;
+            margin-bottom: 1rem;
+        }
+
+        ul li {
+            padding: 0.4rem 0;
+            padding-left: 1.2rem;
+            position: relative;
+            font-size: clamp(0.9rem, 2.5vw, 0.95rem);
+        }
+
+        ul li::before {
+            content: '•';
+            color: var(--accent);
+            font-size: 1.2rem;
+            position: absolute;
+            left: 0;
+            top: 0.2rem;
+        }
+
+        .example {
+            background: rgba(106, 176, 76, 0.1);
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin: 0.8rem 0;
+            border-left: 3px solid var(--success);
+        }
+
+        .example-title {
+            font-weight: bold;
+            color: var(--success);
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: clamp(0.95rem, 2.5vw, 1rem);
+        }
+
+        .type-card {
+            background: rgba(253, 121, 168, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .type-card:hover {
+            background: rgba(253, 121, 168, 0.2);
+            transform: scale(1.01);
+        }
+
+        .type-title {
+            color: var(--accent);
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: clamp(1.2rem, 3.5vw, 1.4rem);
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, rgba(108, 92, 231, 0.2) 0%, rgba(108, 92, 231, 0) 100%);
+            padding: 0.15rem 0.3rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .feature-box {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: clamp(2rem, 5vw, 2.2rem);
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+
+        .feature-title {
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            margin-bottom: 0.4rem;
+            color: var(--dark);
+        }
+
+         /* Ensure tables are scrollable and maintain readability */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    min-width: 600px; /* Ensures table is wide enough to need scrolling on small screens */
+}
+
+th, td {
+    border: 1px solid var(--secondary);
+    padding: 0.8rem;
+    text-align: left;
+    font-size: clamp(0.9rem, 2.5vw, 0.95rem);
+    white-space: nowrap; /* Prevents text wrapping to maintain column width */
+}
+
+th {
+    background: var(--primary);
+    color: white;
+}
+
+tr:nth-child(even) {
+    background: rgba(253, 121, 168, 0.1);
+}
+
+/* Scrollable container for tables */
+div[style*="overflow-x: auto"] {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) var(--light);
+}
+
+div[style*="overflow-x: auto"]::-webkit-scrollbar {
+    height: 8px;
+}
+
+div[style*="overflow-x: auto"]::-webkit-scrollbar-track {
+    background: var(--light);
+}
+
+div[style*="overflow-x: auto"]::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 4px;
+}
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            color: var(--dark);
+            opacity: 0.7;
+            font-size: clamp(0.8rem, 2.5vw, 0.85rem);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0.5rem;
+            }
+
+            h1 {
+                font-size: clamp(1.8rem, 5.5vw, 2rem);
+            }
+
+            .subtitle {
+                font-size: clamp(0.9rem, 2.8vw, 1rem);
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+
+            .card {
+                padding: 1rem;
+                border-radius: 10px;
+            }
+
+            h2 {
+                font-size: clamp(1.3rem, 3.8vw, 1.5rem);
+            }
+
+            .definition {
+                font-size: clamp(0.9rem, 2.3vw, 0.95rem);
+                padding-left: 0.5rem;
+            }
+
+            .type-card {
+                padding: 0.8rem;
+                border-radius: 8px;
+            }
+
+            .type-title {
+                font-size: clamp(1.1rem, 3.2vw, 1.2rem);
+            }
+
+            .feature-box {
+                padding: 0.8rem;
+            }
+
+            .feature-icon {
+                font-size: clamp(1.8rem, 4.5vw, 2rem);
+            }
+
+            table {
+                font-size: clamp(0.85rem, 2.3vw, 0.9rem);
+            }
+
+            th, td {
+                padding: 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0.3rem;
+            }
+
+            h1 {
+                font-size: clamp(1.5rem, 5vw, 1.8rem);
+            }
+
+            .card {
+                padding: 0.8rem;
+                margin-bottom: 1rem;
+            }
+
+            .grid {
+                gap: 0.5rem;
+            }
+
+            ul li {
+                font-size: clamp(0.85rem, 2.3vw, 0.9rem);
+                padding-left: 1rem;
+            }
+
+            .example {
+                padding: 0.6rem;
+            }
+
+            footer {
+                padding: 0.8rem;
+                font-size: clamp(0.75rem, 2.3vw, 0.8rem);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header class="animate">
+        <h1>Time & Tense <span class="hindi">(समय और काल)</span></h1>
+        <p class="subtitle">Understanding the expression of time through verb forms in grammar</p>
+    </header>
+
+    <section class="card animate delay-1">
+        <h2><i class="fas fa-book-open"></i> Definition / परिभाषा</h2>
+        <div class="definition">
+            <p class="english"><span class="highlight">Time</span> is a universal concept referring to the sequence of events in the past, present, and future. <span class="highlight">Tense</span> is the grammatical modification of verbs to express when an action or state occurs relative to these time periods.</p>
+            <p class="hindi"><span class="highlight">समय</span> एक सार्वभौमिक अवधारणा है जो भूतकाल, वर्तमान, और भविष्य में घटनाओं के क्रम को दर्शाती है। <span class="highlight">काल</span> क्रिया का व्याकरणिक रूपांतरण है जो यह व्यक्त करता है कि कोई क्रिया या स्थिति इन समय अवधियों के सापेक्ष कब होती है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Example</div>
+                <p class="english">"Yesterday" indicates <span class="highlight">time</span> (past), while "I <span class="highlight">went</span>" is the <span class="highlight">tense</span> (Simple Past).</p>
+                <p class="hindi">"कल" <span class="highlight">समय</span> (भूतकाल) दर्शाता है, जबकि "मैं <span class="highlight">गया</span>" <span class="highlight">काल</span> (भूतकाल सरल काल) है।</p>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="feature-box floating">
+                <div class="feature-icon"><i class="fas fa-clock"></i></div>
+                <h3 class="feature-title">Time</h3>
+                <p class="hindi">समय</p>
+                <p>Past, Present, Future</p>
+            </div>
+            <div class="feature-box floating" style="animation-delay: 0.3s;">
+                <div class="feature-icon"><i class="fas fa-book"></i></div>
+                <h3 class="feature-title">Tense</h3>
+                <p class="hindi">काल</p>
+                <p>Verb forms</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-2">
+        <h2><i class="fas fa-not-equal"></i> Difference Between Time and Tense / समय और काल में अंतर</h2>
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-balance-scale"></i> Comparison</h3>
+            <p class="english"><span class="highlight">Time</span> is an abstract concept independent of language, marking when events occur. <span class="highlight">Tense</span> is a linguistic tool that modifies verbs to align with time.</p>
+            <p class="hindi"><span class="highlight">समय</span> एक अमूर्त अवधारणा है जो भाषा से स्वतंत्र है और घटनाओं के होने का समय दर्शाती है। <span class="highlight">काल</span> एक भाषाई साधन है जो क्रिया को समय के साथ संरेखित करता है।</p>
+            <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+            <table>
+                <tr>
+                    <th>Aspect</th>
+                    <th>Time (समय)</th>
+                    <th>Tense (काल)</th>
+                </tr>
+                <tr>
+                    <td>Definition</td>
+                    <td>Universal concept of past, present, future</td>
+                    <td>Grammatical form of verbs</td>
+                </tr>
+                <tr>
+                    <td>Example</td>
+                    <td>Tomorrow, now, yesterday</td>
+                    <td>I will go, I am going, I went</td>
+                </tr>
+                <tr>
+                    <td>Purpose</td>
+                    <td>Describes when something happens</td>
+                    <td>Shows how verbs express time</td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+    <section class="card animate delay-3">
+        <h2><i class="fas fa-book"></i> What is Tense? / काल क्या है?</h2>
+        <div class="definition">
+            <p class="english">Tense is the grammatical structure of a verb that indicates the time (past, present, or future) and nature (simple, continuous, perfect, or perfect continuous) of an action or state, helping to convey when and how the action occurs.</p>
+            <p class="hindi">काल क्रिया की व्याकरणिक संरचना है जो क्रिया के समय (भूतकाल, वर्तमान, भविष्य) और प्रकृति (सरल, सतत, पूर्ण, या पूर्ण सतत) को दर्शाती है, जिससे यह स्पष्ट होता है कि क्रिया कब और कैसे होती है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Example</div>
+                <p class="english">"She <span class="highlight">sings</span>" (Simple Present) vs. "She <span class="highlight">was singing</span>" (Past Continuous).</p>
+                <p class="hindi">"वह <span class="highlight">गाती है</span>" (वर्तमान सरल काल) बनाम "वह <span class="highlight">गा रही थी</span>" (भूतकाल सतत काल)।</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-4">
+        <h2><i class="fas fa-list"></i> Verb Forms Table / क्रिया रूप तालिका</h2>
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-table"></i> Common Verb Forms (V1 to V5)</h3>
+            <p class="english">Verbs have five forms used in different tenses: Base (V1), Past (V2), Past Participle (V3), Present Participle (V4), Third Person Singular (V5).</p>
+            <p class="hindi">क्रियाओं के पाँच रूप होते हैं जो विभिन्न कालों में उपयोग होते हैं: मूल (V1), भूतकाल (V2), भूतकालिक कृदंत (V3), वर्तमान कृदंत (V4), तीसरा एकवचन (V5)।</p>
+            <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+                <table>
+                    <tr>
+                        <th>Verb</th>
+                        <th>V1 (Base)</th>
+                        <th>V2 (Past)</th>
+                        <th>V3 (Past Participle)</th>
+                        <th>V4 (Present Participle)</th>
+                        <th>V5 (Third Person Singular)</th>
+                    </tr>
+                    <!-- Regular Verbs (30) -->
+                    <tr>
+                        <td>Accept</td>
+                        <td>accept</td>
+                        <td>accepted</td>
+                        <td>accepted</td>
+                        <td>accepting</td>
+                        <td>accepts</td>
+                    </tr>
+                    <tr>
+                        <td>Act</td>
+                        <td>act</td>
+                        <td>acted</td>
+                        <td>acted</td>
+                        <td>acting</td>
+                        <td>acts</td>
+                    </tr>
+                    <tr>
+                        <td>Arrive</td>
+                        <td>arrive</td>
+                        <td>arrived</td>
+                        <td>arrived</td>
+                        <td>arriving</td>
+                        <td>arrives</td>
+                    </tr>
+                    <tr>
+                        <td>Bake</td>
+                        <td>bake</td>
+                        <td>baked</td>
+                        <td>baked</td>
+                        <td>baking</td>
+                        <td>bakes</td>
+                    </tr>
+                    <tr>
+                        <td>Call</td>
+                        <td>call</td>
+                        <td>called</td>
+                        <td>called</td>
+                        <td>calling</td>
+                        <td>calls</td>
+                    </tr>
+                    <tr>
+                        <td>Clean</td>
+                        <td>clean</td>
+                        <td>cleaned</td>
+                        <td>cleaned</td>
+                        <td>cleaning</td>
+                        <td>cleans</td>
+                    </tr>
+                    <tr>
+                        <td>Dance</td>
+                        <td>dance</td>
+                        <td>danced</td>
+                        <td>danced</td>
+                        <td>dancing</td>
+                        <td>dances</td>
+                    </tr>
+                    <tr>
+                        <td>Decide</td>
+                        <td>decide</td>
+                        <td>decided</td>
+                        <td>decided</td>
+                        <td>deciding</td>
+                        <td>decides</td>
+                    </tr>
+                    <tr>
+                        <td>Enjoy</td>
+                        <td>enjoy</td>
+                        <td>enjoyed</td>
+                        <td>enjoyed</td>
+                        <td>enjoying</td>
+                        <td>enjoys</td>
+                    </tr>
+                    <tr>
+                        <td>Follow</td>
+                        <td>follow</td>
+                        <td>followed</td>
+                        <td>followed</td>
+                        <td>following</td>
+                        <td>follows</td>
+                    </tr>
+                    <tr>
+                        <td>Gather</td>
+                        <td>gather</td>
+                        <td>gathered</td>
+                        <td>gathered</td>
+                        <td>gathering</td>
+                        <td>gathers</td>
+                    </tr>
+                    <tr>
+                        <td>Help</td>
+                        <td>help</td>
+                        <td>helped</td>
+                        <td>helped</td>
+                        <td>helping</td>
+                        <td>helps</td>
+                    </tr>
+                    <tr>
+                        <td>Invite</td>
+                        <td>invite</td>
+                        <td>invited</td>
+                        <td>invited</td>
+                        <td>inviting</td>
+                        <td>invites</td>
+                    </tr>
+                    <tr>
+                        <td>Join</td>
+                        <td>join</td>
+                        <td>joined</td>
+                        <td>joined</td>
+                        <td>joining</td>
+                        <td>joins</td>
+                    </tr>
+                    <tr>
+                        <td>Jump</td>
+                        <td>jump</td>
+                        <td>jumped</td>
+                        <td>jumped</td>
+                        <td>jumping</td>
+                        <td>jumps</td>
+                    </tr>
+                    <tr>
+                        <td>Kick</td>
+                        <td>kick</td>
+                        <td>kicked</td>
+                        <td>kicked</td>
+                        <td>kicking</td>
+                        <td>kicks</td>
+                    </tr>
+                    <tr>
+                        <td>Learn</td>
+                        <td>learn</td>
+                        <td>learned</td>
+                        <td>learned</td>
+                        <td>learning</td>
+                        <td>learns</td>
+                    </tr>
+                    <tr>
+                        <td>Listen</td>
+                        <td>listen</td>
+                        <td>listened</td>
+                        <td>listened</td>
+                        <td>listening</td>
+                        <td>listens</td>
+                    </tr>
+                    <tr>
+                        <td>Move</td>
+                        <td>move</td>
+                        <td>moved</td>
+                        <td>moved</td>
+                        <td>moving</td>
+                        <td>moves</td>
+                    </tr>
+                    <tr>
+                        <td>Notice</td>
+                        <td>notice</td>
+                        <td>noticed</td>
+                        <td>noticed</td>
+                        <td>noticing</td>
+                        <td>notices</td>
+                    </tr>
+                    <tr>
+                        <td>Open</td>
+                        <td>open</td>
+                        <td>opened</td>
+                        <td>opened</td>
+                        <td>opening</td>
+                        <td>opens</td>
+                    </tr>
+                    <tr>
+                        <td>Paint</td>
+                        <td>paint</td>
+                        <td>painted</td>
+                        <td>painted</td>
+                        <td>painting</td>
+                        <td>paints</td>
+                    </tr>
+                    <tr>
+                        <td>Play</td>
+                        <td>play</td>
+                        <td>played</td>
+                        <td>played</td>
+                        <td>playing</td>
+                        <td>plays</td>
+                    </tr>
+                    <tr>
+                        <td>Question</td>
+                        <td>question</td>
+                        <td>questioned</td>
+                        <td>questioned</td>
+                        <td>questioning</td>
+                        <td>questions</td>
+                    </tr>
+                    <tr>
+                        <td>Reply</td>
+                        <td>reply</td>
+                        <td>replied</td>
+                        <td>replied</td>
+                        <td>replying</td>
+                        <td>replies</td>
+                    </tr>
+                    <tr>
+                        <td>Study</td>
+                        <td>study</td>
+                        <td>studied</td>
+                        <td>studied</td>
+                        <td>studying</td>
+                        <td>studies</td>
+                    </tr>
+                    <tr>
+                        <td>Talk</td>
+                        <td>talk</td>
+                        <td>talked</td>
+                        <td>talked</td>
+                        <td>talking</td>
+                        <td>talks</td>
+                    </tr>
+                    <tr>
+                        <td>Visit</td>
+                        <td>visit</td>
+                        <td>visited</td>
+                        <td>visited</td>
+                        <td>visiting</td>
+                        <td>visits</td>
+                    </tr>
+                    <tr>
+                        <td>Walk</td>
+                        <td>walk</td>
+                        <td>walked</td>
+                        <td>walked</td>
+                        <td>walking</td>
+                        <td>walks</td>
+                    </tr>
+                    <tr>
+                        <td>Yell</td>
+                        <td>yell</td>
+                        <td>yelled</td>
+                        <td>yelled</td>
+                        <td>yelling</td>
+                        <td>yells</td>
+                    </tr>
+                    <!-- Irregular Verbs (30) -->
+                    <tr>
+                        <td>Arise</td>
+                        <td>arise</td>
+                        <td>arose</td>
+                        <td>arisen</td>
+                        <td>arising</td>
+                        <td>arises</td>
+                    </tr>
+                    <tr>
+                        <td>Be</td>
+                        <td>be</td>
+                        <td>was/were</td>
+                        <td>been</td>
+                        <td>being</td>
+                        <td>is</td>
+                    </tr>
+                    <tr>
+                        <td>Begin</td>
+                        <td>begin</td>
+                        <td>began</td>
+                        <td>begun</td>
+                        <td>beginning</td>
+                        <td>begins</td>
+                    </tr>
+                    <tr>
+                        <td>Bite</td>
+                        <td>bite</td>
+                        <td>bit</td>
+                        <td>bitten</td>
+                        <td>biting</td>
+                        <td>bites</td>
+                    </tr>
+                    <tr>
+                        <td>Break</td>
+                        <td>break</td>
+                        <td>broke</td>
+                        <td>broken</td>
+                        <td>breaking</td>
+                        <td>breaks</td>
+                    </tr>
+                    <tr>
+                        <td>Choose</td>
+                        <td>choose</td>
+                        <td>chose</td>
+                        <td>chosen</td>
+                        <td>choosing</td>
+                        <td>chooses</td>
+                    </tr>
+                    <tr>
+                        <td>Come</td>
+                        <td>come</td>
+                        <td>came</td>
+                        <td>come</td>
+                        <td>coming</td>
+                        <td>comes</td>
+                    </tr>
+                    <tr>
+                        <td>Do</td>
+                        <td>do</td>
+                        <td>did</td>
+                        <td>done</td>
+                        <td>doing</td>
+                        <td>does</td>
+                    </tr>
+                    <tr>
+                        <td>Drink</td>
+                        <td>drink</td>
+                        <td>drank</td>
+                        <td>drunk</td>
+                        <td>drinking</td>
+                        <td>drinks</td>
+                    </tr>
+                    <tr>
+                        <td>Eat</td>
+                        <td>eat</td>
+                        <td>ate</td>
+                        <td>eaten</td>
+                        <td>eating</td>
+                        <td>eats</td>
+                    </tr>
+                    <tr>
+                        <td>Fall</td>
+                        <td>fall</td>
+                        <td>fell</td>
+                        <td>fallen</td>
+                        <td>falling</td>
+                        <td>falls</td>
+                    </tr>
+                    <tr>
+                        <td>Find</td>
+                        <td>find</td>
+                        <td>found</td>
+                        <td>found</td>
+                        <td>finding</td>
+                        <td>finds</td>
+                    </tr>
+                    <tr>
+                        <td>Fly</td>
+                        <td>fly</td>
+                        <td>flew</td>
+                        <td>flown</td>
+                        <td>flying</td>
+                        <td>flies</td>
+                    </tr>
+                    <tr>
+                        <td>Forget</td>
+                        <td>forget</td>
+                        <td>forgot</td>
+                        <td>forgotten</td>
+                        <td>forgetting</td>
+                        <td>forgets</td>
+                    </tr>
+                    <tr>
+                        <td>Give</td>
+                        <td>give</td>
+                        <td>gave</td>
+                        <td>given</td>
+                        <td>giving</td>
+                        <td>gives</td>
+                    </tr>
+                    <tr>
+                        <td>Go</td>
+                        <td>go</td>
+                        <td>went</td>
+                        <td>gone</td>
+                        <td>going</td>
+                        <td>goes</td>
+                    </tr>
+                    <tr>
+                        <td>Have</td>
+                        <td>have</td>
+                        <td>had</td>
+                        <td>had</td>
+                        <td>having</td>
+                        <td>has</td>
+                    </tr>
+                    <tr>
+                        <td>Know</td>
+                        <td>know</td>
+                        <td>knew</td>
+                        <td>known</td>
+                        <td>knowing</td>
+                        <td>knows</td>
+                    </tr>
+                    <tr>
+                        <td>Leave</td>
+                        <td>leave</td>
+                        <td>left</td>
+                        <td>left</td>
+                        <td>leaving</td>
+                        <td>leaves</td>
+                    </tr>
+                    <tr>
+                        <td>Make</td>
+                        <td>make</td>
+                        <td>made</td>
+                        <td>made</td>
+                        <td>making</td>
+                        <td>makes</td>
+                    </tr>
+                    <tr>
+                        <td>Meet</td>
+                        <td>meet</td>
+                        <td>met</td>
+                        <td>met</td>
+                        <td>meeting</td>
+                        <td>meets</td>
+                    </tr>
+                    <tr>
+                        <td>Quit</td>
+                        <td>quit</td>
+                        <td>quit</td>
+                        <td>quit</td>
+                        <td>quitting</td>
+                        <td>quits</td>
+                    </tr>
+                    <tr>
+                        <td>Read</td>
+                        <td>read</td>
+                        <td>read</td>
+                        <td>read</td>
+                        <td>reading</td>
+                        <td>reads</td>
+                    </tr>
+                    <tr>
+                        <td>Ride</td>
+                        <td>ride</td>
+                        <td>rode</td>
+                        <td>ridden</td>
+                        <td>riding</td>
+                        <td>rides</td>
+                    </tr>
+                    <tr>
+                        <td>Run</td>
+                        <td>run</td>
+                        <td>ran</td>
+                        <td>run</td>
+                        <td>running</td>
+                        <td>runs</td>
+                    </tr>
+                    <tr>
+                        <td>See</td>
+                        <td>see</td>
+                        <td>saw</td>
+                        <td>seen</td>
+                        <td>seeing</td>
+                        <td>sees</td>
+                    </tr>
+                    <tr>
+                        <td>Sing</td>
+                        <td>sing</td>
+                        <td>sang</td>
+                        <td>sung</td>
+                        <td>singing</td>
+                        <td>sings</td>
+                    </tr>
+                    <tr>
+                        <td>Take</td>
+                        <td>take</td>
+                        <td>took</td>
+                        <td>taken</td>
+                        <td>taking</td>
+                        <td>takes</td>
+                    </tr>
+                    <tr>
+                        <td>Write</td>
+                        <td>write</td>
+                        <td>wrote</td>
+                        <td>written</td>
+                        <td>writing</td>
+                        <td>writes</td>
+                    </tr>
+                    <tr>
+                        <td>X-ray</td>
+                        <td>x-ray</td>
+                        <td>x-rayed</td>
+                        <td>x-rayed</td>
+                        <td>x-raying</td>
+                        <td>x-rays</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-3">
+        <h2><i class="fas fa-layer-group"></i> Types of Tenses / काल के प्रकार</h2>
+        <p class="english">English has 12 tenses divided into Present, Past, and Future, each with Simple, Continuous, Perfect, and Perfect Continuous forms.</p>
+        <p class="hindi">अंग्रेजी में 12 काल हैं, जो वर्तमान, भूतकाल, और भविष्य में बँटे हैं, प्रत्येक में सरल, सतत, पूर्ण, और पूर्ण सतत रूप हैं।</p>
+
+        <!-- Present Tenses -->
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-sun"></i> Simple Present Tense (वर्तमान सरल काल)</h3>
+            <p class="english"><strong>Definition:</strong> The Simple Present Tense expresses actions or states that are habitual, generally true, scheduled, or factual, occurring regularly or consistently in the present time.</p>
+            <p class="hindi"><strong>परिभाषा:</strong> वर्तमान सरल काल उन क्रियाओं या अवस्थाओं को व्यक्त करता है जो नियमित, सामान्य रूप से सत्य, समयबद्ध, या तथ्यात्मक हैं, और वर्तमान समय में नियमित रूप से या लगातार होती हैं।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> How to Identify</div>
+                <ul>
+                    <li><span class="english">Look for V1 (base verb) or V5 (-s/es for he/she/it).</span> <span class="hindi">V1 (मूल क्रिया) या V5 (he/she/it के लिए -s/es) देखें।</span></li>
+                    <li><span class="english">Auxiliaries: do/does in negatives/questions.</span> <span class="hindi">सहायक क्रिया: नकारात्मक/प्रश्नों में do/does।</span></li>
+                    <li><span class="english">Time markers: always, never, daily, every day, often.</span> <span class="hindi">समय चिह्न: हमेशा, कभी नहीं, रोज, हर दिन, अक्सर।</span></li>
+                    <li><span class="english">Context: Habits, facts, or schedules.</span> <span class="hindi">संदर्भ: आदतें, तथ्य, या समय-सारिणी।</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Related Words</div>
+                <ul>
+                    <li><span class="english">always, usually, often, sometimes, seldom, never, daily, weekly, monthly, every day/night/morning, generally, regularly</span> <span class="hindi">हमेशा, आमतौर पर, अक्सर, कभी-कभी, शायद ही, कभी नहीं, रोज, साप्ताहिक, मासिक, हर दिन/रात/सुबह, सामान्य रूप से, नियमित रूप से</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Structure</div>
+                <ul>
+                    <li><span class="english">Affirmative: Subject + V1 (add -s/es for he/she/it) + Object</span> <span class="hindi">सकारात्मक: कर्ता + V1 (he/she/it के लिए -s/es जोड़ें) + कर्म</span></li>
+                    <li><span class="english">Negative: Subject + do/does + not + V1 + Object</span> <span class="hindi">नकारात्मक: कर्ता + do/does + not + V1 + कर्म</span></li>
+                    <li><span class="english">Interrogative: Do/Does + Subject + V1 + Object?</span> <span class="hindi">प्रश्नवाचक: Do/Does + कर्ता + V1 + कर्म?</span></li>
+                    <li><span class="english">Negative-Interrogative: Do/Does + Subject + not + V1 + Object?</span> <span class="hindi">नकारात्मक-प्रश्नवाचक: Do/Does + कर्ता + not + V1 + कर्म?</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">Affirmative: She <span class="highlight">sings</span> daily.</span> <span class="hindi">वह रोज <span class="highlight">गाती है</span>।</span></li>
+                    <li><span class="english">Negative: She <span class="highlight">does not sing</span>.</span> <span class="hindi">वह <span class="highlight">नहीं गाती</span>।</span></li>
+                    <li><span class="english">Interrogative: <span class="highlight">Does</span> she sing?</span> <span class="hindi"><span class="highlight">क्या</span> वह गाती है?</span></li>
+                    <li><span class="english">Negative-Interrogative: <span class="highlight">Does</span> she not sing?</span> <span class="hindi"><span class="highlight">क्या</span> वह नहीं गाती?</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Uses</div>
+                <ul>
+                    <li><span class="english">Habits: I <span class="highlight">walk</span> every morning.</span> <span class="hindi">आदत: मैं हर सुबह <span class="highlight">टहलता हूँ</span>।</span></li>
+                    <li><span class="english">Universal Truths: The sun <span class="highlight">rises</span> in the east.</span> <span class="hindi">सार्वभौमिक सत्य: सूरज पूर्व में <span class="highlight">उगता है</span>।</span></li>
+                    <li><span class="english">Schedules: The train <span class="highlight">leaves</span> at 6 PM.</span> <span class="hindi">समय-सारिणी: ट्रेन शाम 6 बजे <span class="highlight">छूटती है</span>।</span></li>
+                    <li><span class="english">Facts: Water <span class="highlight">boils</span> at 100°C.</span> <span class="hindi">तथ्य: पानी 100 डिग्री पर <span class="highlight">उबलता है</span>।</span></li>
+                    <li><span class="english">Feelings/States: I <span class="highlight">love</span> coffee.</span> <span class="hindi">भावनाएँ/अवस्थाएँ: मुझे कॉफी <span class="highlight">पसंद है</span>।</span></li>
+                    <li><span class="english">Commentary: He <span class="highlight">kicks</span> the ball!</span> <span class="hindi">टीका: वह गेंद <span class="highlight">मारता है</span>!</span></li>
+                    <li><span class="english">Narratives: The story <span class="highlight">begins</span> in a village.</span> <span class="hindi">कथाएँ: कहानी एक गाँव में <span class="highlight">शुरू होती है</span>।</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Rules</div>
+                <ul>
+                    <li><span class="english">Use V1; add -s/es for he/she/it.</span> <span class="hindi">V1 का उपयोग; he/she/it के लिए -s/es जोड़ें।</span></li>
+                    <li><span class="english">Use do/does for negatives and questions.</span> <span class="hindi">नकारात्मक और प्रश्नों के लिए do/does का उपयोग।</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-running"></i> Present Continuous Tense (वर्तमान सतत काल)</h3>
+            <p class="english"><strong>Definition:</strong> The Present Continuous Tense describes actions or events currently in progress at the moment of speaking, temporary situations, or definite future plans.</p>
+            <p class="hindi"><strong>परिभाषा:</strong> वर्तमान सतत काल उन क्रियाओं या घटनाओं को व्यक्त करता है जो बोलने के समय चल रही हों, अस्थायी परिस्थितियाँ हों, या निश्चित भविष्य योजनाएँ हों।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> How to Identify</div>
+                <ul>
+                    <li><span class="english">Look for am/is/are + V4 (verb + -ing).</span> <span class="hindi">Am/is/are + V4 (क्रिया + -ing) देखें।</span></li>
+                    <li><span class="english">Time markers: now, at the moment, currently, today.</span> <span class="hindi">समय चिह्न: अब, इस समय, वर्तमान में, आज।</span></li>
+                    <li><span class="english">Context: Ongoing or temporary actions.</span> <span class="hindi">संदर्भ: चल रही या अस्थायी क्रियाएँ।</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Related Words</div>
+                <ul>
+                    <li><span class="english">now, at the moment, currently, today, this week/month, at present</span> <span class="hindi">अब, इस समय, वर्तमान में, आज, इस हफ्ते/महीने, अभी</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Structure</div>
+                <ul>
+                    <li><span class="english">Affirmative: Subject + am/is/are + V4 (ing) + Object</span> <span class="hindi">सकारात्मक: कर्ता + am/is/are + V4 (ing) + कर्म</span></li>
+                    <li><span class="english">Negative: Subject + am/is/are + not + V4 + Object</span> <span class="hindi">नकारात्मक: कर्ता + am/is/are + not + V4 + कर्म</span></li>
+                    <li><span class="english">Interrogative: Am/Is/Are + Subject + V4 + Object?</span> <span class="hindi">प्रश्नवाचक: Am/Is/Are + कर्ता + V4 + कर्म?</span></li>
+                    <li><span class="english">Negative-Interrogative: Am/Is/Are + Subject + not + V4 + Object?</span> <span class="hindi">नकारात्मक-प्रश्नवाचक: Am/Is/Are + कर्ता + not + V4 + कर्म?</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">Affirmative: She <span class="highlight">is singing</span> now.</span> <span class="hindi">वह अब <span class="highlight">गा रही है</span>।</span></li>
+                    <li><span class="english">Negative: She <span class="highlight">is not singing</span>.</span> <span class="hindi">वह <span class="highlight">नहीं गा रही</span>।</span></li>
+                    <li><span class="english">Interrogative: <span class="highlight">Is</span> she singing?</span> <span class="hindi"><span class="highlight">क्या</span> वह गा रही है?</span></li>
+                    <li><span class="english">Negative-Interrogative: <span class="highlight">Is</span> she not singing?</span> <span class="hindi"><span class="highlight">क्या</span> वह नहीं गा रही?</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Uses</div>
+                <ul>
+                    <li><span class="english">Ongoing Action: I <span class="highlight">am reading</span> a book.</span> <span class="hindi">चल रही क्रिया: मैं एक किताब <span class="highlight">पढ़ रहा हूँ</span>।</span></li>
+                    <li><span class="english">Temporary Action: She <span class="highlight">is staying</span> with us this week.</span> <span class="hindi">अस्थायी क्रिया: वह इस हफ्ते हमारे साथ <span class="highlight">रह रही है</span>।</span></li>
+                    <li><span class="english">Future Plan: We <span class="highlight">are meeting</span> tomorrow.</span> <span class="hindi">भविष्य योजना: हम कल <span class="highlight">मिल रहे हैं</span>।</span></li>
+                    <li><span class="english">Changing Situations: The weather <span class="highlight">is getting</span> warmer.</span> <span class="hindi">बदलती स्थिति: मौसम <span class="highlight">गर्म हो रहा है</span>।</span></li>
+                    <li><span class="english">Annoyance: He <span class="highlight">is always complaining</span>!</span> <span class="hindi">नाराजगी: वह <span class="highlight">हमेशा शिकायत कर रहा है</span>!</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Rules</div>
+                <ul>
+                    <li><span class="english">Use am/is/are + V4 (ing).</span> <span class="hindi">Am/is/are + V4 (ing) का उपयोग।</span></li>
+                    <li><span class="english">Avoid with state verbs (e.g., know, like).</span> <span class="hindi">स्थिति क्रिया (जैसे, know, like) के साथ उपयोग न करें।</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-check-circle"></i> Present Perfect Tense (वर्तमान पूर्ण काल)</h3>
+            <p class="english"><strong>Definition:</strong> The Present Perfect Tense indicates actions or events completed at an unspecified time in the past with relevance to the present, or experiences and achievements up to now.</p>
+            <p class="hindi"><strong>परिभाषा:</strong> वर्तमान पूर्ण काल उन क्रियाओं या घटनाओं को दर्शाता है जो पिछले में अनिर्दिष्ट समय पर पूरी हुईं और जिनका वर्तमान से संबंध है, या अब तक के अनुभव और उपलब्धियाँ।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> How to Identify</div>
+                <ul>
+                    <li><span class="english">Look for have/has + V3 (past participle).</span> <span class="hindi">Have/has + V3 (भूतकालिक कृदंत) देखें।</span></li>
+                    <li><span class="english">Time markers: just, already, yet, ever, never, since, for.</span> <span class="hindi">समय चिह्न: अभी, पहले से, अभी तक, कभी, कभी नहीं, से, के लिए।</span></li>
+                    <li><span class="english">Context: Past actions affecting the present.</span> <span class="hindi">संदर्भ: वर्तमान को प्रभावित करने वाली पिछली क्रियाएँ।</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Related Words</div>
+                <ul>
+                    <li><span class="english">just, already, yet, ever, never, since, for, recently, lately, up to now, so far</span> <span class="hindi">अभी, पहले से, अभी तक, कभी, कभी नहीं, से, के लिए, हाल में, अब तक</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Structure</div>
+                <ul>
+                    <li><span class="english">Affirmative: Subject + have/has + V3 + Object</span> <span class="hindi">सकारात्मक: कर्ता + have/has + V3 + कर्म</span></li>
+                    <li><span class="english">Negative: Subject + have/has + not + V3 + Object</span> <span class="hindi">नकारात्मक: कर्ता + have/has + not + V3 + कर्म</span></li>
+                    <li><span class="english">Interrogative: Have/Has + Subject + V3 + Object?</span> <span class="hindi">प्रश्नवाचक: Have/Has + कर्ता + V3 + कर्म?</span></li>
+                    <li><span class="english">Negative-Interrogative: Have/Has + Subject + not + V3 + Object?</span> <span class="hindi">नकारात्मक-प्रश्नवाचक: Have/Has + कर्ता + not + V3 + कर्म?</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">Affirmative: She <span class="highlight">has sung</span> a song.</span> <span class="hindi">वह एक गाना <span class="highlight">गा चुकी है</span>।</span></li>
+                    <li><span class="english">Negative: She <span class="highlight">has not sung</span>.</span> <span class="hindi">वह <span class="highlight">नहीं गा चुकी</span>।</span></li>
+                    <li><span class="english">Interrogative: <span class="highlight">Has</span> she sung?</span> <span class="hindi"><span class="highlight">क्या</span> वह गा चुकी है?</span></li>
+                    <li><span class="english">Negative-Interrogative: <span class="highlight">Has</span> she not sung?</span> <span class="hindi"><span class="highlight">क्या</span> वह नहीं गा चुकी?</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Uses</div>
+                <ul>
+                    <li><span class="english">Completed Action: I <span class="highlight">have finished</span> my homework.</span> <span class="hindi">पूर्ण क्रिया: मैंने अपना होमवर्क <span class="highlight">पूरा कर लिया</span>।</span></li>
+                    <li><span class="english">Experience: She <span class="highlight">has visited</span> Paris.</span> <span class="hindi">अनुभव: वह पेरिस <span class="highlight">घूम चुकी है</span>।</span></li>
+                    <li><span class="english">Recent Action: They <span class="highlight">have just left</span>.</span> <span class="hindi">हाल की क्रिया: वे अभी <span class="highlight">निकले हैं</span>।</span></li>
+                    <li><span class="english">Achievements: He <span class="highlight">has won</span> three awards.</span> <span class="hindi">उपलब्धियाँ: उसने तीन पुरस्कार <span class="highlight">जीते हैं</span>।</span></li>
+                    <li><span class="english">Multiple Actions: I <span class="highlight">have read</span> this book twice.</span> <span class="hindi">एकाधिक क्रियाएँ: मैंने इस किताब को दो बार <span class="highlight">पढ़ा है</span>।</span></li>
+                    <li><span class="english">Unfinished Time: I <span class="highlight">have worked</span> here this year.</span> <span class="hindi">अपूर्ण समय: मैंने इस साल यहाँ <span class="highlight">काम किया है</span>।</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Rules</div>
+                <ul>
+                    <li><span class="english">Use have/has + V3.</span> <span class="hindi">Have/has + V3 का उपयोग।</span></li>
+                    <li><span class="english">Avoid specific past time markers (e.g., yesterday).</span> <span class="hindi">विशिष्ट भूतकाल चिह्न (जैसे, कल) से बचें।</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-hourglass"></i> Present Perfect Continuous Tense (वर्तमान पूर्ण सतत काल)</h3>
+            <p class="english"><strong>Definition:</strong> The Present Perfect Continuous Tense describes actions that began in the past, continue in the present, or have recently stopped, emphasizing the duration or ongoing nature with present relevance.</p>
+            <p class="hindi"><strong>परिभाषा:</strong> वर्तमान पूर्ण सतत काल उन क्रियाओं को दर्शाता है जो पिछले में शुरू हुईं, वर्तमान में जारी हैं, या हाल में रुकी हैं, और उनकी अवधि या चल रही प्रकृति पर जोर देता है जो वर्तमान से संबंधित है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> How to Identify</div>
+                <ul>
+                    <li><span class="english">Look for have/has + been + V4 (verb + -ing).</span> <span class="hindi">Have/has + been + V4 (क्रिया + -ing) देखें।</span></li>
+                    <li><span class="english">Time markers: since, for, all day, lately, recently.</span> <span class="hindi">समय चिह्न: से, के लिए, सारा दिन, हाल में, अभी हाल में।</span></li>
+                    <li><span class="english">Context: Duration or ongoing actions.</span> <span class="hindi">संदर्भ: अवधि या चल रही क्रियाएँ।</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Related Words</div>
+                <ul>
+                    <li><span class="english">since, for, all day/week, lately, recently, this morning</span> <span class="hindi">से, के लिए, सारा दिन/हफ्ता, हाल में, अभी हाल में, आज सुबह</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Structure</div>
+                <ul>
+                    <li><span class="english">Affirmative: Subject + have/has + been + V4 + Object</span> <span class="hindi">सकारात्मक: कर्ता + have/has + been + V4 + कर्म</span></li>
+                    <li><span class="english">Negative: Subject + have/has + not + been + V4 + Object</span> <span class="hindi">नकारात्मक: कर्ता + have/has + not + been + V4 + कर्म</span></li>
+                    <li><span class="english">Interrogative: Have/Has + Subject + been + V4 + Object?</span> <span class="hindi">प्रश्नवाचक: Have/Has + कर्ता + been + V4 + कर्म?</span></li>
+                    <li><span class="english">Negative-Interrogative: Have/Has + Subject + not + been + V4 + Object?</span> <span class="hindi">नकारात्मक-प्रश्नवाचक: Have/Has + कर्ता + not + been + V4 + कर्म?</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">Affirmative: She <span class="highlight">has been singing</span> for hours.</span> <span class="hindi">वह घंटों से <span class="highlight">गा रही है</span>।</span></li>
+                    <li><span class="english">Negative: She <span class="highlight">has not been singing</span>.</span> <span class="hindi">वह <span class="highlight">नहीं गा रही थी</span>।</span></li>
+                    <li><span class="english">Interrogative: <span class="highlight">Has</span> she been singing?</span> <span class="hindi"><span class="highlight">क्या</span> वह गा रही थी?</span></li>
+                    <li><span class="english">Negative-Interrogative: <span class="highlight">Has</span> she not been singing?</span> <span class="hindi"><span class="highlight">क्या</span> वह नहीं गा रही थी?</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Uses</div>
+                <ul>
+                    <li><span class="english">Ongoing Action: I <span class="highlight">have been studying</span> since morning.</span> <span class="hindi">चल रही क्रिया: मैं सुबह से <span class="highlight">पढ़ रहा हूँ</span>।</span></li>
+                    <li><span class="english">Recent Action: She <span class="highlight">has been working</span> hard lately.</span> <span class="hindi">हाल की क्रिया: वह हाल में कठिन <span class="highlight">काम कर रही थी</span>।</span></li>
+                    <li><span class="english">Cause of Present State: He is tired because he <span class="highlight">has been running</span>.</span> <span class="hindi">वर्तमान स्थिति का कारण: वह थका है क्योंकि वह <span class="highlight">दौड़ रहा था</span>।</span></li>
+                    <li><span class="english">Temporary Habit: They <span class="highlight">have been practicing</span> daily.</span> <span class="hindi">अस्थायी आदत: वे रोज <span class="highlight">अभ्यास कर रहे हैं</span>।</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Rules</div>
+                <ul>
+                    <li><span class="english">Use have/has + been + V4.</span> <span class="hindi">Have/has + been + V4 का उपयोग।</span></li>
+                    <li><span class="english">Emphasizes duration of action.</span> <span class="hindi">क्रिया की अवधि पर जोर देता है।</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Past Tenses -->
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-history"></i> Simple Past Tense (भूतकाल सरल काल)</h3>
+            <p class="english"><strong>Definition:</strong> The Simple Past Tense expresses actions or states that occurred and were completed at a specific time in the past, with no direct connection to the present.</p>
+            <p class="hindi"><strong>परिभाषा:</strong> भूतकाल सरल काल उन क्रियाओं या अवस्थाओं को व्यक्त करता है जो पिछले में विशिष्ट समय पर हुईं और पूरी हो गईं, जिनका वर्तमान से कोई सीधा संबंध नहीं है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> How to Identify</div>
+                <ul>
+                    <li><span class="english">Look for V2 (past form) or did + V1.</span> <span class="hindi">V2 (भूतकाल रूप) या did + V1 देखें।</span></li>
+                    <li><span class="english">Time markers: yesterday, last week, ago, in 2020.</span> <span class="hindi">समय चिह्न: कल, पिछले हफ्ते, पहले, 2020 में।</span></li>
+                    <li><span class="english">Context: Completed past actions.</span> <span class="hindi">संदर्भ: पूर्ण भूतकाल क्रियाएँ।</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Related Words</div>
+                <ul>
+                    <li><span class="english">yesterday, last night/week/month, ago, in 2020, once, then</span> <span class="hindi">कल, पिछले रात/हफ्ते/महीने, पहले, 2020 में, एक बार, तब</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Structure</div>
+                <ul>
+                    <li><span class="english">Affirmative: Subject + V2 + Object</span> <span class="hindi">सकारात्मक: कर्ता + V2 + कर्म</span></li>
+                    <li><span class="english">Negative: Subject + did + not + V1 + Object</span> <span class="hindi">नकारात्मक: कर्ता + did + not + V1 + कर्म</span></li>
+                    <li><span class="english">Interrogative: Did + Subject + V1 + Object?</span> <span class="hindi">प्रश्नवाचक: Did + कर्ता + V1 + कर्म?</span></li>
+                    <li><span class="english">Negative-Interrogative: Did + Subject + not + V1 + Object?</span> <span class="hindi">नकारात्मक-प्रश्नवाचक: Did + कर्ता + not + V1 + कर्म?</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">Affirmative: She <span class="highlight">sang</span> yesterday.</span> <span class="hindi">वह कल <span class="highlight">गाई</span>।</span></li>
+                    <li><span class="english">Negative: She <span class="highlight">did not sing</span>.</span> <span class="hindi">वह <span class="highlight">नहीं गाई</span>।</span></li>
+                    <li><span class="english">Interrogative: <span class="highlight">Did</span> she sing?</span> <span class="hindi"><span class="highlight">क्या</span> वह गाई?</span></li>
+                    <li><span class="english">Negative-Interrogative: <span class="highlight">Did</span> she not sing?</span> <span class="hindi"><span class="highlight">क्या</span> वह नहीं गाई?</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Uses</div>
+                <ul>
+                    <li><span class="english">Completed Action: I <span class="highlight">visited</span> Delhi last year.</span> <span class="hindi">पूर्ण क्रिया: मैंने पिछले साल दिल्ली <span class="highlight">घूमा</span>।</span></li>
+                    <li><span class="english">Past Habit: We <span class="highlight">played</span> daily.</span> <span class="hindi">पिछली आदत: हम रोज <span class="highlight">खेलते थे</span>।</span></li>
+                    <li><span class="english">Sequential Actions: She <span class="highlight">cooked</span> and <span class="highlight">ate</span>.</span> <span class="hindi">क्रमिक क्रियाएँ: उसने <span class="highlight">खाना बनाया</span> और <span class="highlight">खाया</span>।</span></li>
+                    <li><span class="english">Narratives: The hero <span class="highlight">fought</span> the dragon.</span> <span class="hindi">कथाएँ: नायक ने ड्रैगन से <span class="highlight">लड़ा</span>।</span></li>
+                    <li><span class="english">Reported Speech: He <span class="highlight">said</span> he was tired.</span> <span class="hindi">रिपोर्टेड वाक्य: उसने <span class="highlight">कहा</span> कि वह थका था।</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Rules</div>
+                <ul>
+                    <li><span class="english">Use V2 for affirmative; did + V1 for negatives/questions.</span> <span class="hindi">सकारात्मक के लिए V2; नकारात्मक/प्रश्नों के लिए did + V1।</span></li>
+                    <li><span class="english">Use with specific past time markers (e.g., yesterday).</span> <span class="hindi">विशिष्ट भूतकाल चिह्न (जैसे, कल) के साथ उपयोग।</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-running"></i> Past Continuous Tense (भूतकाल सतत काल)</h3>
+            <p class="english"><strong>Definition:</strong> The Past Continuous Tense describes actions or events that were in progress at a specific moment or period in the past, often interrupted by another event or set as background context.</p>
+            <p class="hindi"><strong>परिभाषा:</strong> भूतकाल सतत काल उन क्रियाओं या घटनाओं को व्यक्त करता है जो पिछले में किसी विशिष्ट क्षण या अवधि में चल रही थीं, जो अक्सर किसी अन्य घटना से बाधित हुईं या पृष्ठभूमि संदर्भ के रूप में उपयोग हुईं।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> How to Identify</div>
+                <ul>
+                    <li><span class="english">Look for was/were + V4 (verb + -ing).</span> <span class="hindi">Was/were + V4 (क्रिया + -ing) देखें।</span></li>
+                    <li><span class="english">Time markers: when, while, at 5 PM, all day.</span> <span class="hindi">समय चिह्न: जब, जबकि, शाम 5 बजे, सारा दिन।</span></li>
+                    <li><span class="english">Context: Ongoing or interrupted actions.</span> <span class="hindi">संदर्भ: चल रही या बाधित क्रियाएँ।</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Related Words</div>
+                <ul>
+                    <li><span class="english">when, while, at that time, all day, yesterday at 6 PM</span> <span class="hindi">जब, जबकि, उस समय, सारा दिन, कल शाम 6 बजे</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Structure</div>
+                <ul>
+                    <li><span class="english">Affirmative: Subject + was/were + V4 + Object</span> <span class="hindi">सकारात्मक: कर्ता + was/were + V4 + कर्म</span></li>
+                    <li><span class="english">Negative: Subject + was/were + not + V4 + Object</span> <span class="hindi">नकारात्मक: कर्ता + was/were + not + V4 + कर्म</span></li>
+                    <li><span class="english">Interrogative: Was/Were + Subject + V4 + Object?</span> <span class="hindi">प्रश्नवाचक: Was/Were + कर्ता + V4 + कर्म?</span></li>
+                    <li><span class="english">Negative-Interrogative: Was/Were + Subject + not + V4 + Object?</span> <span class="hindi">नकारात्मक-प्रश्नवाचक: Was/Were + कर्ता + not + V4 + कर्म?</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">Affirmative: She <span class="highlight">was singing</span> at 5 PM.</span> <span class="hindi">वह शाम 5 बजे <span class="highlight">गा रही थी</span>।</span></li>
+                    <li><span class="english">Negative: She <span class="highlight">was not singing</span>.</span> <span class="hindi">वह <span class="highlight">नहीं गा रही थी</span>।</span></li>
+                    <li><span class="english">Interrogative: <span class="highlight">Was</span> she singing?</span> <span class="hindi"><span class="highlight">क्या</span> वह गा रही थी?</span></li>
+                    <li><span class="english">Negative-Interrogative: <span class="highlight">Was</span> she not singing?</span> <span class="hindi"><span class="highlight">क्या</span> वह नहीं गा रही थी?</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Uses</div>
+                <ul>
+                    <li><span class="english">Ongoing Action: I <span class="highlight">was reading</span> when he called.</span> <span class="hindi">चल रही क्रिया: मैं <span class="highlight">पढ़ रहा था</span> जब उसने फोन किया।</span></li>
+                    <li><span class="english">Background Action: They <span class="highlight">were playing</span> while it rained.</span> <span class="hindi">पृष्ठभूमि क्रिया: वे <span class="highlight">खेल रहे थे</span> जब बारिश हुई।</span></li>
+                    <li><span class="english">Simultaneous Actions: She <span class="highlight">was cooking</span> while he <span class="highlight">was reading</span>.</span> <span class="hindi">समकालिक क्रियाएँ: वह <span class="highlight">खाना बना रही थी</span> जबकि वह <span class="highlight">पढ़ रहा था</span>।</span></li>
+                    <li><span class="english">Polite Requests: I <span class="highlight">was wondering</span> if you could help.</span> <span class="hindi">विनम्र अनुरोध: मैं <span class="highlight">सोच रहा था</span> कि क्या आप मदद कर सकते हैं।</span></li>
+                    <li><span class="english">Temporary Past Action: We <span class="highlight">were staying</span> there last month.</span> <span class="hindi">अस्थायी भूतकाल क्रिया: हम पिछले महीने वहाँ <span class="highlight">रह रहे थे</span>।</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Rules</div>
+                <ul>
+                    <li><span class="english">Use was/were + V4.</span> <span class="hindi">Was/were + V4 का उपयोग।</span></li>
+                    <li><span class="english">Often used with another past event.</span> <span class="hindi">अक्सर किसी अन्य भूतकाल घटना के साथ उपयोग।</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-check-circle"></i> Past Perfect Tense (भूतकाल पूर्ण काल)</h3>
+            <p class="english"><strong>Definition:</strong> The Past Perfect Tense expresses actions or states completed before another action or time point in the past, establishing a sequence of past events.</p>
+            <p class="hindi"><strong>परिभाषा:</strong> भूतकाल पूर्ण काल उन क्रियाओं या अवस्थाओं को व्यक्त करता है जो पिछले में किसी अन्य क्रिया या समय बिंदु से पहले पूरी हो चुकी थीं, जिससे भूतकाल की घटनाओं का क्रम स्थापित होता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> How to Identify</div>
+                <ul>
+                    <li><span class="english">Look for had + V3 (past participle).</span> <span class="hindi">Had + V3 (भूतकालिक कृदंत) देखें।</span></li>
+                    <li><span class="english">Time markers: before, after, by the time, already.</span> <span class="hindi">समय चिह्न: पहले, बाद में, उस समय तक, पहले से।</span></li>
+                    <li><span class="english">Context: Earlier past action relative to another.</span> <span class="hindi">संदर्भ: किसी अन्य के सापेक्ष पहले की भूतकाल क्रिया।</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Related Words</div>
+                <ul>
+                    <li><span class="english">before, after, by the time, already, when, until</span> <span class="hindi">पहले, बाद में, उस समय तक, पहले से, जब, तक</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Structure</div>
+                <ul>
+                    <li><span class="english">Affirmative: Subject + had + V3 + Object</span> <span class="hindi">सकारात्मक: कर्ता + had + V3 + कर्म</span></li>
+                    <li><span class="english">Negative: Subject + had + not + V3 + Object</span> <span class="hindi">नकारात्मक: कर्ता + had + not + V3 + कर्म</span></li>
+                    <li><span class="english">Interrogative: Had + Subject + V3 + Object?</span> <span class="hindi">प्रश्नवाचक: Had + कर्ता + V3 + कर्म?</span></li>
+                    <li><span class="english">Negative-Interrogative: Had + Subject + not + V3 + Object?</span> <span class="hindi">नकारात्मक-प्रश्नवाचक: Had + कर्ता + not + V3 + कर्म?</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">Affirmative: She <span class="highlight">had sung</span> before the party.</span> <span class="hindi">वह पार्टी से पहले <span class="highlight">गा चुकी थी</span>।</span></li>
+                    <li><span class="english">Negative: She <span class="highlight">had not sung</span>.</span> <span class="hindi">वह <span class="highlight">नहीं गा चुकी थी</span>।</span></li>
+                    <li><span class="english">Interrogative: <span class="highlight">Had</span> she sung?</span> <span class="hindi"><span class="highlight">क्या</span> वह गा चुकी थी?</span></li>
+                    <li><span class="english">Negative-Interrogative: <span class="highlight">Had</span> she not sung?</span> <span class="hindi"><span class="highlight">क्या</span> वह नहीं गा चुकी थी?</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Uses</div>
+                <ul>
+                    <li><span class="english">Earlier Action: I <span class="highlight">had finished</span> before he arrived.</span> <span class="hindi">पहले की क्रिया: मैंने <span class="highlight">पूरा कर लिया था</span> इससे पहले कि वह आया।</span></li>
+                    <li><span class="english">Cause: She was tired because she <span class="highlight">had worked</span>.</span> <span class="hindi">कारण: वह थकी थी क्योंकि वह <span class="highlight">काम कर चुकी थी</span>।</span></li>
+                    <li><span class="english">Reported Speech: He said he <span class="highlight">had seen</span> it.</span> <span class="hindi">रिपोर्टेड वाक्य: उसने कहा कि उसने इसे <span class="highlight">देख लिया था</span>।</span></li>
+                    <li><span class="english">Conditional: If I <span class="highlight">had known</span>, I would have helped.</span> <span class="hindi">शर्त: अगर मैं <span class="highlight">जानता</span>, तो मैं मदद करता।</span></li>
+                    <li><span class="english">Sequence: They <span class="highlight">had eaten</span> before we arrived.</span> <span class="hindi">क्रम: उन्होंने <span class="highlight">खा लिया था</span> इससे पहले कि हम पहुँचे।</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Rules</div>
+                <ul>
+                    <li><span class="english">Use had + V3.</span> <span class="hindi">Had + V3 का उपयोग।</span></li>
+                    <li><span class="english">Always paired with a later past event.</span> <span class="hindi">हमेशा बाद की भूतकाल घटना के साथ।</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-hourglass"></i> Past Perfect Continuous Tense (भूतकाल पूर्ण सतत काल)</h3>
+            <p class="english"><strong>Definition:</strong> The Past Perfect Continuous Tense describes actions that were ongoing in the past for a duration before another past event or time, emphasizing the continuity and duration of the action.</p>
+            <p class="hindi"><strong>परिभाषा:</strong> भूतकाल पूर्ण सतत काल उन क्रियाओं को व्यक्त करता है जो पिछले में किसी अन्य भूतकाल घटना या समय से पहले एक अवधि तक चल रही थीं, और क्रिया की निरंतरता और अवधि पर जोर देता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> How to Identify</div>
+                <ul>
+                    <li><span class="english">Look for had + been + V4 (verb + -ing).</span> <span class="hindi">Had + been + V4 (क्रिया + -ing) देखें।</span></li>
+                    <li><span class="english">Time markers: for, since, before, until, all day.</span> <span class="hindi">समय चिह्न: के लिए, से, पहले, तक, सारा दिन।</span></li>
+                    <li><span class="english">Context: Duration before a past event.</span> <span class="hindi">संदर्भ: भूतकाल घटना से पहले अवधि।</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Related Words</div>
+                <ul>
+                    <li><span class="english">for, since, before, until, all day, by the time</span> <span class="hindi">के लिए, से, पहले, तक, सारा दिन, उस समय तक</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Structure</div>
+                <ul>
+                    <li><span class="english">Affirmative: Subject + had + been + V4 + Object</span> <span class="hindi">सकारात्मक: कर्ता + had + been + V4 + कर्म</span></li>
+                    <li><span class="english">Negative: Subject + had + not + been + V4 + Object</span> <span class="hindi">नकारात्मक: कर्ता + had + not + been + V4 + कर्म</span></li>
+                    <li><span class="english">Interrogative: Had + Subject + been + V4 + Object?</span> <span class="hindi">प्रश्नवाचक: Had + कर्ता + been + V4 + कर्म?</span></li>
+                    <li><span class="english">Negative-Interrogative: Had + Subject + not + been + V4 + Object?</span> <span class="hindi">नकारात्मक-प्रश्नवाचक: Had + कर्ता + not + been + V4 + कर्म?</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">Affirmative: She <span class="highlight">had been singing</span> for hours before the event.</span> <span class="hindi">वह आयोजन से पहले घंटों से <span class="highlight">गा रही थी</span>।</span></li>
+                    <li><span class="english">Negative: She <span class="highlight">had not been singing</span>.</span> <span class="hindi">वह <span class="highlight">नहीं गा रही थी</span>।</span></li>
+                    <li><span class="english">Interrogative: <span class="highlight">Had</span> she been singing?</span> <span class="hindi"><span class="highlight">क्या</span> वह गा रही थी?</span></li>
+                    <li><span class="english">Negative-Interrogative: <span class="highlight">Had</span> she not been singing?</span> <span class="hindi"><span class="highlight">क्या</span> वह नहीं गा रही थी?</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Uses</div>
+                <ul>
+                    <li><span class="english">Ongoing Action: I <span class="highlight">had been studying</span> for three hours when she arrived.</span> <span class="hindi">चल रही क्रिया: मैं तीन घंटे से <span class="highlight">पढ़ रहा था</span> जब वह आई।</span></li>
+                    <li><span class="english">Cause of Past State: He was tired because he <span class="highlight">had been running</span>.</span> <span class="hindi">पिछली स्थिति का कारण: वह थका था क्योंकि वह <span class="highlight">दौड़ रहा था</span>।</span></li>
+                    <li><span class="english">Repeated Action: They <span class="highlight">had been meeting</span> secretly before the decision.</span> <span class="hindi">दोहराई गई क्रिया: वे निर्णय से पहले गुप्त रूप से <span class="highlight">मिल रहे थे</span>।</span></li>
+                    <li><span class="english">Duration Emphasis: She <span class="highlight">had been working</span> there since 2010.</span> <span class="hindi">अवधि पर जोर: वह 2010 से वहाँ <span class="highlight">काम कर रही थी</span>।</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Rules</div>
+                <ul>
+                    <li><span class="english">Use had + been + V4.</span> <span class="hindi">Had + been + V4 का उपयोग।</span></li>
+                    <li><span class="english">Emphasizes duration before another past event.</span> <span class="hindi">किसी अन्य भूतकाल घटना से पहले अवधि पर जोर देता है।</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Future Tenses -->
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-rocket"></i> Simple Future Tense (भविष्य सरल काल)</h3>
+            <p class="english"><strong>Definition:</strong> The Simple Future Tense expresses actions or states that will occur at a specific time in the future, including predictions, decisions, intentions, or scheduled events.</p>
+            <p class="hindi"><strong>परिभाषा:</strong> भविष्य सरल काल उन क्रियाओं या अवस्थाओं को व्यक्त करता है जो भविष्य में किसी विशिष्ट समय पर होंगी, जिसमें भविष्यवाणियाँ, निर्णय, इरादे, या समयबद्ध घटनाएँ शामिल हैं।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> How to Identify</div>
+                <ul>
+                    <li><span class="english">Look for will + V1 or shall + V1 (formal).</span> <span class="hindi">Will + V1 या shall + V1 (औपचारिक) देखें।</span></li>
+                    <li><span class="english">Time markers: tomorrow, next week, soon, in 2026.</span> <span class="hindi">समय चिह्न: कल, अगले हफ्ते, जल्द, 2026 में।</span></li>
+                    <li><span class="english">Context: Future predictions or plans.</span> <span class="hindi">संदर्भ: भविष्य की भविष्यवाणियाँ या योजनाएँ।</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Related Words</div>
+                <ul>
+                    <li><span class="english">tomorrow, next day/week/month, soon, in the future, in 2026, later</span> <span class="hindi">कल, अगला दिन/हफ्ता/महीना, जल्द, भविष्य में, 2026 में, बाद में</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Structure</div>
+                <ul>
+                    <li><span class="english">Affirmative: Subject + will + V1 + Object</span> <span class="hindi">सकारात्मक: कर्ता + will + V1 + कर्म</span></li>
+                    <li><span class="english">Negative: Subject + will + not + V1 + Object</span> <span class="hindi">नकारात्मक: कर्ता + will + not + V1 + कर्म</span></li>
+                    <li><span class="english">Interrogative: Will + Subject + V1 + Object?</span> <span class="hindi">प्रश्नवाचक: Will + कर्ता + V1 + कर्म?</span></li>
+                    <li><span class="english">Negative-Interrogative: Will + Subject + not + V1 + Object?</span> <span class="hindi">नकारात्मक-प्रश्नवाचक: Will + कर्ता + not + V1 + कर्म?</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">Affirmative: She <span class="highlight">will sing</span> tomorrow.</span> <span class="hindi">वह कल <span class="highlight">गाएगी</span>।</span></li>
+                    <li><span class="english">Negative: She <span class="highlight">will not sing</span>.</span> <span class="hindi">वह <span class="highlight">नहीं गाएगी</span>।</span></li>
+                    <li><span class="english">Interrogative: <span class="highlight">Will</span> she sing?</span> <span class="hindi"><span class="highlight">क्या</span> वह गाएगी?</span></li>
+                    <li><span class="english">Negative-Interrogative: <span class="highlight">Will</span> she not sing?</span> <span class="hindi"><span class="highlight">क्या</span> वह नहीं गाएगी?</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Uses</div>
+                <ul>
+                    <li><span class="english">Prediction: It <span class="highlight">will rain</span> tonight.</span> <span class="hindi">भविष्यवाणी: आज रात <span class="highlight">बारिश होगी</span>।</span></li>
+                    <li><span class="english">Decision: I <span class="highlight">will help</span> you.</span> <span class="hindi">निर्णय: मैं <span class="highlight">आपकी मदद करूँगा</span>।</span></li>
+                    <li><span class="english">Intention: We <span class="highlight">will study</span> harder.</span> <span class="hindi">इरादा: हम <span class="highlight">कठिन पढ़ाई करेंगे</span>।</span></li>
+                    <li><span class="english">Scheduled Event: The match <span class="highlight">will start</span> at 7 PM.</span> <span class="hindi">समयबद्ध घटना: मैच शाम 7 बजे <span class="highlight">शुरू होगा</span>।</span></li>
+                    <li><span class="english">Promise: I <span class="highlight">will call</span> you.</span> <span class="hindi">वादा: मैं <span class="highlight">आपको फोन करूँगा</span>।</span></li>
+                    <li><span class="english">Threat: You <span class="highlight">will regret</span> this!</span> <span class="hindi">धमकी: तुम्हें इसका <span class="highlight">पछतावा होगा</span>!</span></li>
+                    <li><span class="english">Offer: I <span class="highlight">will carry</span> your bag.</span> <span class="hindi">प्रस्ताव: मैं तुम्हारा बैग <span class="highlight">उठाऊँगा</span>।</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Rules</div>
+                <ul>
+                    <li><span class="english">Use will + V1; shall is rare and formal.</span> <span class="hindi">Will + V1 का उपयोग; shall दुर्लभ और औपचारिक है।</span></li>
+                    <li><span class="english">Use with future time markers (e.g., tomorrow).</span> <span class="hindi">भविष्य समय चिह्न (जैसे, कल) के साथ उपयोग।</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-running"></i> Future Continuous Tense (भविष्य सतत काल)</h3>
+            <p class="english"><strong>Definition:</strong> The Future Continuous Tense describes actions that will be ongoing at a specific time or during a period in the future, often emphasizing the duration or temporary nature of the action.</p>
+            <p class="hindi"><strong>परिभाषा:</strong> भविष्य सतत काल उन क्रियाओं को व्यक्त करता है जो भविष्य में किसी विशिष्ट समय या अवधि के दौरान चल रही होंगी, अक्सर क्रिया की अवधि या अस्थायी प्रकृति पर जोर देता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> How to Identify</div>
+                <ul>
+                    <li><span class="english">Look for will + be + V4 (verb + -ing).</span> <span class="hindi">Will + be + V4 (क्रिया + -ing) देखें।</span></li>
+                    <li><span class="english">Time markers: tomorrow at 5 PM, next week, at that time.</span> <span class="hindi">समय चिह्न: कल शाम 5 बजे, अगले हफ्ते, उस समय।</span></li>
+                    <li><span class="english">Context: Ongoing future actions.</span> <span class="hindi">संदर्भ: भविष्य में चल रही क्रियाएँ।</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Related Words</div>
+                <ul>
+                    <li><span class="english">tomorrow at 5 PM, next week/month, at that time, soon, later</span> <span class="hindi">कल शाम 5 बजे, अगले हफ्ते/महीने, उस समय, जल्द, बाद में</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Structure</div>
+                <ul>
+                    <li><span class="english">Affirmative: Subject + will + be + V4 + Object</span> <span class="hindi">सकारात्मक: कर्ता + will + be + V4 + कर्म</span></li>
+                    <li><span class="english">Negative: Subject + will + not + be + V4 + Object</span> <span class="hindi">नकारात्मक: कर्ता + will + not + be + V4 + कर्म</span></li>
+                    <li><span class="english">Interrogative: Will + Subject + be + V4 + Object?</span> <span class="hindi">प्रश्नवाचक: Will + कर्ता + be + V4 + कर्म?</span></li>
+                    <li><span class="english">Negative-Interrogative: Will + Subject + not + be + V4 + Object?</span> <span class="hindi">नकारात्मक-प्रश्नवाचक: Will + कर्ता + not + be + V4 + कर्म?</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">Affirmative: She <span class="highlight">will be singing</span> at 7 PM.</span> <span class="hindi">वह शाम 7 बजे <span class="highlight">गा रही होगी</span>।</span></li>
+                    <li><span class="english">Negative: She <span class="highlight">will not be singing</span>.</span> <span class="hindi">वह <span class="highlight">नहीं गा रही होगी</span>।</span></li>
+                    <li><span class="english">Interrogative: <span class="highlight">Will</span> she be singing?</span> <span class="hindi"><span class="highlight">क्या</span> वह गा रही होगी?</span></li>
+                    <li><span class="english">Negative-Interrogative: <span class="highlight">Will</span> she not be singing?</span> <span class="hindi"><span class="highlight">क्या</span> वह नहीं गा रही होगी?</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Uses</div>
+                <ul>
+                    <li><span class="english">Ongoing Action: I <span class="highlight">will be working</span> tomorrow at 10 AM.</span> <span class="hindi">चल रही क्रिया: मैं कल सुबह 10 बजे <span class="highlight">काम कर रहा होऊँगा</span>।</span></li>
+                    <li><span class="english">Planned Action: They <span class="highlight">will be traveling</span> next month.</span> <span class="hindi">योजित क्रिया: वे अगले महीने <span class="highlight">यात्रा कर रहे होंगे</span>।</span></li>
+                    <li><span class="english">Polite Inquiry: <span class="highlight">Will you be joining</span> us?</span> <span class="hindi">विनम्र पूछताछ: <span class="highlight">क्या आप हमारे साथ शामिल होंगे</span>?</span></li>
+                    <li><span class="english">Expected Action: He <span class="highlight">will be arriving</span> soon.</span> <span class="hindi">अपेक्षित क्रिया: वह जल्द <span class="highlight">पहुँच रहा होगा</span>।</span></li>
+                    <li><span class="english">Interrupted Action: We <span class="highlight">will be studying</span> when you visit.</span> <span class="hindi">बाधित क्रिया: हम <span class="highlight">पढ़ रहे होंगे</span> जब आप आएँगे।</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Rules</div>
+                <ul>
+                    <li><span class="english">Use will + be + V4.</span> <span class="hindi">Will + be + V4 का उपयोग।</span></li>
+                    <li><span class="english">Often used with specific future time.</span> <span class="hindi">अक्सर विशिष्ट भविष्य समय के साथ उपयोग।</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-check-circle"></i> Future Perfect Tense (भविष्य पूर्ण काल)</h3>
+            <p class="english"><strong>Definition:</strong> The Future Perfect Tense expresses actions that will be completed by a specific time in the future, emphasizing the completion of the action before another future event or time.</p>
+            <p class="hindi"><strong>परिभाषा:</strong> भविष्य पूर्ण काल उन क्रियाओं को व्यक्त करता है जो भविष्य में किसी विशिष्ट समय तक पूरी हो जाएँगी, और किसी अन्य भविष्य घटना या समय से पहले क्रिया के पूर्ण होने पर जोर देता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> How to Identify</div>
+                <ul>
+                    <li><span class="english">Look for will + have + V3 (past participle).</span> <span class="hindi">Will + have + V3 (भूतकालिक कृदंत) देखें।</span></li>
+                    <li><span class="english">Time markers: by tomorrow, by next week, by 2026.</span> <span class="hindi">समय चिह्न: कल तक, अगले हफ्ते तक, 2026 तक।</span></li>
+                    <li><span class="english">Context: Completion before a future point.</span> <span class="hindi">संदर्भ: भविष्य बिंदु से पहले पूर्णता।</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Related Words</div>
+                <ul>
+                    <li><span class="english">by tomorrow, by next week/month, by 2026, by then, by the time</span> <span class="hindi">कल तक, अगले हफ्ते/महीने तक, 2026 तक, तब तक, उस समय तक</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Structure</div>
+                <ul>
+                    <li><span class="english">Affirmative: Subject + will + have + V3 + Object</span> <span class="hindi">सकारात्मक: कर्ता + will + have + V3 + कर्म</span></li>
+                    <li><span class="english">Negative: Subject + will + not + have + V3 + Object</span> <span class="hindi">नकारात्मक: कर्ता + will + not + have + V3 + कर्म</span></li>
+                    <li><span class="english">Interrogative: Will + Subject + have + V3 + Object?</span> <span class="hindi">प्रश्नवाचक: Will + कर्ता + have + V3 + कर्म?</span></li>
+                    <li><span class="english">Negative-Interrogative: Will + Subject + not + have + V3 + Object?</span> <span class="hindi">नकारात्मक-प्रश्नवाचक: Will + कर्ता + not + have + V3 + कर्म?</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">Affirmative: She <span class="highlight">will have sung</span> by 8 PM.</span> <span class="hindi">वह रात 8 बजे तक <span class="highlight">गा चुकी होगी</span>।</span></li>
+                    <li><span class="english">Negative: She <span class="highlight">will not have sung</span>.</span> <span class="hindi">वह <span class="highlight">नहीं गा चुकी होगी</span>।</span></li>
+                    <li><span class="english">Interrogative: <span class="highlight">Will</span> she have sung?</span> <span class="hindi"><span class="highlight">क्या</span> वह गा चुकी होगी?</span></li>
+                    <li><span class="english">Negative-Interrogative: <span class="highlight">Will</span> she not have sung?</span> <span class="hindi"><span class="highlight">क्या</span> वह नहीं गा चुकी होगी?</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Uses</div>
+                <ul>
+                    <li><span class="english">Completed Action: I <span class="highlight">will have finished</span> by tomorrow.</span> <span class="hindi">पूर्ण क्रिया: मैं कल तक <span class="highlight">पूरा कर चुका होऊँगा</span>।</span></li>
+                    <li><span class="english">Before Future Event: They <span class="highlight">will have arrived</span> by the time you reach.</span> <span class="hindi">भविष्य घटना से पहले: वे तुम्हारे पहुँचने तक <span class="highlight">पहुँच चुके होंगे</span>।</span></li>
+                    <li><span class="english">Assumption: He <span class="highlight">will have completed</span> the task by now.</span> <span class="hindi">अनुमान: वह अब तक कार्य <span class="highlight">पूरा कर चुका होगा</span>।</span></li>
+                    <li><span class="english">Cause of Future State: She <span class="highlight">will have studied</span> enough to pass.</span> <span class="hindi">भविष्य स्थिति का कारण: उसने पास होने के लिए पर्याप्त <span class="highlight">पढ़ लिया होगा</span>।</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Rules</div>
+                <ul>
+                    <li><span class="english">Use will + have + V3.</span> <span class="hindi">Will + have + V3 का उपयोग।</span></li>
+                    <li><span class="english">Always paired with a future time reference.</span> <span class="hindi">हमेशा भविष्य समय संदर्भ के साथ।</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-hourglass"></i> Future Perfect Continuous Tense (भविष्य पूर्ण सतत काल)</h3>
+            <p class="english"><strong>Definition:</strong> The Future Perfect Continuous Tense describes actions that will have been ongoing for a duration by a specific time in the future, emphasizing the continuity and duration of the action up to that point.</p>
+            <p class="hindi"><strong>परिभाषा:</strong> भविष्य पूर्ण सतत काल उन क्रियाओं को व्यक्त करता है जो भविष्य में किसी विशिष्ट समय तक एक अवधि के लिए चल रही होंगी, और उस बिंदु तक क्रिया की निरंतरता और अवधि पर जोर देता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> How to Identify</div>
+                <ul>
+                    <li><span class="english">Look for will + have + been + V4 (verb + -ing).</span> <span class="hindi">Will + have + been + V4 (क्रिया + -ing) देखें।</span></li>
+                    <li><span class="english">Time markers: by next year, for, since, by the time.</span> <span class="hindi">समय चिह्न: अगले साल तक, के लिए, से, उस समय तक।</span></li>
+                    <li><span class="english">Context: Duration up to a future point.</span> <span class="hindi">संदर्भ: भविष्य बिंदु तक अवधि।</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Related Words</div>
+                <ul>
+                    <li><span class="english">by next year, for, since, by the time, by 2026, until</span> <span class="hindi">अगले साल तक, के लिए, से, उस समय तक, 2026 तक, तक</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Structure</div>
+                <ul>
+                    <li><span class="english">Affirmative: Subject + will + have + been + V4 + Object</span> <span class="hindi">सकारात्मक: कर्ता + will + have + been + V4 + कर्म</span></li>
+                    <li><span class="english">Negative: Subject + will + not + have + been + V4 + Object</span> <span class="hindi">नकारात्मक: कर्ता + will + not + have + been + V4 + कर्म</span></li>
+                    <li><span class="english">Interrogative: Will + Subject + have + been + V4 + Object?</span> <span class="hindi">प्रश्नवाचक: Will + कर्ता + have + been + V4 + कर्म?</span></li>
+                    <li><span class="english">Negative-Interrogative: Will + Subject + not + have + been + V4 + Object?</span> <span class="hindi">नकारात्मक-प्रश्नवाचक: Will + कर्ता + not + have + been + V4 + कर्म?</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">Affirmative: She <span class="highlight">will have been singing</span> for two hours by 9 PM.</span> <span class="hindi">वह रात 9 बजे तक दो घंटे से <span class="highlight">गा रही होगी</span>।</span></li>
+                    <li><span class="english">Negative: She <span class="highlight">will not have been singing</span>.</span> <span class="hindi">वह <span class="highlight">नहीं गा रही होगी</span>।</span></li>
+                    <li><span class="english">Interrogative: <span class="highlight">Will</span> she have been singing?</span> <span class="hindi"><span class="highlight">क्या</span> वह गा रही होगी?</span></li>
+                    <li><span class="english">Negative-Interrogative: <span class="highlight">Will</span> she not have been singing?</span> <span class="hindi"><span class="highlight">क्या</span> वह नहीं गा रही होगी?</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Uses</div>
+                <ul>
+                    <li><span class="english">Ongoing Action: I <span class="highlight">will have been studying</span> for five years by 2026.</span> <span class="hindi">चल रही क्रिया: मैं 2026 तक पाँच साल से <span class="highlight">पढ़ रहा होऊँगा</span>।</span></li>
+                    <li><span class="english">Cause of Future State: He <span class="highlight">will have been working</span> all day, so he’ll be tired.</span> <span class="hindi">भविष्य स्थिति का कारण: वह सारा दिन <span class="highlight">काम कर रहा होगा</span>, इसलिए वह थका होगा।</span></li>
+                    <li><span class="english">Duration Emphasis: They <span class="highlight">will have been living</span> here for a decade by next year.</span> <span class="hindi">अवधि पर जोर: वे अगले साल तक एक दशक से यहाँ <span class="highlight">रह रहे होंगे</span>।</span></li>
+                    <li><span class="english">Expected Continuation: She <span class="highlight">will have been practicing</span> until the event.</span> <span class="hindi">अपेक्षित निरंतरता: वह आयोजन तक <span class="highlight">अभ्यास कर रही होगी</span>।</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Rules</div>
+                <ul>
+                    <li><span class="english">Use will + have + been + V4.</span> <span class="hindi">Will + have + been + V4 का उपयोग।</span></li>
+                    <li><span class="english">Emphasizes duration up to a future point.</span> <span class="hindi">भविष्य बिंदु तक अवधि पर जोर देता है।</span></li>
+                </ul>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="card animate delay-4">
+        <h2><i class="fas fa-table"></i> Tense Usage Chart / काल उपयोग चार्ट</h2>
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-chart-line"></i> Overview of Tenses</h3>
+            <p class="english">This chart summarizes the usage, time markers, and structure of all 12 tenses for quick reference.</p>
+            <p class="hindi">यह चार्ट सभी 12 कालों के उपयोग, समय चिह्नों, और संरचना का त्वरित संदर्भ के लिए सारांश देता है।</p>
+            <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+            <table>
+                <tr>
+                    <th>Tense (काल)</th>
+                    <th>Usage (उपयोग)</th>
+                    <th>Time Markers (समय चिह्न)</th>
+                    <th>Structure (संरचना)</th>
+                </tr>
+                <tr>
+                    <td>Simple Present</td>
+                    <td>Habits, facts, schedules, feelings</td>
+                    <td>always, never, daily, every day</td>
+                    <td>Subject + V1/V5; do/does for negatives/questions</td>
+                </tr>
+                <tr>
+                    <td>Present Continuous</td>
+                    <td>Ongoing actions, temporary actions, future plans</td>
+                    <td>now, at the moment, currently, today</td>
+                    <td>Subject + am/is/are + V4</td>
+                </tr>
+                <tr>
+                    <td>Present Perfect</td>
+                    <td>Completed actions with present relevance, experiences</td>
+                    <td>just, already, yet, ever, since, for</td>
+                    <td>Subject + have/has + V3</td>
+                </tr>
+                <tr>
+                    <td>Present Perfect Continuous</td>
+                    <td>Ongoing actions with duration, recent actions</td>
+                    <td>since, for, all day, lately</td>
+                    <td>Subject + have/has + been + V4</td>
+                </tr>
+                <tr>
+                    <td>Simple Past</td>
+                    <td>Completed past actions, past habits</td>
+                    <td>yesterday, last week, ago, in 2020</td>
+                    <td>Subject + V2; did + V1 for negatives/questions</td>
+                </tr>
+                <tr>
+                    <td>Past Continuous</td>
+                    <td>Ongoing past actions, interrupted actions</td>
+                    <td>when, while, at 5 PM, all day</td>
+                    <td>Subject + was/were + V4</td>
+                </tr>
+                <tr>
+                    <td>Past Perfect</td>
+                    <td>Actions completed before another past event</td>
+                    <td>before, after, by the time, already</td>
+                    <td>Subject + had + V3</td>
+                </tr>
+                <tr>
+                    <td>Past Perfect Continuous</td>
+                    <td>Ongoing actions before another past event</td>
+                    <td>for, since, before, until</td>
+                    <td>Subject + had + been + V4</td>
+                </tr>
+                <tr>
+                    <td>Simple Future</td>
+                    <td>Predictions, decisions, scheduled events</td>
+                    <td>tomorrow, next week, soon, in 2026</td>
+                    <td>Subject + will + V1</td>
+                </tr>
+                <tr>
+                    <td>Future Continuous</td>
+                    <td>Ongoing future actions, planned actions</td>
+                    <td>tomorrow at 5 PM, next week, at that time</td>
+                    <td>Subject + will + be + V4</td>
+                </tr>
+                <tr>
+                    <td>Future Perfect</td>
+                    <td>Actions completed by a future time</td>
+                    <td>by tomorrow, by next week, by 2026</td>
+                    <td>Subject + will + have + V3</td>
+                </tr>
+                <tr>
+                    <td>Future Perfect Continuous</td>
+                    <td>Ongoing actions up to a future time</td>
+                    <td>by next year, for, since, by 2026</td>
+                    <td>Subject + will + have + been + V4</td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+    <section class="card animate delay-4">
+        <h2><i class="fas fa-volume-up"></i> Context and Tone / संदर्भ और लहजा</h2>
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-comment"></i> How Tenses Affect Meaning</h3>
+            <p class="english">Tenses change the tone and context of a sentence, affecting how the action is perceived.</p>
+            <p class="hindi">काल वाक्य के लहजे और संदर्भ को बदलते हैं, जिससे क्रिया की धारणा प्रभावित होती है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">Narrative: "I <span class="highlight">was walking</span> when I <span class="highlight">saw</span> a bird." (Storytelling)</span> <span class="hindi">कथन: "मैं <span class="highlight">टहल रहा था</span> जब मैंने एक पक्षी <span class="highlight">देखा</span>।" (कहानी)</span></li>
+                    <li><span class="english">Factual: "The sun <span class="highlight">rises</span> in the east." (General fact)</span> <span class="hindi">तथ्य: "सूरज पूर्व में <span class="highlight">उगता है</span>।" (सामान्य तथ्य)</span></li>
+                    <li><span class="english">Urgent: "I <span class="highlight">am meeting</span> him now!" (Immediate action)</span> <span class="hindi">तत्काल: "मैं अब उससे <span class="highlight">मिल रहा हूँ</span>!" (तत्काल क्रिया)</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-3">
+        <h2><i class="fas fa-briefcase"></i> Practical Applications / व्यावहारिक उपयोग</h2>
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-pen"></i> Using Tenses in Real Life</h3>
+            <p class="english">Tenses are used in conversations, writing, storytelling, and formal communication to convey time and intent accurately.</p>
+            <p class="hindi">काल का उपयोग बातचीत, लेखन, कहानी सुनाने, और औपचारिक संचार में समय और इरादे को सटीक रूप से व्यक्त करने के लिए होता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">Conversation: "I <span class="highlight">have just finished</span> my homework."</span> <span class="hindi">बातचीत: "मैंने अभी-अभी अपना होमवर्क <span class="highlight">पूरा किया</span>।"</span></li>
+                    <li><span class="english">Storytelling: "She <span class="highlight">was walking</span> when it <span class="highlight">started</span> raining."</span> <span class="hindi">कहानी: "वह <span class="highlight">टहल रही थी</span> जब बारिश <span class="highlight">शुरू हुई</span>।"</span></li>
+                    <li><span class="english">Formal Writing: "The project <span class="highlight">will be completed</span> by next month."</span> <span class="hindi">औपचारिक लेखन: "प्रोजेक्ट अगले महीने तक <span class="highlight">पूरा हो जाएगा</span>।"</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-4">
+        <h2><i class="fas fa-tasks"></i> Timeline Diagram / समयरेखा चित्र</h2>
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-stream"></i> Visualizing Tenses</h3>
+            <p class="english">A timeline helps visualize how tenses relate to time. Imagine a horizontal line with "Past" on the left, "Present" in the center, and "Future" on the right.</p>
+            <p class="hindi">समयरेखा काल को समय से जोड़ने में मदद करती है। एक क्षैतिज रेखा की कल्पना करें जिसमें बाईं ओर "भूतकाल", बीच में "वर्तमान", और दाईं ओर "भविष्य" हो।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Description</div>
+                <ul>
+                    <li><span class="english">Simple Past (e.g., "I walked") is a single point in the past.</span> <span class="hindi">भूतकाल सरल (जैसे, "मैं टहला") भूतकाल में एक बिंदु है।</span></li>
+                    <li><span class="english">Present Continuous (e.g., "I am walking") is a line around the present.</span> <span class="hindi">वर्तमान सतत (जैसे, "मैं टहल रहा हूँ") वर्तमान के आसपास एक रेखा है।</span></li>
+                    <li><span class="english">Future Perfect (e.g., "I will have walked") is a point completed in the future.</span> <span class="hindi">भविष्य पूर्ण (जैसे, "मैं टहल चुका होऊँगा") भविष्य में पूर्ण एक बिंदु है।</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Vocab Doctor App - Comprehensive Time & Tense Guide</p>
+        <p>Master English and Hindi grammar with interactive, engaging lessons</p>
+    </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verb (क्रिया) - Grammar App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --light: #f8f9fa;
+            --dark: #2d3436;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --info: #0984e3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 100%;
+            width: 100%;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 1s ease;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 6vw, 2.5rem);
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            color: var(--dark);
+            opacity: 0.8;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+        }
+
+        h2 i {
+            color: var(--accent);
+        }
+
+        .definition {
+            font-size: clamp(0.95rem, 2.5vw, 1rem);
+            margin-bottom: 1rem;
+            padding-left: 0.8rem;
+            border-left: 3px solid var(--secondary);
+        }
+
+        .hindi {
+            color: #e84393;
+            font-weight: 500;
+        }
+
+        .english {
+            color: var(--info);
+            font-weight: 500;
+        }
+
+        ul {
+            list-style-type: none;
+            margin-bottom: 1rem;
+        }
+
+        ul li {
+            padding: 0.4rem 0;
+            padding-left: 1.2rem;
+            position: relative;
+            font-size: clamp(0.9rem, 2.5vw, 0.95rem);
+        }
+
+        ul li::before {
+            content: '•';
+            color: var(--accent);
+            font-size: 1.2rem;
+            position: absolute;
+            left: 0;
+            top: 0.2rem;
+        }
+
+        .example {
+            background: rgba(106, 176, 76, 0.1);
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin: 0.8rem 0;
+            border-left: 3px solid var(--success);
+        }
+
+        .example-title {
+            font-weight: bold;
+            color: var(--success);
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: clamp(0.95rem, 2.5vw, 1rem);
+        }
+
+        .type-card {
+            background: rgba(253, 121, 168, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .type-card:hover {
+            background: rgba(253, 121, 168, 0.2);
+            transform: scale(1.01);
+        }
+
+        .type-title {
+            color: var(--accent);
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: clamp(1.2rem, 3.5vw, 1.4rem);
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, rgba(108, 92, 231, 0.2) 0%, rgba(108, 92, 231, 0) 100%);
+            padding: 0.15rem 0.3rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .feature-box {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: clamp(2rem, 5vw, 2.2rem);
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+
+        .feature-title {
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            margin-bottom: 0.4rem;
+            color: var(--dark);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            color: var(--dark);
+            opacity: 0.7;
+            font-size: clamp(0.8rem, 2.5vw, 0.85rem);
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0.5rem;
+            }
+
+            h1 {
+                font-size: clamp(1.8rem, 5.5vw, 2rem);
+            }
+
+            .subtitle {
+                font-size: clamp(0.9rem, 2.8vw, 1rem);
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+
+            .card {
+                padding: 1rem;
+                border-radius: 10px;
+            }
+
+            h2 {
+                font-size: clamp(1.3rem, 3.8vw, 1.5rem);
+            }
+
+            .definition {
+                font-size: clamp(0.9rem, 2.3vw, 0.95rem);
+                padding-left: 0.5rem;
+            }
+
+            .type-card {
+                padding: 0.8rem;
+                border-radius: 8px;
+            }
+
+            .type-title {
+                font-size: clamp(1.1rem, 3.2vw, 1.2rem);
+            }
+
+            .feature-box {
+                padding: 0.8rem;
+            }
+
+            .feature-icon {
+                font-size: clamp(1.8rem, 4.5vw, 2rem);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0.3rem;
+            }
+
+            h1 {
+                font-size: clamp(1.5rem, 5vw, 1.8rem);
+            }
+
+            .card {
+                padding: 0.8rem;
+                margin-bottom: 1rem;
+            }
+
+            .grid {
+                gap: 0.5rem;
+            }
+
+            ul li {
+                font-size: clamp(0.85rem, 2.3vw, 0.9rem);
+                padding-left: 1rem;
+            }
+
+            .example {
+                padding: 0.6rem;
+            }
+
+            footer {
+                padding: 0.8rem;
+                font-size: clamp(0.75rem, 2.3vw, 0.8rem);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header class="animate">
+        <h1>Verb <span class="hindi">(क्रिया)</span></h1>
+        <p class="subtitle">Words that express actions, states, or occurrences in a sentence</p>
+    </header>
+
+    <section class="card animate delay-1">
+        <h2><i class="fas fa-book-open"></i> Definition / परिभाषा</h2>
+        <div class="definition">
+            <p class="english">A verb is a word that expresses an action, occurrence, or state of being. It is the core of a sentence, indicating what the subject does or is. Verbs are essential for constructing complete sentences.</p>
+            <p class="hindi">क्रिया वह शब्द है जो किसी कार्य, घटना या स्थिति को व्यक्त करता है। यह वाक्य का मूल है, जो दर्शाता है कि कर्ता क्या करता है या है। पूर्ण वाक्य रचना के लिए क्रिया आवश्यक है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Example</div>
+                <p class="english">In "Rahul <span class="highlight">runs</span> fast", <span class="highlight">runs</span> is a verb showing action.</p>
+                <p class="hindi">"राहुल <span class="highlight">दौड़ता</span> है तेजी से" में, <span class="highlight">दौड़ता</span> एक क्रिया है जो कार्य दिखाती है।</p>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="feature-box floating">
+                <div class="feature-icon"><i class="fas fa-running"></i></div>
+                <h3 class="feature-title">Action</h3>
+                <p class="hindi">कार्य</p>
+                <p>run, sing, write</p>
+            </div>
+
+            <div class="feature-box floating" style="animation-delay: 0.3s;">
+                <div class="feature-icon"><i class="fas fa-link"></i></div>
+                <h3 class="feature-title">Linking</h3>
+                <p class="hindi">संयोजक</p>
+                <p>am, is, are</p>
+            </div>
+
+            <div class="feature-box floating" style="animation-delay: 0.6s;">
+                <div class="feature-icon"><i class="fas fa-tools"></i></div>
+                <h3 class="feature-title">Auxiliary</h3>
+                <p class="hindi">सहायक</p>
+                <p>have, can, will</p>
+            </div>
+
+            <div class="feature-box floating" style="animation-delay: 0.9s;">
+                <div class="feature-icon"><i class="fas fa-exchange-alt"></i></div>
+                <h3 class="feature-title">Transitive</h3>
+                <p class="hindi">सकर्मक</p>
+                <p>eat, read, kick</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-2">
+        <h2><i class="fas fa-layer-group"></i> Types of Verbs / क्रिया के प्रकार</h2>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-running"></i> Action Verb (क्रियात्मक क्रिया)</h3>
+            <p class="english">An action verb expresses a physical or mental action performed by the subject.</p>
+            <p class="hindi">क्रियात्मक क्रिया कर्ता द्वारा किए गए शारीरिक या मानसिक कार्य को व्यक्त करती है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">run, sing, write, think, dance</span></li>
+                    <li><span class="hindi">दौड़ना, गाना, लिखना, सोचना, नाचना</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-link"></i> Linking Verb (संयोजक क्रिया)</h3>
+            <p class="english">A linking verb connects the subject to additional information about the subject, describing its state or identity.</p>
+            <p class="hindi">संयोजक क्रिया कर्ता को उसके बारे में अतिरिक्त जानकारी से जोड़ती है, उसकी स्थिति या पहचान का वर्णन करती है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">am, is, are, seem, become</span></li>
+                    <li><span class="hindi">हूँ, है, हैं, लगता है, बनना</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-tools"></i> Auxiliary Verb (सहायक क्रिया)</h3>
+            <p class="english">An auxiliary verb helps the main verb by indicating tense, mood, or voice, often called helping verbs.</p>
+            <p class="hindi">सहायक क्रिया मुख्य क्रिया की सहायता करती है, जो काल, भाव या वाच्य को दर्शाती है, इसे अक्सर सहायक क्रिया कहा जाता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">have, has, had, can, will</span></li>
+                    <li><span class="hindi">है, था, कर सकता है, होगा</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-exchange-alt"></i> Transitive Verb (सकर्मक क्रिया)</h3>
+            <p class="english">A transitive verb requires a direct object to complete its meaning.</p>
+            <p class="hindi">सकर्मक क्रिया को अपने अर्थ को पूर्ण करने के लिए प्रत्यक्ष कर्म की आवश्यकता होती है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">eat, kick, read, write, paint</span></li>
+                    <li><span class="hindi">खाना, लात मारना, पढ़ना, लिखना, चित्र बनाना</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-arrows-alt-h"></i> Intransitive Verb (अकर्मक क्रिया)</h3>
+            <p class="english">An intransitive verb does not require a direct object to complete its meaning.</p>
+            <p class="hindi">अकर्मक क्रिया को अपने अर्थ को पूर्ण करने के लिए प्रत्यक्ष कर्म की आवश्यकता नहीं होती।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">run, sleep, laugh, arrive, cry</span></li>
+                    <li><span class="hindi">दौड़ना, सोना, हँसना, पहुँचना, रोना</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-check-circle"></i> Regular Verb (नियमित क्रिया)</h3>
+            <p class="english">A regular verb follows a standard pattern for forming past tense and past participle (usually by adding -ed).</p>
+            <p class="hindi">नियमित क्रिया भूतकाल और भूतकालिक कृदंत बनाने के लिए एक मानक पैटर्न का पालन करती है (आमतौर पर -ed जोड़कर)।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">walk, walked, play, played, learn, learned</span></li>
+                    <li><span class="hindi">चलना, चला, खेलना, खेला, सीखना, सीखा</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-random"></i> Irregular Verb (अनियमित क्रिया)</h3>
+            <p class="english">An irregular verb does not follow the standard pattern for forming past tense and past participle.</p>
+            <p class="hindi">अनियमित क्रिया भूतकाल और भूतकालिक कृदंत बनाने के लिए मानक पैटर्न का पालन नहीं करती।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">go, went, gone; sing, sang, sung</span></li>
+                    <li><span class="hindi">जाना, गया, गया; गाना, गाया, गाया</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-clock"></i> Verb Tenses (क्रिया काल)</h3>
+            <p class="english">Verbs change form to indicate the time of an action or state, categorized into past, present, and future tenses.</p>
+            <p class="hindi">क्रिया कार्य या स्थिति के समय को दर्शाने के लिए रूप बदलती है, जो भूतकाल, वर्तमान काल और भविष्य काल में वर्गीकृत होती हैं।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">Past: walked, sang; Present: walk, sing; Future: will walk, will sing</span></li>
+                    <li><span class="hindi">भूतकाल: चला, गाया; वर्तमान: चलता है, गाता है; भविष्य: चलेगा, गाएगा</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-3">
+        <h2><i class="fas fa-lightbulb"></i> Key Points About Verbs / क्रिया के बारे में मुख्य बिंदु</h2>
+        <ul>
+            <li><span class="english">Verbs express actions, states, or occurrences.</span> <span class="hindi">क्रिया कार्य, स्थिति या घटनाओं को व्यक्त करती है।</span></li>
+            <li><span class="english">Verbs must agree with the subject in number and person.</span> <span class="hindi">क्रिया को कर्ता के साथ संख्या और पुरुष में सहमत होना चाहिए।</span></li>
+            <li><span class="english">Verbs change form to indicate tense (past, present, future).</span> <span class="hindi">क्रिया काल (भूतकाल, वर्तमान, भविष्य) को दर्शाने के लिए रूप बदलती है।</span></li>
+            <li><span class="english">Verbs can be conjugated based on person, number, and tense.</span> <span class="hindi">क्रिया को पुरुष, संख्या और काल के आधार पर संयुग्मित किया जा सकता है।</span></li>
+            <li><span class="english">Verbs can express mood (indicative, imperative, subjunctive).</span> <span class="hindi">क्रिया भाव (सूचक, आदेश, संभाव्य) को व्यक्त कर सकती है।</span></li>
+            <li><span class="english">Verbs can be active or passive voice.</span> <span class="hindi">क्रिया सक्रिय या निष्क्रिय वाच्य में हो सकती है।</span></li>
+            <li><span class="english">Auxiliary verbs help form complex tenses and questions.</span> <span class="hindi">सहायक क्रियाएँ जटिल काल और प्रश्न बनाने में मदद करती हैं।</span></li>
+            <li><span class="english">Transitive verbs need an object; intransitive verbs do not.</span> <span class="hindi">सकर्मक क्रिया को कर्म की आवश्यकता होती है; अकर्मक क्रिया को नहीं।</span></li>
+            <li><span class="english">Irregular verbs have unique past and participle forms.</span> <span class="hindi">अनियमित क्रियाओं के भूतकाल और कृदंत रूप अद्वितीय होते हैं।</span></li>
+            <li><span class="english">Verbs are essential for sentence completeness.</span> <span class="hindi">वाक्य की पूर्णता के लिए क्रिया आवश्यक है।</span></li>
+        </ul>
+    </section>
+
+    <section class="card animate delay-4">
+        <h2><i class="fas fa-question-circle"></i> How to Identify Verbs / क्रिया की पहचान कैसे करें</h2>
+        <ul>
+            <li><span class="english">Look for words that show action, state, or occurrence in a sentence.</span> <span class="hindi">वाक्य में कार्य, स्थिति या घटना दिखाने वाले शब्दों को देखें।</span></li>
+            <li><span class="english">Check if the word answers "what is happening?" or "what is the subject doing?"</span> <span class="hindi">जाँच करें कि क्या शब्द "क्या हो रहा है?" या "कर्ता क्या कर रहा है?" का जवाब देता है।</span></li>
+            <li><span class="english">Identify words that change form to show tense (e.g., walk, walked).</span> <span class="hindi">ऐसे शब्दों की पहचान करें जो काल दिखाने के लिए रूप बदलते हैं (उदाहरण, चलना, चला)।</span></li>
+            <li><span class="english">Look for words that can take auxiliary verbs (e.g., is running, will sing).</span> <span class="hindi">ऐसे शब्दों को देखें जो सहायक क्रियाएँ ले सकते हैं (उदाहरण, दौड़ रहा है, गाएगा)।</span></li>
+            <li><span class="english">Check if the word is essential for the sentence to make sense.</span> <span class="hindi">जाँच करें कि क्या शब्द वाक्य के अर्थ के लिए आवश्यक है।</span></li>
+        </ul>
+
+        <div class="example">
+            <div class="example-title"><i class="fas fa-star"></i> Practice Examples</div>
+            <p class="english">Identify the verbs in these sentences:</p>
+            <p class="hindi">इन वाक्यों में क्रिया पहचानें:</p>
+            <ul>
+                <li><span class="english">Rahul <span class="highlight">sings</span> beautifully.</span></li>
+                <li><span class="hindi">राहुल <span class="highlight">गाता</span> है सुंदरता से।</span></li>
+                <li><span class="english">The book <span class="highlight">is</span> on the table.</span></li>
+                <li><span class="hindi">किताब मेज पर <span class="highlight">है</span>।</span></li>
+                <li><span class="english">They <span class="highlight">have finished</span> their homework.</span></li>
+                <li><span class="hindi">उन्होंने अपना गृहकार्य <span class="highlight">पूरा किया</span> है।</span></li>
+            </ul>
+        </div>
+
+        <div class="example">
+            <div class="example-title"><i class="fas fa-lightbulb"></i> Tip for Beginners</div>
+            <p class="english">To practice identifying verbs, read a sentence and ask, "What is the action or state?" The word that answers this is usually the verb. Try changing the tense of the word to confirm it’s a verb (e.g., run, ran, running).</p>
+            <p class="hindi">क्रिया की पहचान का अभ्यास करने के लिए, एक वाक्य पढ़ें और पूछें, "कार्य या स्थिति क्या है?" जो शब्द इसका जवाब देता है, वह आमतौर पर क्रिया होता है। शब्द का काल बदलकर पुष्टि करें कि यह क्रिया है (उदाहरण, दौड़ना, दौड़ा, दौड़ रहा)।</p>
+        </div>
+    </section>
+
+    <section class="card animate delay-4">
+        <h2><i class="fas fa-exclamation-circle"></i> Common Mistakes with Verbs / क्रिया के साथ सामान्य गलतियाँ</h2>
+        <ul>
+            <li><span class="english">Using incorrect verb tense (e.g., "She go yesterday" instead of "went").</span> <span class="hindi">गलत क्रिया काल का उपयोग (उदाहरण, "वह कल जा" के बजाय "गई")।</span></li>
+            <li><span class="english">Subject-verb agreement errors (e.g., "They runs" instead of "run").</span> <span class="hindi">कर्ता-क्रिया समझौता त्रुटियाँ (उदाहरण, "वे दौड़ता है" के बजाय "दौड़ते हैं")।</span></li>
+            <li><span class="english">Confusing transitive and intransitive verbs (e.g., "I lay the book" instead of "lie").</span> <span class="hindi">सकर्मक और अकर्मक क्रिया में भ्रम (उदाहरण, "मैं किताब रखता हूँ" के बजाय "लेटता हूँ")।</span></li>
+            <li><span class="english">Using irregular verb forms incorrectly (e.g., "I have went" instead of "gone").</span> <span class="hindi">अनियमित क्रिया रूपों का गलत उपयोग (उदाहरण, "मैं गया है" के बजाय "गया हुआ है")।</span></li>
+            <li><span class="english">Omitting auxiliary verbs in complex tenses (e.g., "I finished" instead of "I have finished").</span> <span class="hindi">जटिल काल में सहायक क्रिया छोड़ना (उदाहरण, "मैं पूरा किया" के बजाय "मैंने पूरा किया")।</span></li>
+        </ul>
+        <div class="example">
+            <div class="example-title"><i class="fas fa-star"></i> Correct the Mistakes</div>
+            <p class="english">Incorrect: "She sing yesterday." Correct: "She <span class="highlight">sang</span> yesterday."</p>
+            <p class="hindi">गलत: "वह कल गाना।" सही: "वह कल <span class="highlight">गाई</span>।"</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Vocab Doctor App - Comprehensive Verb Guide</p>
+        <p>Master English and Hindi grammar with interactive, engaging lessons</p>
+    </footer>
+</div>
+</body>
+</html>

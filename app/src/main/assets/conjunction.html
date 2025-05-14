@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conjunction (समुच्चयबोधक) - Grammar App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --light: #f8f9fa;
+            --dark: #2d3436;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --info: #0984e3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 100%;
+            width: 100%;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 1s ease;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 6vw, 2.5rem);
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            color: var(--dark);
+            opacity: 0.8;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+        }
+
+        h2 i {
+            color: var(--accent);
+        }
+
+        .definition {
+            font-size: clamp(0.95rem, 2.5vw, 1rem);
+            margin-bottom: 1rem;
+            padding-left: 0.8rem;
+            border-left: 3px solid var(--secondary);
+        }
+
+        .hindi {
+            color: #e84393;
+            font-weight: 500;
+        }
+
+        .english {
+            color: var(--info);
+            font-weight: 500;
+        }
+
+        ul {
+            list-style-type: none;
+            margin-bottom: 1rem;
+        }
+
+        ul li {
+            padding: 0.4rem 0;
+            padding-left: 1.2rem;
+            position: relative;
+            font-size: clamp(0.9rem, 2.5vw, 0.95rem);
+        }
+
+        ul li::before {
+            content: '•';
+            color: var(--accent);
+            font-size: 1.2rem;
+            position: absolute;
+            left: 0;
+            top: 0.2rem;
+        }
+
+        .example {
+            background: rgba(106, 176, 76, 0.1);
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin: 0.8rem 0;
+            border-left: 3px solid var(--success);
+        }
+
+        .example-title {
+            font-weight: bold;
+            color: var(--success);
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: clamp(0.95rem, 2.5vw, 1rem);
+        }
+
+        .type-card {
+            background: rgba(253, 121, 168, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .type-card:hover {
+            background: rgba(253, 121, 168, 0.2);
+            transform: scale(1.01);
+        }
+
+        .type-title {
+            color: var(--accent);
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: clamp(1.2rem, 3.5vw, 1.4rem);
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, rgba(108, 92, 231, 0.2) 0%, rgba(108, 92, 231, 0) 100%);
+            padding: 0.15rem 0.3rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .feature-box {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: clamp(2rem, 5vw, 2.2rem);
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+
+        .feature-title {
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            margin-bottom: 0.4rem;
+            color: var(--dark);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            color: var(--dark);
+            opacity: 0.7;
+            font-size: clamp(0.8rem, 2.5vw, 0.85rem);
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0.5rem;
+            }
+
+            h1 {
+                font-size: clamp(1.8rem, 5.5vw, 2rem);
+            }
+
+            .subtitle {
+                font-size: clamp(0.9rem, 2.8vw, 1rem);
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+
+            .card {
+                padding: 1rem;
+                border-radius: 10px;
+            }
+
+            h2 {
+                font-size: clamp(1.3rem, 3.8vw, 1.5rem);
+            }
+
+            .definition {
+                font-size: clamp(0.9rem, 2.3vw, 0.95rem);
+                padding-left: 0.5rem;
+            }
+
+            .type-card {
+                padding: 0.8rem;
+                border-radius: 8px;
+            }
+
+            .type-title {
+                font-size: clamp(1.1rem, 3.2vw, 1.2rem);
+            }
+
+            .feature-box {
+                padding: 0.8rem;
+            }
+
+            .feature-icon {
+                font-size: clamp(1.8rem, 4.5vw, 2rem);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0.3rem;
+            }
+
+            h1 {
+                font-size: clamp(1.5rem, 5vw, 1.8rem);
+            }
+
+            .card {
+                padding: 0.8rem;
+                margin-bottom: 1rem;
+            }
+
+            .grid {
+                gap: 0.5rem;
+            }
+
+            ul li {
+                font-size: clamp(0.85rem, 2.3vw, 0.9rem);
+                padding-left: 1rem;
+            }
+
+            .example {
+                padding: 0.6rem;
+            }
+
+            footer {
+                padding: 0.8rem;
+                font-size: clamp(0.75rem, 2.3vw, 0.8rem);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header class="animate">
+        <h1>Conjunction <span class="hindi">(समुच्चयबोधक)</span></h1>
+        <p class="subtitle">Words that connect words, phrases, or clauses in a sentence</p>
+    </header>
+
+    <section class="card animate delay-1">
+        <h2><i class="fas fa-book-open"></i> Definition / परिभाषा</h2>
+        <div class="definition">
+            <p class="english">A conjunction is a word that joins words, phrases, or clauses together in a sentence, enabling the creation of complex and compound sentences. Conjunctions enhance sentence variety and clarity by linking related ideas.</p>
+            <p class="hindi">समुच्चयबोधक वह शब्द है जो वाक्य में शब्दों, वाक्यांशों, या उपवाक्यों को जोड़ता है, जिससे जटिल और संयुक्त वाक्य बनते हैं। समुच्चयबोधक संबंधित विचारों को जोड़कर वाक्य की विविधता और स्पष्टता को बढ़ाते हैं।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Example</div>
+                <p class="english">In "She wanted to go, <span class="highlight">but</span> it was raining", <span class="highlight">but</span> is a conjunction connecting two clauses.</p>
+                <p class="hindi">"वह जाना चाहती थी, <span class="highlight">लेकिन</span> बारिश हो रही थी" में, <span class="highlight">लेकिन</span> एक समुच्चयबोधक है जो दो उपवाक्यों को जोड़ता है।</p>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="feature-box floating">
+                <div class="feature-icon"><i class="fas fa-link"></i></div>
+                <h3 class="feature-title">Coordinating</h3>
+                <p class="hindi">समन्वयी</p>
+                <p>and, but, or</p>
+            </div>
+
+            <div class="feature-box floating" style="animation-delay: 0.3s;">
+                <div class="feature-icon"><i class="fas fa-sitemap"></i></div>
+                <h3 class="feature-title">Subordinating</h3>
+                <p class="hindi">अधीनस्थ</p>
+                <p>if, because, although</p>
+            </div>
+
+            <div class="feature-box floating" style="animation-delay: 0.6s;">
+                <div class="feature-icon"><i class="fas fa-exchange-alt"></i></div>
+                <h3 class="feature-title">Correlative</h3>
+                <p class="hindi">सहसंबंधी</p>
+                <p>either...or, neither...nor</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-2">
+        <h2><i class="fas fa-layer-group"></i> Types of Conjunctions / समुच्चयबोधक के प्रकार</h2>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-link"></i> Coordinating Conjunctions (समन्वयी समुच्चयबोधक)</h3>
+            <p class="english">Coordinating conjunctions join words, phrases, or independent clauses of equal grammatical rank, creating compound sentences.</p>
+            <p class="hindi">समन्वयी समुच्चयबोधक शब्दों, वाक्यांशों, या समान व्याकरणिक स्तर के स्वतंत्र उपवाक्यों को जोड़ते हैं, जिससे संयुक्त वाक्य बनते हैं।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Common Coordinating Conjunctions</div>
+                <ul>
+                    <li>
+                        <strong class="english">And:</strong> Adds information or connects similar ideas.
+                        <ul>
+                            <li><span class="english">Usage: Joins two elements of equal importance, showing addition.</span></li>
+                            <li><span class="hindi">उपयोग: समान महत्व के दो तत्वों को जोड़ता है, जोड़ को दर्शाता है।</span></li>
+                            <li><span class="english">Rules: Use a comma before "and" in a list of three or more items (e.g., apples, oranges, and bananas).</span></li>
+                            <li><span class="hindi">नियम: तीन या अधिक वस्तुओं की सूची में "और" से पहले अल्पविराम का उपयोग करें (उदाहरण, सेब, संतरे, और केले)।</span></li>
+                            <li><span class="english">Example: She bought apples <span class="highlight">and</span> oranges.</span></li>
+                            <li><span class="hindi">उदाहरण: उसने सेब <span class="highlight">और</span> संतरे खरीदे।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">But:</strong> Shows contrast or exception.
+                        <ul>
+                            <li><span class="english">Usage: Connects two contrasting ideas or introduces an exception.</span></li>
+                            <li><span class="hindi">उपयोग: दो विरोधी विचारों को जोड़ता है या एक अपवाद प्रस्तुत करता है।</span></li>
+                            <li><span class="english">Rules: Use "but" to show opposition between clauses (e.g., wanted to go, but couldn’t).</span></li>
+                            <li><span class="hindi">नियम: उपवाक्यों के बीच विरोध दिखाने के लिए "लेकिन" का उपयोग करें (उदाहरण, जाना चाहता था, लेकिन नहीं जा सका)।</span></li>
+                            <li><span class="english">Example: He studied hard <span class="highlight">but</span> failed the exam.</span></li>
+                            <li><span class="hindi">उदाहरण: उसने कठिन पढ़ाई की <span class="highlight">लेकिन</span> परीक्षा में असफल रहा।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">Or:</strong> Presents alternatives or choices.
+                        <ul>
+                            <li><span class="english">Usage: Offers options or alternatives between two elements.</span></li>
+                            <li><span class="hindi">उपयोग: दो तत्वों के बीच विकल्प या वैकल्पिकता प्रस्तुत करता है।</span></li>
+                            <li><span class="english">Rules: Use "or" to indicate a choice (e.g., tea or coffee).</span></li>
+                            <li><span class="hindi">नियम: विकल्प दर्शाने के लिए "या" का उपयोग करें (उदाहरण, चाय या कॉफी)।</span></li>
+                            <li><span class="english">Example: Do you want tea <span class="highlight">or</span> coffee?</span></li>
+                            <li><span class="hindi">उदाहरण: क्या आप चाय <span class="highlight">या</span> कॉफी चाहते हैं?</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">Yet:</strong> Indicates contrast, often with unexpected results.
+                        <ul>
+                            <li><span class="english">Usage: Shows contrast, similar to "but," often with surprising outcomes.</span></li>
+                            <li><span class="hindi">उपयोग: विरोध दर्शाता है, "लेकिन" के समान, अक्सर आश्चर्यजनक परिणामों के साथ।</span></li>
+                            <li><span class="english">Rules: Use "yet" for contrast with an unexpected twist (e.g., tried hard, yet failed).</span></li>
+                            <li><span class="hindi">नियम: अप्रत्याशित मोड़ के साथ विरोध के लिए "फिर भी" का उपयोग करें (उदाहरण, कठिन प्रयास किया, फिर भी असफल रहा)।</span></li>
+                            <li><span class="english">Example: She was tired <span class="highlight">yet</span> kept working.</span></li>
+                            <li><span class="hindi">उदाहरण: वह थक गई थी <span class="highlight">फिर भी</span> काम करती रही।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">So:</strong> Shows result or consequence.
+                        <ul>
+                            <li><span class="english">Usage: Indicates the result or consequence of a previous statement.</span></li>
+                            <li><span class="hindi">उपयोग: पिछले कथन के परिणाम या नतीजे को दर्शाता है।</span></li>
+                            <li><span class="english">Rules: Use "so" to show cause and effect (e.g., rained, so we stayed).</span></li>
+                            <li><span class="hindi">नियम: कारण और प्रभाव दिखाने के लिए "इसलिए" का उपयोग करें (उदाहरण, बारिश हुई, इसलिए हम रुके)।</span></li>
+                            <li><span class="english">Example: It was late, <span class="highlight">so</span> we left.</span></li>
+                            <li><span class="hindi">उदाहरण: देर हो गई थी, <span class="highlight">इसलिए</span> हम चले गए।</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-sitemap"></i> Subordinating Conjunctions (अधीनस्थ समुच्चयबोधक)</h3>
+            <p class="english">Subordinating conjunctions connect a dependent clause to an independent clause, showing relationships like cause, time, condition, or contrast.</p>
+            <p class="hindi">अधीनस्थ समुच्चयबोधक एक आश्रित उपवाक्य को स्वतंत्र उपवाक्य से जोड़ते हैं, कारण, समय, स्थिति, या विरोध जैसे संबंध दिखाते हैं।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Common Subordinating Conjunctions</div>
+                <ul>
+                    <li>
+                        <strong class="english">Because:</strong> Indicates cause or reason.
+                        <ul>
+                            <li><span class="english">Usage: Explains why something happened, linking cause to effect.</span></li>
+                            <li><span class="hindi">उपयोग: यह बताता है कि कुछ क्यों हुआ, कारण को प्रभाव से जोड़ता है।</span></li>
+                            <li><span class="english">Rules: Use "because" to introduce a reason (e.g., stayed because it rained).</span></li>
+                            <li><span class="hindi">नियम: कारण प्रस्तुत करने के लिए "क्योंकि" का उपयोग करें (उदाहरण, बारिश के कारण रुके)।</span></li>
+                            <li><span class="english">Example: We stayed home <span class="highlight">because</span> it was raining.</span></li>
+                            <li><span class="hindi">उदाहरण: हम घर पर रुके <span class="highlight">क्योंकि</span> बारिश हो रही थी।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">If:</strong> Shows condition.
+                        <ul>
+                            <li><span class="english">Usage: Introduces a condition that must be met for the main clause to occur.</span></li>
+                            <li><span class="hindi">उपयोग: एक ऐसी स्थिति प्रस्तुत करता है जो मुख्य उपवाक्य के घटित होने के लिए पूरी होनी चाहिए।</span></li>
+                            <li><span class="english">Rules: Use "if" for hypothetical or conditional situations (e.g., if it rains).</span></li>
+                            <li><span class="hindi">नियम: काल्पनिक या सशर्त स्थितियों के लिए "अगर" का उपयोग करें (उदाहरण, अगर बारिश हो)।</span></li>
+                            <li><span class="english">Example: I’ll go <span class="highlight">if</span> you come.</span></li>
+                            <li><span class="hindi">उदाहरण: मैं जाऊँगा <span class="highlight">अगर</span> तुम आओ।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">Although:</strong> Indicates contrast or concession.
+                        <ul>
+                            <li><span class="english">Usage: Shows a contrast between the dependent and main clauses, often conceding a point.</span></li>
+                            <li><span class="hindi">उपयोग: आश्रित और मुख्य उपवाक्यों के बीच विरोध दर्शाता है, अक्सर एक बिंदु को स्वीकार करता है।</span></li>
+                            <li><span class="english">Rules: Use "although" for contrasting ideas (e.g., although tired).</span></li>
+                            <li><span class="hindi">नियम: विरोधी विचारों के लिए "हालांकि" का उपयोग करें (उदाहरण, हालांकि थका हुआ)।</span></li>
+                            <li><span class="english">Example: <span class="highlight">Although</span> she was tired, she finished the work.</span></li>
+                            <li><span class="hindi">उदाहरण: <span class="highlight">हालांकि</span> वह थक गई थी, उसने काम पूरा किया।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">When:</strong> Indicates time.
+                        <ul>
+                            <li><span class="english">Usage: Specifies the time at which the main clause occurs.</span></li>
+                            <li><span class="hindi">उपयोग: वह समय निर्दिष्ट करता है जब मुख्य उपवाक्य घटित होता है।</span></li>
+                            <li><span class="english">Rules: Use "when" for simultaneous events (e.g., when I arrived).</span></li>
+                            <li><span class="hindi">नियम: एक साथ होने वाली घटनाओं के लिए "जब" का उपयोग करें (उदाहरण, जब मैं पहुँचा)।</span></li>
+                            <li><span class="english">Example: Call me <span class="highlight">when</span> you arrive.</span></li>
+                            <li><span class="hindi">उदाहरण: मुझे फोन करो <span class="highlight">जब</span> तुम पहुँचो।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">Since:</strong> Indicates time or cause.
+                        <ul>
+                            <li><span class="english">Usage: Shows the starting point of an event or a reason for something.</span></li>
+                            <li><span class="hindi">उपयोग: किसी घटना का प्रारंभिक बिंदु या किसी चीज का कारण दर्शाता है।</span></li>
+                            <li><span class="english">Rules: Use "since" for time (from a point) or cause (e.g., since Monday).</span></li>
+                            <li><span class="hindi">नियम: समय (किसी बिंदु से) या कारण के लिए "जब से" का उपयोग करें (उदाहरण, सोमवार से)।</span></li>
+                            <li><span class="english">Example: She’s been happy <span class="highlight">since</span> she moved.</span></li>
+                            <li><span class="hindi">उदाहरण: वह खुश है <span class="highlight">जब से</span> वह स्थानांतरित हुई।</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-exchange-alt"></i> Correlative Conjunctions (सहसंबंधी समुच्चयबोधक)</h3>
+            <p class="english">Correlative conjunctions are pairs of conjunctions that work together to connect equal elements in a sentence, emphasizing relationships like choice or negation.</p>
+            <p class="hindi">सहसंबंधी समुच्चयबोधक जोड़े में कार्य करने वाले समुच्चयबोधक हैं जो वाक्य में समान तत्वों को जोड़ते हैं, विकल्प या नकार जैसे संबंधों पर जोर देते हैं।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Common Correlative Conjunctions</div>
+                <ul>
+                    <li>
+                        <strong class="english">Either...Or:</strong> Presents two positive choices.
+                        <ul>
+                            <li><span class="english">Usage: Offers two alternatives, where one or both may be true.</span></li>
+                            <li><span class="hindi">उपयोग: दो विकल्प प्रस्तुत करता है, जहाँ एक या दोनों सत्य हो सकते हैं।</span></li>
+                            <li><span class="english">Rules: Ensure parallel structure (e.g., either noun or noun).</span></li>
+                            <li><span class="hindi">नियम: समानांतर संरचना सुनिश्चित करें (उदाहरण, या तो संज्ञा या संज्ञा)।</span></li>
+                            <li><span class="english">Example: You can <span class="highlight">either</span> walk <span class="highlight">or</span> take a bus.</span></li>
+                            <li><span class="hindi">उदाहरण: तुम <span class="highlight">या तो</span> पैदल चल सकते हो <span class="highlight">या</span> बस ले सकते हो।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">Neither...Nor:</strong> Negates two choices.
+                        <ul>
+                            <li><span class="english">Usage: Denies both alternatives, indicating neither is true.</span></li>
+                            <li><span class="hindi">उपयोग: दोनों विकल्पों को नकारता है, यह दर्शाता है कि दोनों सत्य नहीं हैं।</span></li>
+                            <li><span class="english">Rules: Use parallel structure and ensure subject-verb agreement.</span></li>
+                            <li><span class="hindi">नियम: समानांतर संरचना का उपयोग करें और कर्ता-क्रिया समझौता सुनिश्चित करें।</span></li>
+                            <li><span class="english">Example: She is <span class="highlight">neither</span> tall <span class="highlight">nor</span> short.</span></li>
+                            <li><span class="hindi">उदाहरण: वह <span class="highlight">न तो</span> लंबी है <span class="highlight">न ही</span> छोटी।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">Not only...But also:</strong> Emphasizes addition.
+                        <ul>
+                            <li><span class="english">Usage: Highlights that both elements are true, adding emphasis.</span></li>
+                            <li><span class="hindi">उपयोग: यह उजागर करता है कि दोनों तत्व सत्य हैं, जोर देता है।</span></li>
+                            <li><span class="english">Rules: Maintain parallel structure (e.g., not only verb but also verb).</span></li>
+                            <li><span class="hindi">नियम: समानांतर संरचना बनाए रखें (उदाहरण, न केवल क्रिया बल्कि क्रिया भी)।</span></li>
+                            <li><span class="english">Example: He is <span class="highlight">not only</span> smart <span class="highlight">but also</span> kind.</span></li>
+                            <li><span class="hindi">उदाहरण: वह <span class="highlight">न केवल</span> होशियार है <span class="highlight">बल्कि</span> दयालु भी।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">Whether...Or:</strong> Presents two possibilities.
+                    <li><span class="english">Usage: Indicates two possible outcomes or conditions, often in uncertainty.</span></li>
+                    <li><span class="hindi">उपयोग: दो संभावित परिणामों या शर्तों को दर्शाता है, अक्सर अनिश्चितता में।</span></li>
+                    <li><span class="english">Rules: Use "whether" to introduce alternatives, often with "or" (e.g., whether to stay or leave).</span></li>
+                    <li><span class="hindi">नियम: विकल्प प्रस्तुत करने के लिए "चाहे" का उपयोग करें, अक्सर "या" के साथ (उदाहरण, रहना या जाना)।</span></li>
+                    <li><span class="english">Example: I don’t know <span class="highlight">whether</span> to stay <span class="highlight">or</span> leave.</span></li>
+                    <li><span class="hindi">उदाहरण: मुझे नहीं पता <span class="highlight">चाहे</span> रहना है <span class="highlight">या</span> जाना है।</span></li>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-3">
+        <h2><i class="fas fa-lightbulb"></i> Key Points About Conjunctions / समुच्चयबोधक के बारे में मुख्य बिंदु</h2>
+        <ul>
+            <li><span class="english">Conjunctions connect words, phrases, or clauses, creating sentence variety.</span> <span class="hindi">समुच्चयबोधक शब्दों, वाक्यांशों, या उपवाक्यों को जोड़ते हैं, वाक्य विविधता बनाते हैं।</span></li>
+            <li><span class="english">Coordinating conjunctions join equal elements, forming compound sentences.</span> <span class="hindi">समन्वयी समुच्चयबोधक समान तत्वों को जोड़ते हैं, संयुक्त वाक्य बनाते हैं।</span></li>
+            <li><span class="english">Subordinating conjunctions link dependent clauses to main clauses, forming complex sentences.</span> <span class="hindi">अधीनस्थ समुच्चयबोधक आश्रित उपवाक्यों को मुख्य उपवाक्यों से जोड़ते हैं, जटिल वाक्य बनाते हैं।</span></li>
+            <li><span class="english">Correlative conjunctions work in pairs to emphasize relationships.</span> <span class="hindi">सहसंबंधी समुच्चयबोधक जोड़ों में कार्य करते हैं ताकि संबंधों पर जोर दिया जाए।</span></li>
+            <li><span class="english">Conjunctions like "and" or "but" require proper punctuation (e.g., commas in lists).</span> <span class="hindi">"और" या "लेकिन" जैसे समुच्चयबोधकों के लिए उचित विराम चिह्न (उदाहरण, सूचियों में अल्पविराम) की आवश्यकता होती है।</span></li>
+            <li><span class="english">Some conjunctions (e.g., yet, so) can also function as adverbs in different contexts.</span> <span class="hindi">कुछ समुच्चयबोधक (उदाहरण, फिर भी, इसलिए) विभिन्न संदर्भों में क्रिया-विशेषण के रूप में भी कार्य कर सकते हैं।</span></li>
+            <li><span class="english">Incorrect conjunction use can lead to run-on sentences or unclear meaning.</span> <span class="hindi">समुच्चयबोधक का गलत उपयोग रन-ऑन वाक्यों या अस्पष्ट अर्थ की ओर ले जा सकता है।</span></li>
+            <li><span class="english">Correlative conjunctions require parallel structure for grammatical accuracy.</span> <span class="hindi">सहसंबंधी समुच्चयबोधकों के लिए व्याकरणिक सटीकता के लिए समानांतर संरचना की आवश्यकता होती है।</span></li>
+            <li><span class="english">Conjunctions help avoid repetition by combining ideas efficiently.</span> <span class="hindi">समुच्चयबोधक विचारों को कुशलतापूर्वक जोड़कर पुनरावृत्ति से बचने में मदद करते हैं।</span></li>
+            <li><span class="english">Some subordinating conjunctions (e.g., because, since) can start a sentence.</span> <span class="hindi">कुछ अधीनस्थ समुच्चयबोधक (उदाहरण, क्योंकि, जब से) वाक्य शुरू कर सकते हैं।</span></li>
+        </ul>
+    </section>
+
+    <section class="card animate delay-4">
+        <h2><i class="fas fa-question-circle"></i> How to Identify Conjunctions / समुच्चयबोधक की पहचान कैसे करें</h2>
+        <ul>
+            <li><span class="english">Look for words that join words, phrases, or clauses in a sentence.</span> <span class="hindi">ऐसे शब्दों को देखें जो वाक्य में शब्दों, वाक्यांशों, या उपवाक्यों को जोड़ते हैं।</span></li>
+            <li><span class="english">Check if the word connects equal parts (coordinating) or a dependent clause (subordinating).</span> <span class="hindi">जाँच करें कि क्या शब्द समान हिस्सों (समन्वयी) या आश्रित उपवाक्य (अधीनस्थ) को जोड़ता है।</span></li>
+            <li><span class="english">Identify paired words like "either...or" for correlative conjunctions.</span> <span class="hindi">"या तो...या" जैसे जोड़े गए शब्दों की पहचान सहसंबंधी समुच्चयबोधकों के लिए करें।</span></li>
+            <li><span class="english">Look for words that answer "why?", "when?", "if?", or show contrast/choice.</span> <span class="hindi">ऐसे शब्दों को देखें जो "क्यों?", "कब?", "अगर?", या विरोध/विकल्प दिखाते हैं।</span></li>
+            <li><span class="english">Differentiate conjunctions from prepositions (e.g., "after" as a conjunction joins clauses, not nouns).</span> <span class="hindi">समुच्चयबोधकों को पूर्वसर्गों से अलग करें (उदाहरण, "बाद" एक समुच्चयबोधक के रूप में उपवाक्यों को जोड़ता है, संज्ञाओं को नहीं)।</span></li>
+        </ul>
+
+        <div class="example">
+            <div class="example-title"><i class="fas fa-star"></i> Practice Examples</div>
+            <p class="english">Identify the conjunctions in these sentences:</p>
+            <p class="hindi">इन वाक्यों में समुच्चयबोधक पहचानें:</p>
+            <ul>
+                <li><span class="english">I wanted to play, <span class="highlight">but</span> it was raining.</span></li>
+                <li><span class="hindi">मैं खेलना चाहता था, <span class="highlight">लेकिन</span> बारिश हो रही थी।</span></li>
+                <li><span class="english">She can sing <span class="highlight">or</span> dance.</span></li>
+                <li><span class="hindi">वह गा सकती है <span class="highlight">या</span> नाच सकती है।</span></li>
+                <li><span class="english">We’ll go <span class="highlight">if</span> the weather is good.</span></li>
+                <li><span class="hindi">हम जाएँगे <span class="highlight">अगर</span> मौसम अच्छा हो।</span></li>
+                <li><span class="english">He is <span class="highlight">not only</span> talented <span class="highlight">but also</span> hardworking.</span></li>
+                <li><span class="hindi">वह <span class="highlight">न केवल</span> प्रतिभाशाली है <span class="highlight">बल्कि</span> मेहनती भी।</span></li>
+            </ul>
+        </div>
+
+        <div class="example">
+            <div class="example-title"><i class="fas fa-lightbulb"></i> Tip for Beginners</div>
+            <p class="english">To identify conjunctions, read a sentence and find words that link two parts, such as words, phrases, or clauses. Test by removing the conjunction to see if the sentence splits into two ideas (e.g., "I ran, but I fell" splits into "I ran" and "I fell").</p>
+            <p class="hindi">समुच्चयबोधकों की पहचान के लिए, एक वाक्य पढ़ें और ऐसे शब्द ढूंढें जो दो हिस्सों, जैसे शब्दों, वाक्यांशों, या उपवाक्यों को जोड़ते हों। समुच्चयबोधक को हटाकर परीक्षण करें कि क्या वाक्य दो विचारों में विभाजित होता है (उदाहरण, "मैं दौड़ा, लेकिन मैं गिर गया" "मैं दौड़ा" और "मैं गिर गया" में विभाजित होता है)।</p>
+        </div>
+    </section>
+
+    <section class="card animate delay-4">
+        <h2><i class="fas fa-exclamation-circle"></i> Common Mistakes with Conjunctions / समुच्चयबोधक के साथ सामान्य गलतियाँ</h2>
+        <ul>
+            <li><span class="english">Using incorrect conjunctions (e.g., "and" instead of "but" for contrast).</span> <span class="hindi">गलत समुच्चयबोधक का उपयोग (उदाहरण, विरोध के लिए "लेकिन" के बजाय "और")।</span></li>
+            <li><span class="english">Omitting commas before coordinating conjunctions in compound sentences (e.g., "I ran and I fell" needs a comma).</span> <span class="hindi">संयुक्त वाक्यों में समन्वयी समुच्चयबोधकों से पहले अल्पविराम छोड़ना (उदाहरण, "मैं दौड़ा और मैं गिर गया" को अल्पविराम चाहिए)।</span></li>
+            <li><span class="english">Using "because" and "so" together (e.g., "Because it rained, so we stayed").</span> <span class="hindi">"क्योंकि" और "इसलिए" का एक साथ उपयोग (उदाहरण, "क्योंकि बारिश हुई, इसलिए हम रुके")।</span></li>
+            <li><span class="english">Non-parallel structure in correlative conjunctions (e.g., "either walk or to run").</span> <span class="hindi">सहसंबंधी समुच्चयबोधकों में गैर-समानांतर संरचना (उदाहरण, "या तो चलना या दौड़ना")।</span></li>
+            <li><span class="english">Confusing conjunctions with prepositions (e.g., "after" as a preposition vs. conjunction).</span> <span class="hindi">समुच्चयबोधकों को पूर्वसर्गों से भ्रमित करना (उदाहरण, "बाद" एक पूर्वसर्ग बनाम समुच्चयबोधक)।</span></li>
+        </ul>
+        <div class="example">
+            <div class="example-title"><i class="fas fa-star"></i> Correct the Mistakes</div>
+            <p class="english">Incorrect: "She was tired and she kept working." Correct: "She was tired, <span class="highlight">but</span> she kept working."</p>
+            <p class="hindi">गलत: "वह थक गई थी और वह काम करती रही।" सही: "वह थक गई थी, <span class="highlight">लेकिन</span> वह काम करती रही।"</p>
+            <p class="english">Incorrect: "Either you walk or to run." Correct: "You can <span class="highlight">either</span> walk <span class="highlight">or</span> run."</p>
+            <p class="hindi">गलत: "या तो तुम चलो या दौड़ो।" सही: "तुम <span class="highlight">या तो</span> चल सकते हो <span class="highlight">या</span> दौड़ सकते हो।"</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Vocab Doctor App - Comprehensive Conjunction Guide</p>
+        <p>Master English and Hindi grammar with interactive, engaging lessons</p>
+    </footer>
+</div>
+</body>
+</html>

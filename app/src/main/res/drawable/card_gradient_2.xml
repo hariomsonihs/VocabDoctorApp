@@ -1,0 +1,8 @@
+<!-- card_gradient_2.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient
+        android:startColor="#E1F5FE"
+        android:endColor="#B3E5FC"
+        android:angle="90" />
+    <corners android:radius="20dp" />
+</shape>

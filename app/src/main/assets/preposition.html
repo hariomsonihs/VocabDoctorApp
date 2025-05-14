@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preposition (पूर्वसर्ग) - Grammar App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --light: #f8f9fa;
+            --dark: #2d3436;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --info: #0984e3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 100%;
+            width: 100%;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 1s ease;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 6vw, 2.5rem);
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            color: var(--dark);
+            opacity: 0.8;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+        }
+
+        h2 i {
+            color: var(--accent);
+        }
+
+        .definition {
+            font-size: clamp(0.95rem, 2.5vw, 1rem);
+            margin-bottom: 1rem;
+            padding-left: 0.8rem;
+            border-left: 3px solid var(--secondary);
+        }
+
+        .hindi {
+            color: #e84393;
+            font-weight: 500;
+        }
+
+        .english {
+            color: var(--info);
+            font-weight: 500;
+        }
+
+        ul {
+            list-style-type: none;
+            margin-bottom: 1rem;
+        }
+
+        ul li {
+            padding: 0.4rem 0;
+            padding-left: 1.2rem;
+            position: relative;
+            font-size: clamp(0.9rem, 2.5vw, 0.95rem);
+        }
+
+        ul li::before {
+            content: '•';
+            color: var(--accent);
+            font-size: 1.2rem;
+            position: absolute;
+            left: 0;
+            top: 0.2rem;
+        }
+
+        .example {
+            background: rgba(106, 176, 76, 0.1);
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin: 0.8rem 0;
+            border-left: 3px solid var(--success);
+        }
+
+        .example-title {
+            font-weight: bold;
+            color: var(--success);
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: clamp(0.95rem, 2.5vw, 1rem);
+        }
+
+        .type-card {
+            background: rgba(253, 121, 168, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .type-card:hover {
+            background: rgba(253, 121, 168, 0.2);
+            transform: scale(1.01);
+        }
+
+        .type-title {
+            color: var(--accent);
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: clamp(1.2rem, 3.5vw, 1.4rem);
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, rgba(108, 92, 231, 0.2) 0%, rgba(108, 92, 231, 0) 100%);
+            padding: 0.15rem 0.3rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .feature-box {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: clamp(2rem, 5vw, 2.2rem);
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+
+        .feature-title {
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            margin-bottom: 0.4rem;
+            color: var(--dark);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            color: var(--dark);
+            opacity: 0.7;
+            font-size: clamp(0.8rem, 2.5vw, 0.85rem);
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0.5rem;
+            }
+
+            h1 {
+                font-size: clamp(1.8rem, 5.5vw, 2rem);
+            }
+
+            .subtitle {
+                font-size: clamp(0.9rem, 2.8vw, 1rem);
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+
+            .card {
+                padding: 1rem;
+                border-radius: 10px;
+            }
+
+            h2 {
+                font-size: clamp(1.3rem, 3.8vw, 1.5rem);
+            }
+
+            .definition {
+                font-size: clamp(0.9rem, 2.3vw, 0.95rem);
+                padding-left: 0.5rem;
+            }
+
+            .type-card {
+                padding: 0.8rem;
+                border-radius: 8px;
+            }
+
+            .type-title {
+                font-size: clamp(1.1rem, 3.2vw, 1.2rem);
+            }
+
+            .feature-box {
+                padding: 0.8rem;
+            }
+
+            .feature-icon {
+                font-size: clamp(1.8rem, 4.5vw, 2rem);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0.3rem;
+            }
+
+            h1 {
+                font-size: clamp(1.5rem, 5vw, 1.8rem);
+            }
+
+            .card {
+                padding: 0.8rem;
+                margin-bottom: 1rem;
+            }
+
+            .grid {
+                gap: 0.5rem;
+            }
+
+            ul li {
+                font-size: clamp(0.85rem, 2.3vw, 0.9rem);
+                padding-left: 1rem;
+            }
+
+            .example {
+                padding: 0.6rem;
+            }
+
+            footer {
+                padding: 0.8rem;
+                font-size: clamp(0.75rem, 2.3vw, 0.8rem);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header class="animate">
+        <h1>Preposition <span class="hindi">(पूर्वसर्ग)</span></h1>
+        <p class="subtitle">Words that connect nouns or pronouns to other words, showing relationships like place, time, or direction</p>
+    </header>
+
+    <section class="card animate delay-1">
+        <h2><i class="fas fa-book-open"></i> Definition / परिभाषा</h2>
+        <div class="definition">
+            <p class="english">A preposition is a word or group of words that shows the relationship between a noun or pronoun and other words in a sentence. It indicates position, direction, time, manner, or purpose, forming prepositional phrases that add clarity and context to sentences. Prepositions are versatile and essential for linking ideas in complex sentence structures.</p>
+            <p class="hindi">पूर्वसर्ग एक शब्द या शब्दों का समूह है जो संज्ञा या सर्वनाम और वाक्य के अन्य शब्दों के बीच संबंध दिखाता है। यह स्थिति, दिशा, समय, तरीके, या उद्देश्य को दर्शाता है, और पूर्वसर्गी वाक्यांश बनाता है जो वाक्यों में स्पष्टता और संदर्भ जोड़ता है। पूर्वसर्ग बहुमुखी हैं और जटिल वाक्य संरचनाओं में विचारों को जोड़ने के लिए आवश्यक हैं।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Example</div>
+                <p class="english">In "The book is <span class="highlight">on</span> the table", <span class="highlight">on</span> is a preposition showing position.</p>
+                <p class="hindi">"किताब मेज <span class="highlight">पर</span> है" में, <span class="highlight">पर</span> एक पूर्वसर्ग है जो स्थिति दिखाता है।</p>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="feature-box floating">
+                <div class="feature-icon"><i class="fas fa-map-marker-alt"></i></div>
+                <h3 class="feature-title">Place</h3>
+                <p class="hindi">स्थान</p>
+                <p>in, on, at</p>
+            </div>
+
+            <div class="feature-box floating" style="animation-delay: 0.3s;">
+                <div class="feature-icon"><i class="fas fa-clock"></i></div>
+                <h3 class="feature-title">Time</h3>
+                <p class="hindi">काल</p>
+                <p>at, by, in</p>
+            </div>
+
+            <div class="feature-box floating" style="animation-delay: 0.6s;">
+                <div class="feature-icon"><i class="fas fa-arrows-alt-h"></i></div>
+                <h3 class="feature-title">(Direction)</h3>
+                <p class="hindi">दिशा</p>
+                <p>to, towards, across</p>
+            </div>
+
+            <div class="feature-box floating" style="animation-delay: 0.9s;">
+                <div class="feature-icon"><i class="fas fa-user"></i></div>
+                <h3 class="feature-title">Agent</h3>
+                <p class="hindi">कर्ता</p>
+                <p>by, with</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-2">
+        <h2><i class="fas fa-layer-group"></i> Types of Prepositions / पूर्वसर्ग के प्रकार</h2>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-map-marker-alt"></i> Preposition of Place (स्थान पूर्वसर्ग)</h3>
+            <p class="english">Prepositions of place describe the position or location of a noun or pronoun in relation to another object or place. They answer the question "Where?" and are used to specify spatial relationships.</p>
+            <p class="hindi">स्थान पूर्वसर्ग संज्ञा या सर्वनाम की स्थिति या स्थान को किसी अन्य वस्तु या स्थान के सापेक्ष वर्णन करते हैं। ये "कहाँ?" प्रश्न का उत्तर देते हैं और स्थानिक संबंधों को निर्दिष्ट करने के लिए उपयोग किए जाते हैं।</p>
+
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Common Prepositions of Place</div>
+                <ul>
+                    <li>
+                        <strong class="english">At:</strong> Used for specific points or locations.
+                        <ul>
+                            <li><span class="english">Usage: Refers to a precise point, such as an address, a meeting point, or a small location.</span></li>
+                            <li><span class="hindi">उपयोग: एक विशिष्ट बिंदु, जैसे पता, मिलन बिंदु, या छोटा स्थान को दर्शाता है।</span></li>
+                            <li><span class="english">Rules: Use "at" for exact locations (e.g., at the corner, at school).</span></li>
+                            <li><span class="hindi">नियम: सटीक स्थानों के लिए "at" का उपयोग करें (उदाहरण, कोने पर, स्कूल में)।</span></li>
+                            <li><span class="english">Example: She is waiting <span class="highlight">at</span> the bus stop.</span></li>
+                            <li><span class="hindi">उदाहरण: वह बस स्टॉप <span class="highlight">पर</span> इंतजार कर रही है।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">In:</strong> Used for enclosed spaces or larger areas.
+                        <ul>
+                            <li><span class="english">Usage: Refers to something inside a defined area, such as a room, city, or country.</span></li>
+                            <li><span class="hindi">उपयोग: किसी परिभाषित क्षेत्र के अंदर, जैसे कमरा, शहर, या देश को दर्शाता है।</span></li>
+                            <li><span class="english">Rules: Use "in" for enclosed or broader spaces (e.g., in the house, in India).</span></li>
+                            <li><span class="hindi">नियम: बंद या व्यापक स्थानों के लिए "in" का उपयोग करें (उदाहरण, घर में, भारत में)।</span></li>
+                            <li><span class="english">Example: The keys are <span class="highlight">in</span> the drawer.</span></li>
+                            <li><span class="hindi">उदाहरण: चाबियाँ दराज <span class="highlight">में</span> हैं।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">On:</strong> Used for surfaces or lines.
+                        <ul>
+                            <li><span class="english">Usage: Indicates something is on a surface, such as a table, or along a line, like a road.</span></li>
+                            <li><span class="hindi">उपयोग: किसी सतह पर, जैसे मेज, या किसी रेखा के साथ, जैसे सड़क को दर्शाता है।</span></li>
+                            <li><span class="english">Rules: Use "on" for surfaces or linear paths (e.g., on the table, on the road).</span></li>
+                            <li><span class="hindi">नियम: सतहों या रैखिक पथों के लिए "on" का उपयोग करें (उदाहरण, मेज पर, सड़क पर)।</span></li>
+                            <li><span class="english">Example: The book is <span class="highlight">on</span> the shelf.</span></li>
+                            <li><span class="hindi">उदाहरण: किताब शेल्फ <span class="highlight">पर</span> है।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">Above:</strong> Used for higher positions.
+                        <ul>
+                            <li><span class="english">Usage: Indicates something is at a higher level, not touching the object below.</span></li>
+                            <li><span class="hindi">उपयोग: किसी चीज का उच्च स्तर पर होना, नीचे की वस्तु को स्पर्श न करना।</span></li>
+                            <li><span class="english">Rules: Use "above" when there is no contact (e.g., above the clouds).</span></li>
+                            <li><span class="hindi">नियम: जब कोई संपर्क न हो तब "above" का उपयोग करें (उदाहरण, बादलों के ऊपर)।</span></li>
+                            <li><span class="english">Example: The plane flies <span class="highlight">above</span> the mountains.</span></li>
+                            <li><span class="hindi">उदाहरण: विमान पहाड़ों <span class="highlight">के ऊपर</span> उड़ता है।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">Below:</strong> Used for lower positions.
+                        <ul>
+                            <li><span class="english">Usage: Indicates something is at a lower level, not touching the object above.</span></li>
+                            <li><span class="hindi">उपयोग: किसी चीज का निचले स्तर पर होना, ऊपर की वस्तु को स्पर्श न करना।</span></li>
+                            <li><span class="english">Rules: Use "below" for lower positions without contact (e.g., below sea level).</span></li>
+                            <li><span class="hindi">नियम: बिना संपर्क के निचले स्थानों के लिए "below" का उपयोग करें (उदाहरण, समुद्र तल से नीचे)।</span></li>
+                            <li><span class="english">Example: The fish swim <span class="highlight">below</span> the surface.</span></li>
+                            <li><span class="hindi">उदाहरण: मछलियाँ सतह <span class="highlight">के नीचे</span> तैरती हैं।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">Beside:</strong> Used for side-by-side positions.
+                        <ul>
+                            <li><span class="english">Usage: Indicates something is next to or alongside another object.</span></li>
+                            <li><span class="hindi">उपयोग: किसी चीज का किसी अन्य वस्तु के बगल में या साथ में होना।</span></li>
+                            <li><span class="english">Rules: Use "beside" for adjacent positions (e.g., beside the river).</span></li>
+                            <li><span class="hindi">नियम: आसन्न स्थानों के लिए "beside" का उपयोग करें (उदाहरण, नदी के बगल में)।</span></li>
+                            <li><span class="english">Example: The park is <span class="highlight">beside</span> the school.</span></li>
+                            <li><span class="hindi">उदाहरण: पार्क स्कूल <span class="highlight">के बगल में</span> है।</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-clock"></i> Preposition of Time (काल पूर्वसर्ग)</h3>
+            <p class="english">Prepositions of time indicate when something happens, the duration of an event, or the time relative to another event. They answer the question "When?"</p>
+            <p class="hindi">काल पूर्वसर्ग यह दर्शाते हैं कि कोई चीज कब होती है, किसी घटना की अवधि, या किसी अन्य घटना के सापेक्ष समय। ये "कब?" प्रश्न का उत्तर देते हैं।</p>
+
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Common Prepositions of Time</div>
+                <ul>
+                    <li>
+                        <strong class="english">At:</strong> Used for specific times.
+                        <ul>
+                            <li><span class="english">Usage: Refers to exact times, such as clock times or specific moments.</span></li>
+                            <li><span class="hindi">उपयोग: सटीक समय, जैसे घड़ी का समय या विशिष्ट क्षणों को दर्शाता है।</span></li>
+                            <li><span class="english">Rules: Use "at" for precise times (e.g., at 5 PM, at midnight).</span></li>
+                            <li><span class="hindi">नियम: सटीक समय के लिए "at" का उपयोग करें (उदाहरण, शाम 5 बजे, आधी रात को)।</span></li>
+                            <li><span class="english">Example: The meeting starts <span class="highlight">at</span> 9 AM.</span></li>
+                            <li><span class="hindi">उदाहरण: बैठक सुबह 9 बजे <span class="highlight">पर</span> शुरू होती है।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">On:</strong> Used for days and dates.
+                        <ul>
+                            <li><span class="english">Usage: Refers to specific days or dates, including holidays.</span></li>
+                            <li><span class="hindi">उपयोग: विशिष्ट दिनों या तारीखों, जिसमें छुट्टियाँ शामिल हैं, को दर्शाता है।</span></li>
+                            <li><span class="english">Rules: Use "on" for days and dates (e.g., on Monday, on 15th May).</span></li>
+                            <li><span class="hindi">नियम: दिनों और तारीखों के लिए "on" का उपयोग करें (उदाहरण, सोमवार को, 15 मई को)।</span></li>
+                            <li><span class="english">Example: We have a holiday <span class="highlight">on</span> Sunday.</span></li>
+                            <li><span class="hindi">उदाहरण: हमारे पास रविवार <span class="highlight">को</span> छुट्टी है।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">In:</strong> Used for longer periods.
+                        <ul>
+                            <li><span class="english">Usage: Refers to months, years, seasons, or parts of the day (except precise times).</span></li>
+                            <li><span class="hindi">उपयोग: महीनों, वर्षों, मौसमों, या दिन के हिस्सों (सटीक समय को छोड़कर) को दर्शाता है।</span></li>
+                            <li><span class="english">Rules: Use "in" for extended time periods (e.g., in July, in 2023).</span></li>
+                            <li><span class="hindi">नियम: विस्तारित समय अवधि के लिए "in" का उपयोग करें (उदाहरण, जुलाई में, 2023 में)।</span></li>
+                            <li><span class="english">Example: I was born <span class="highlight">in</span> 1995.</span></li>
+                            <li><span class="hindi">उदाहरण: मेरा जन्म 1995 <span class="highlight">में</span> हुआ था।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">By:</strong> Used for deadlines or time limits.
+                        <ul>
+                            <li><span class="english">Usage: Indicates a point in time by which something must be completed.</span></li>
+                            <li><span class="hindi">उपयोग: उस समय बिंदु को दर्शाता है जिसके द्वारा कुछ पूरा होना चाहिए।</span></li>
+                            <li><span class="english">Rules: Use "by" for deadlines (e.g., by tomorrow, by evening).</span></li>
+                            <li><span class="hindi">नियम: समय सीमा के लिए "by" का उपयोग करें (उदाहरण, कल तक, शाम तक)।</span></li>
+                            <li><span class="english">Example: Submit the report <span class="highlight">by</span> Monday.</span></li>
+                            <li><span class="hindi">उदाहरण: रिपोर्ट सोमवार <span class="highlight">तक</span> जमा करें।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">During:</strong> Used for duration within a period.
+                        <ul>
+                            <li><span class="english">Usage: Indicates something happens within a specific time frame.</span></li>
+                            <li><span class="hindi">उपयोग: किसी विशिष्ट समय सीमा के भीतर कुछ होने को दर्शाता है।</span></li>
+                            <li><span class="english">Rules: Use "during" for events occurring throughout a period (e.g., during the summer).</span></li>
+                            <li><span class="hindi">नियम: किसी अवधि के दौरान होने वाली घटनाओं के लिए "during" का उपयोग करें (उदाहरण, गर्मियों के दौरान)।</span></li>
+                            <li><span class="english">Example: It rained <span class="highlight">during</span> the night.</span></li>
+                            <li><span class="hindi">उदाहरण: रात <span class="highlight">के दौरान</span> बारिश हुई।</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-arrows-alt-h"></i> Preposition of Direction (दिशा पूर्वसर्ग)</h3>
+            <p class="english">Prepositions of direction indicate the movement or orientation of a noun or pronoun toward, away from, or along a path. They answer the question "Where to?" or "In what direction?"</p>
+            <p class="hindi">दिशा पूर्वसर्ग संज्ञा या सर्वनाम की गति या अभिविन्यास को किसी स्थान की ओर, उससे दूर, या किसी पथ के साथ दर्शाते हैं। ये "कहाँ की ओर?" या "किस दिशा में?" प्रश्न का उत्तर देते हैं।</p>
+
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Common Prepositions of Direction</div>
+                <ul>
+                    <li>
+                        <strong class="english">To:</strong> Used for movement toward a destination.
+                        <ul>
+                            <li><span class="english">Usage: Indicates movement toward a specific place or person.</span></li>
+                            <li><span class="hindi">उपयोग: किसी विशिष्ट स्थान या व्यक्ति की ओर गति को दर्शाता है।</span></li>
+                            <li><span class="english">Rules: Use "to" for destinations (e.g., to the market, to school).</span></li>
+                            <li><span class="hindi">नियम: गंतव्यों के लिए "to" का उपयोग करें (उदाहरण, बाजार में, स्कूल में)।</span></li>
+                            <li><span class="english">Example: She walked <span class="highlight">to</span> the park.</span></li>
+                            <li><span class="hindi">उदाहरण: वह पार्क <span class="highlight">की ओर</span> चली।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">Towards:</strong> Used for movement in the direction of something.
+                        <ul>
+                            <li><span class="english">Usage: Indicates movement in the general direction, not necessarily reaching the destination.</span></li>
+                            <li><span class="hindi">उपयोग: सामान्य दिशा में गति को दर्शाता है, जरूरी नहीं कि गंतव्य तक पहुँचे।</span></li>
+                            <li><span class="english">Rules: Use "towards" for direction without implying arrival (e.g., towards the north).</span></li>
+                            <li><span class="hindi">नियम: बिना आगमन के दिशा के लिए "towards" का उपयोग करें (उदाहरण, उत्तर की ओर)।</span></li>
+                            <li><span class="english">Example: He ran <span class="highlight">towards</span> the forest.</span></li>
+                            <li><span class="hindi">उदाहरण: वह जंगल <span class="highlight">की ओर</span> दौड़ा।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">For:</strong> Used for intended destinations.
+                        <ul>
+                            <li><span class="english">Usage: Indicates the intended destination or purpose of movement.</span></li>
+                            <li><span class="hindi">उपयोग: गति के इच्छित गंतव्य या उद्देश्य को दर्शाता है।</span></li>
+                            <li><span class="english">Rules: Use "for" when stating a purpose or destination (e.g., leave for Paris).</span></li>
+                            <li><span class="hindi">नियम: उद्देश्य या गंतव्य बताने के लिए "for" का उपयोग करें (उदाहरण, पेरिस के लिए रवाना)।</span></li>
+                            <li><span class="english">Example: They left <span class="highlight">for</span> London.</span></li>
+                            <li><span class="hindi">उदाहरण: वे लंदन <span class="highlight">के लिए</span> रवाना हुए।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">At:</strong> Used for directed actions.
+                        <ul>
+                            <li><span class="english">Usage: Indicates a target or point of action, often with verbs like throw or aim.</span></li>
+                            <li><span class="hindi">उपयोग: लक्ष्य या कार्य के बिंदु को दर्शाता है, अक्सर फेंकना या निशाना लगाना जैसे क्रिया के साथ।</span></li>
+                            <li><span class="english">Rules: Use "at" for directed actions (e.g., throw at the target).</span></li>
+                            <li><span class="hindi">नियम: निर्देशित कार्यों के लिए "at" का उपयोग करें (उदाहरण, लक्ष्य पर फेंकना)।</span></li>
+                            <li><span class="english">Example: He threw the ball <span class="highlight">at</span> the wall.</span></li>
+                            <li><span class="hindi">उदाहरण: उसने गेंद दीवार <span class="highlight">पर</span> फेंकी।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">On:</strong> Used for movement onto a surface.
+                        <ul>
+                            <li><span class="english">Usage: Indicates movement resulting in contact with a surface.</span></li>
+                            <li><span class="hindi">उपयोग: किसी सतह के साथ संपर्क में आने वाली गति को दर्शाता है।</span></li>
+                            <li><span class="english">Rules: Use "on" when movement leads to surface contact (e.g., jump on the bed).</span></li>
+                            <li><span class="hindi">नियम: जब गति सतह के संपर्क में लाती है तब "on" का उपयोग करें (उदाहरण, बिस्तर पर कूदना)।</span></li>
+                            <li><span class="english">Example: The cat jumped <span class="highlight">on</span> the table.</span></li>
+                            <li><span class="hindi">उदाहरण: बिल्ली मेज <span class="highlight">पर</span> कूदी।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">Up:</strong> Used for upward movement.
+                        <ul>
+                            <li><span class="english">Usage: Indicates movement in an upward direction.</span></li>
+                            <li><span class="hindi">उपयोग: ऊपर की दिशा में गति को दर्शाता है।</span></li>
+                            <li><span class="english">Rules: Use "up" for vertical ascent (e.g., climb up the hill).</span></li>
+                            <li><span class="hindi">नियम: ऊर्ध्वाधर चढ़ाई के लिए "up" का उपयोग करें (उदाहरण, पहाड़ी पर चढ़ना)।</span></li>
+                            <li><span class="english">Example: She climbed <span class="highlight">up</span> the ladder.</span></li>
+                            <li><span class="hindi">उदाहरण: वह सीढ़ी <span class="highlight">पर</span> चढ़ी।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">Down:</strong> Used for downward movement.
+                        <ul>
+                            <li><span class="english">Usage: Indicates movement in a downward direction.</span></li>
+                            <li><span class="hindi">उपयोग: नीचे की दिशा में गति को दर्शाता है।</span></li>
+                            <li><span class="english">Rules: Use "down" for vertical descent (e.g., roll down the hill).</span></li>
+                            <li><span class="hindi">नियम: ऊर्ध्वाधर उतराई के लिए "down" का उपयोग करें (उदाहरण, पहाड़ी से नीचे लुढ़कना)।</span></li>
+                            <li><span class="english">Example: The ball rolled <span class="highlight">down</span> the slope.</span></li>
+                            <li><span class="hindi">उदाहरण: गेंद ढलान <span class="highlight">से नीचे</span> लुढ़की।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">Along:</strong> Used for movement parallel to something.
+                        <ul>
+                            <li><span class="english">Usage: Indicates movement parallel to a line or path, such as a road or river.</span></li>
+                            <li><span class="hindi">उपयोग: किसी रेखा या पथ, जैसे सड़क या नदी के समानांतर गति को दर्शाता है।</span></li>
+                            <li><span class="english">Rules: Use "along" for linear movement (e.g., walk along the river).</span></li>
+                            <li><span class="hindi">नियम: रैखिक गति के लिए "along" का उपयोग करें (उदाहरण, नदी के किनारे चलना)।</span></li>
+                            <li><span class="english">Example: They walked <span class="highlight">along</span> the beach.</span></li>
+                            <li><span class="hindi">उदाहरण: वे समुद्र तट <span class="highlight">के किनारे</span> चले।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">Across:</strong> Used for movement from one side to another.
+                        <ul>
+                            <li><span class="english">Usage: Indicates movement from one side of a surface or area to the other.</span></li>
+                            <li><span class="hindi">उपयोग: किसी सतह या क्षेत्र के एक तरफ से दूसरी तरफ गति को दर्शाता है।</span></li>
+                            <li><span class="english">Rules: Use "across" for crossing surfaces (e.g., swim across the river).</span></li>
+                            <li><span class="hindi">नियम: सतहों को पार करने के लिए "across" का उपयोग करें (उदाहरण, नदी के पार तैरना)।</span></li>
+                            <li><span class="english">Example: She swam <span class="highlight">across</span> the lake.</span></li>
+                            <li><span class="hindi">उदाहरण: वह झील <span class="highlight">के पार</span> तैर गई।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">Against:</strong> Used for movement in opposition or contact.
+                        <ul>
+                            <li><span class="english">Usage: Indicates movement toward something with contact or opposition.</span></li>
+                            <li><span class="hindi">उपयोग: किसी चीज की ओर गति को संपर्क या विरोध के साथ दर्शाता है।</span></li>
+                            <li><span class="english">Rules: Use "against" for contact or opposition (e.g., lean against the wall).</span></li>
+                            <li><span class="hindi">नियम: संपर्क या विरोध के लिए "against" का उपयोग करें (उदाहरण, दीवार के खिलाफ झुकना)।</span></li>
+                            <li><span class="english">Example: He leaned <span class="highlight">against</span> the door.</span></li>
+                            <li><span class="hindi">उदाहरण: वह दरवाजे <span class="highlight">के खिलाफ</span> झुका।</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-user"></i> Preposition of Agent (कर्ता पूर्वसर्ग)</h3>
+            <p class="english">Prepositions of agent indicate the doer or cause of an action, often used in passive voice sentences to show who or what performed the action.</p>
+            <p class="hindi">कर्ता पूर्वसर्ग कार्य के कर्ता या कारण को दर्शाते हैं, जो अक्सर निष्क्रिय वाक्यों में यह दिखाने के लिए उपयोग होते हैं कि कार्य किसने या किस चीज ने किया।</p>
+
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Common Prepositions of Agent</div>
+                <ul>
+                    <li>
+                        <strong class="english">By:</strong> Used for the doer in passive voice.
+                        <ul>
+                            <li><span class="english">Usage: Indicates the person or thing performing the action in a passive sentence.</span></li>
+                            <li><span class="hindi">उपयोग: निष्क्रिय वाक्य में कार्य करने वाले व्यक्ति या वस्तु को दर्शाता है।</span></li>
+                            <li><span class="english">Rules: Use "by" in passive constructions (e.g., written by the author).</span></li>
+                            <li><span class="hindi">नियम: निष्क्रिय संरचनाओं में "by" का उपयोग करें (उदाहरण, लेखक द्वारा लिखित)।</span></li>
+                            <li><span class="english">Example: The book was written <span class="highlight">by</span> her.</span></li>
+                            <li><span class="hindi">उदाहरण: किताब उसके <span class="highlight">द्वारा</span> लिखी गई थी।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">With:</strong> Used for the cause or means.
+                        <ul>
+                            <li><span class="english">Usage: Indicates the cause or means by which an action is performed.</span></li>
+                            <li><span class="hindi">उपयोग: कार्य के कारण या साधन को दर्शाता है जिसके द्वारा कार्य किया जाता है।</span></li>
+                            <li><span class="english">Rules: Use "with" for tools or abstract causes (e.g., painted with a brush).</span></li>
+                            <li><span class="hindi">नियम: उपकरणों या अमूर्त कारणों के लिए "with" का उपयोग करें (उदाहरण, ब्रश के साथ चित्रित)।</span></li>
+                            <li><span class="english">Example: The door was locked <span class="highlight">with</span> a key.</span></li>
+                            <li><span class="hindi">उदाहरण: दरवाजा चाबी <span class="highlight">के साथ</span> बंद किया गया था।</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-tools"></i> Preposition of Instrument (साधन पूर्वसर्ग)</h3>
+            <p class="english">Prepositions of instrument indicate the tool, device, or means used to perform an action.</p>
+            <p class="hindi">साधन पूर्वसर्ग उस उपकरण, यंत्र, या साधन को दर्शाते हैं जिसका उपयोग कार्य करने के लिए किया जाता है।</p>
+
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Common Prepositions of Instrument</div>
+                <ul>
+                    <li>
+                        <strong class="english">With:</strong> Used for physical tools.
+                        <ul>
+                            <li><span class="english">Usage: Indicates the physical tool or instrument used to perform an action.</span></li>
+                            <li><span class="hindi">उपयोग: कार्य करने के लिए उपयोग किए गए भौतिक उपकरण या यंत्र को दर्शाता है।</span></li>
+                            <li><span class="english">Rules: Use "with" for tangible tools (e.g., cut with a knife).</span></li>
+                            <li><span class="hindi">नियम: मूर्त उपकरणों के लिए "with" का उपयोग करें (उदाहरण, चाकू से काटना)।</span></li>
+                            <li><span class="english">Example: She painted the wall <span class="highlight">with</span> a brush.</span></li>
+                            <li><span class="hindi">उदाहरण: उसने दीवार को ब्रश <span class="highlight">के साथ</span> रंगा।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">By:</strong> Used for methods or transport.
+                        <ul>
+                            <li><span class="english">Usage: Indicates the method or mode of transport used to accomplish something.</span></li>
+                            <li><span class="hindi">उपयोग: किसी चीज को पूरा करने के लिए उपयोग किए गए तरीके या परिवहन के साधन को दर्शाता है।</span></li>
+                            <li><span class="english">Rules: Use "by" for transport or methods (e.g., travel by car).</span></li>
+                            <li><span class="hindi">नियम: परिवहन या तरीकों के लिए "by" का उपयोग करें (उदाहरण, कार से यात्रा)।</span></li>
+                            <li><span class="english">Example: They traveled <span class="highlight">by</span> train.</span></li>
+                            <li><span class="hindi">उदाहरण: उन्होंने ट्रेन <span class="highlight">से</span> यात्रा की।</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-link"></i> Compound Preposition (संयुक्त पूर्वसर्ग)</h3>
+            <p class="english">Compound prepositions are phrases made up of two or more words that function as a single preposition, indicating complex relationships.</p>
+            <p class="hindi">संयुक्त पूर्वसर्ग दो या अधिक शब्दों से बने वाक्यांश हैं जो एकल पूर्वसर्ग के रूप में कार्य करते हैं, जटिल संबंधों को दर्शाते हैं।</p>
+
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Common Compound Prepositions</div>
+                <ul>
+                    <li>
+                        <strong class="english">In front of:</strong> Used for position ahead.
+                        <ul>
+                            <li><span class="english">Usage: Indicates something is positioned ahead of another object or place.</span></li>
+                            <li><span class="hindi">उपयोग: किसी चीज का किसी अन्य वस्तु या स्थान के आगे स्थित होना दर्शाता है।</span></li>
+                            <li><span class="english">Rules: Use "in front of" for spatial positioning (e.g., in front of the house).</span></li>
+                            <li><span class="hindi">नियम: स्थानिक स्थिति के लिए "in front of" का उपयोग करें (उदाहरण, घर के सामने)।</span></li>
+                            <li><span class="english">Example: The car is parked <span class="highlight">in front of</span> the gate.</span></li>
+                            <li><span class="hindi">उदाहरण: कार गेट <span class="highlight">के सामने</span> खड़ी है।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">Because of:</strong> Used for cause or reason.
+                        <ul>
+                            <li><span class="english">Usage: Indicates the reason or cause for an action or situation.</span></li>
+                            <li><span class="hindi">उपयोग: किसी कार्य या स्थिति के कारण या वजह को दर्शाता है।</span></li>
+                            <li><span class="english">Rules: Use "because of" for causal relationships (e.g., absent because of illness).</span></li>
+                            <li><span class="hindi">नियम: कारण संबंधों के लिए "because of" का उपयोग करें (उदाहरण, बीमारी के कारण अनुपस्थित)।</span></li>
+                            <li><span class="english">Example: The match was canceled <span class="highlight">because of</span> rain.</span></li>
+                            <li><span class="hindi">उदाहरण: मैच बारिश <span class="highlight">के कारण</span> रद्द कर दिया गया।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">Instead of:</strong> Used for substitution.
+                        <ul>
+                            <li><span class="english">Usage: Indicates something is used or done in place of another.</span></li>
+                            <li><span class="hindi">उपयोग: किसी चीज का किसी अन्य के स्थान पर उपयोग या किया जाना दर्शाता है।</span></li>
+                            <li><span class="english">Rules: Use "instead of" for alternatives (e.g., tea instead of coffee).</span></li>
+                            <li><span class="hindi">नियम: विकल्पों के लिए "instead of" का उपयोग करें (उदाहरण, कॉफी के बजाय चाय)।</span></li>
+                            <li><span class="english">Example: She chose tea <span class="highlight">instead of</span> coffee.</span></li>
+                            <li><span class="hindi">उदाहरण: उसने कॉफी <span class="highlight">के बजाय</span> चाय चुनी।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">Out of:</strong> Used for movement from inside or source.
+                        <ul>
+                            <li><span class="english">Usage: Indicates movement from inside a place or material source.</span></li>
+                            <li><span class="hindi">उपयोग: किसी स्थान के अंदर से या सामग्री स्रोत से गति को दर्शाता है।</span></li>
+                            <li><span class="english">Rules: Use "out of" for exits or sources (e.g., out of the room).</span></li>
+                            <li><span class="hindi">नियम: निकास या स्रोतों के लिए "out of" का उपयोग करें (उदाहरण, कमरे से बाहर)।</span></li>
+                            <li><span class="english">Example: He walked <span class="highlight">out of</span> the building.</span></li>
+                            <li><span class="hindi">उदाहरण: वह इमारत <span class="highlight">से बाहर</span> निकला।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">Along with:</strong> Used for accompaniment.
+                        <ul>
+                            <li><span class="english">Usage: Indicates something or someone is in addition to another.</span></li>
+                            <li><span class="hindi">उपयोग: किसी चीज या व्यक्ति का किसी अन्य के अतिरिक्त होना दर्शाता है।</span></li>
+                            <li><span class="english">Rules: Use "along with" for additional items or people (e.g., along with friends).</span></li>
+                            <li><span class="hindi">नियम: अतिरिक्त वस्तुओं या लोगों के लिए "along with" का उपयोग करें (उदाहरण, दोस्तों के साथ)।</span></li>
+                            <li><span class="english">Example: She came <span class="highlight">along with</span> her brother.</span></li>
+                            <li><span class="hindi">उदाहरण: वह अपने भाई <span class="highlight">के साथ</span> आई।</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-3">
+        <h2><i class="fas fa-lightbulb"></i> Key Points About Prepositions / पूर्वसर्ग के बारे में मुख्य बिंदु</h2>
+        <ul>
+            <li><span class="english">Prepositions connect nouns or pronouns to other words, showing relationships like place, time, or direction.</span> <span class="hindi">पूर्वसर्ग संज्ञा या सर्वनाम को अन्य शब्दों से जोड़ते हैं, स्थान, समय, या दिशा जैसे संबंध दिखाते हैं।</span></li>
+            <li><span class="english">Prepositions form prepositional phrases (e.g., on the table, at 5 PM).</span> <span class="hindi">पूर्वसर्ग पूर्वसर्गी वाक्यांश बनाते हैं (उदाहरण, मेज पर, 5 बजे)।</span></li>
+            <li><span class="english">Prepositions are critical in phrasal verbs, changing verb meanings (e.g., give up, look after).</span> <span class="hindi">पूर्वसर्ग वाक्यांशी क्रियाओं में महत्वपूर्ण हैं, जो क्रिया के अर्थ को बदलते हैं (उदाहरण, छोड़ देना, देखभाल करना)।</span></li>
+            <li><span class="english">Specific verbs require specific prepositions (e.g., depend on, believe in).</span> <span class="hindi">विशिष्ट क्रियाएँ विशिष्ट पूर्वसर्गों की मांग करती हैं (उदाहरण, निर्भर करना पर, विश्वास करना में)।</span></li>
+            <li><span class="english">In vs. on vs. at differ for place and time; use carefully to avoid confusion.</span> <span class="hindi">स्थान और समय के लिए में बनाम पर बनाम को भिन्न हैं; भ्रम से बचने के लिए सावधानी से उपयोग करें।</span></li>
+            <li><span class="english">To vs. towards differ in implying arrival (to) vs. direction (towards).</span> <span class="hindi">की ओर बनाम की ओर में आगमन (की ओर) बनाम दिशा (की ओर) में अंतर है।</span></li>
+            <li><span class="english">Compound prepositions act as single units (e.g., in front of, because of).</span> <span class="hindi">संयुक्त पूर्वसर्ग एकल इकाइयों के रूप में कार्य करते हैं (उदाहरण, के सामने, के कारण)।</span></li>
+            <li><span class="english">Prepositions do not change form based on number, gender, or tense.</span> <span class="hindi">पूर्वसर्ग संख्या, लिंग, या काल के आधार पर रूप नहीं बदलते।</span></li>
+            <li><span class="english">Prepositions in idiomatic expressions have fixed uses (e.g., on time, in trouble).</span> <span class="hindi">मुहावरेदार अभिव्यक्तियों में पूर्वसर्गों का निश्चित उपयोग होता है (उदाहरण, समय पर, मुसीबत में)।</span></li>
+            <li><span class="english">Avoid ending formal sentences with prepositions, though acceptable in informal contexts.</span> <span class="hindi">औपचारिक वाक्यों को पूर्वसर्गों के साथ समाप्त करने से बचें, हालांकि अनौपचारिक संदर्भों में स्वीकार्य है।</span></li>
+        </ul>
+    </section>
+
+    <section class="card animate delay-4">
+        <h2><i class="fas fa-question-circle"></i> How to Identify Prepositions / पूर्वसर्ग की पहचान कैसे करें</h2>
+        <ul>
+            <li><span class="english">Look for words that connect a noun or pronoun to another word, showing place, time, or direction.</span> <span class="hindi">ऐसे शब्दों को देखें जो संज्ञा या सर्वनाम को किसी अन्य शब्द से जोड़ते हैं, स्थान, समय, या दिशा दिखाते हैं।</span></li>
+            <li><span class="english">Check if the word answers "where?", "when?", "how?", "with what?", or "to where?"</span> <span class="hindi">जाँच करें कि क्या शब्द "कहाँ?", "कब?", "कैसे?", "किसके साथ?", या "कहाँ की ओर?" का जवाब देता है।</span></li>
+            <li><span class="english">Identify words forming phrases with nouns/pronouns (e.g., in the room, to the city).</span> <span class="hindi">ऐसे शब्दों की पहचान करें जो संज्ञा/सर्वनाम के साथ वाक्यांश बनाते हैं (उदाहरण, कमरे में, शहर की ओर)।</span></li>
+            <li><span class="english">Look for short words (e.g., in, on, at) or phrases (e.g., in front of).</span> <span class="hindi">छोटे शब्दों (उदाहरण, में, पर, को) या वाक्यांशों (उदाहरण, के सामने) को देखें।</span></li>
+            <li><span class="english">Check if the word is part of a phrasal verb (e.g., look after, give up).</span> <span class="hindi">जाँच करें कि क्या शब्द किसी वाक्यांशी क्रिया का हिस्सा है (उदाहरण, देखभाल करना, छोड़ देना)।</span></li>
+        </ul>
+
+        <div class="example">
+            <div class="example-title"><i class="fas fa-star"></i> Practice Examples</div>
+            <p class="english">Identify the prepositions in these sentences:</p>
+            <p class="hindi">इन वाक्यों में पूर्वसर्ग पहचानें:</p>
+            <ul>
+                <li><span class="english">The cat sleeps <span class="highlight">on</span> the couch.</span></li>
+                <li><span class="hindi">बिल्ली सोफे <span class="highlight">पर</span> सोती है।</span></li>
+                <li><span class="english">We meet <span class="highlight">at</span> noon.</span></li>
+                <li><span class="hindi">हम दोपहर <span class="highlight">को</span> मिलते हैं।</span></li>
+                <li><span class="english">She ran <span class="highlight">towards</span> the hills.</span></li>
+                <li><span class="hindi">वह पहाड़ियों <span class="highlight">की ओर</span> दौड़ी।</span></li>
+                <li><span class="english">The painting was done <span class="highlight">by</span> a famous artist.</span></li>
+                <li><span class="hindi">चित्र एक प्रसिद्ध कलाकार <span class="highlight">द्वारा</span> बनाया गया था।</span></li>
+                <li><span class="english">He cut the wood <span class="highlight">with</span> an axe.</span></li>
+                <li><span class="hindi">उसने लकड़ी कुल्हाड़ी <span class="highlight">से</span> काटी।</span></li>
+                <li><span class="english">The shop is <span class="highlight">in front of</span> the park.</span></li>
+                <li><span class="hindi">दुकान पार्क <span class="highlight">के सामने</span> है।</span></li>
+            </ul>
+        </div>
+
+        <div class="example">
+            <div class="example-title"><i class="fas fa-lightbulb"></i> Tip for Beginners</div>
+            <p class="english">To identify prepositions, read a sentence and find words that link a noun or pronoun to another part of the sentence, such as a place, time, or action. Test by replacing the preposition with another to see if the sentence’s meaning changes (e.g., "on the table" vs. "under the table").</p>
+            <p class="hindi">पूर्वसर्गों की पहचान के लिए, एक वाक्य पढ़ें और ऐसे शब्द ढूंढें जो संज्ञा या सर्वनाम को वाक्य के अन्य हिस्से, जैसे स्थान, समय, या कार्य से जोड़ते हों। पूर्वसर्ग को किसी अन्य से बदलकर परीक्षण करें कि क्या वाक्य का अर्थ बदलता है (उदाहरण, "मेज पर" बनाम "मेज के नीचे")।</p>
+        </div>
+    </section>
+
+    <section class="card animate delay-4">
+        <h2><i class="fas fa-exclamation-circle"></i> Common Mistakes with Prepositions / पूर्वसर्ग के साथ सामान्य गलतियाँ</h2>
+        <ul>
+            <li><span class="english">Confusing in vs. on vs. at (e.g., "at the room" instead of "in the room").</span> <span class="hindi">में बनाम पर बनाम को में भ्रम (उदाहरण, "कमरे पर" के बजाय "कमरे में")।</span></li>
+            <li><span class="english">Using to vs. towards incorrectly (e.g., "walk towards the school" when arrival is meant).</span> <span class="hindi">की ओर बनाम की ओर का गलत उपयोग (उदाहरण, "स्कूल की ओर चलना" जब आगमन का मतलब हो)।</span></li>
+            <li><span class="english">Omitting prepositions (e.g., "I go school" instead of "to school").</span> <span class="hindi">पूर्वसर्ग छोड़ना (उदाहरण, "मैं स्कूल जाता हूँ" के बजाय "स्कूल को")।</span></li>
+            <li><span class="english">Using unnecessary prepositions (e.g., "discuss about" instead of "discuss").</span> <span class="hindi">अनावश्यक पूर्वसर्ग का उपयोग (उदाहरण, "चर्चा के बारे में" के बजाय "चर्चा")।</span></li>
+            <li><span class="english">Misusing prepositions in phrasal verbs (e.g., "look up" instead of "look after").</span> <span class="hindi">वाक्यांशी क्रियाओं में पूर्वसर्गों का गलत उपयोग (उदाहरण, "देखभाल करना" के बजाय "ऊपर देखना")।</span></li>
+            <li><span class="english">Confusing by vs. with (e.g., "written with the author" instead of "by the author").</span> <span class="hindi">द्वारा बनाम के साथ में भ्रम (उदाहरण, "लेखक के साथ लिखित" के बजाय "लेखक द्वारा")।</span></li>
+        </ul>
+        <div class="example">
+            <div class="example-title"><i class="fas fa-star"></i> Correct the Mistakes</div>
+            <p class="english">Incorrect: "She is good in singing." Correct: "She is good <span class="highlight">at</span> singing."</p>
+            <p class="hindi">गलत: "वह गायन में अच्छी है।" सही: "वह गायन <span class="highlight">में</span> अच्छी है।"</p>
+            <p class="english">Incorrect: "He walked to the north." Correct: "He walked <span class="highlight">towards</span> the north."</p>
+            <p class="hindi">गलत: "वह उत्तर को चला।" सही: "वह उत्तर <span class="highlight">की ओर</span> चला।"</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Vocab Doctor App - Comprehensive Preposition Guide</p>
+        <p>Master English and Hindi grammar with interactive, engaging lessons</p>
+    </footer>
+</div>
+</body>
+</html>

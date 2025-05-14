@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pronoun (सर्वनाम) - Grammar App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --light: #f8f9fa;
+            --dark: #2d3436;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --info: #0984e3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 100%;
+            width: 100%;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 1s ease;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 6vw, 2.5rem);
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            color: var(--dark);
+            opacity: 0.8;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+        }
+
+        h2 i {
+            color: var(--accent);
+        }
+
+        .definition {
+            font-size: clamp(0.95rem, 2.5vw, 1rem);
+            margin-bottom: 1rem;
+            padding-left: 0.8rem;
+            border-left: 3px solid var(--secondary);
+        }
+
+        .hindi {
+            color: #e84393;
+            font-weight: 500;
+        }
+
+        .english {
+            color: var(--info);
+            font-weight: 500;
+        }
+
+        ul {
+            list-style-type: none;
+            margin-bottom: 1rem;
+        }
+
+        ul li {
+            padding: 0.4rem 0;
+            padding-left: 1.2rem;
+            position: relative;
+            font-size: clamp(0.9rem, 2.5vw, 0.95rem);
+        }
+
+        ul li::before {
+            content: '•';
+            color: var(--accent);
+            font-size: 1.2rem;
+            position: absolute;
+            left: 0;
+            top: 0.2rem;
+        }
+
+        .example {
+            background: rgba(106, 176, 76, 0.1);
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin: 0.8rem 0;
+            border-left: 3px solid var(--success);
+        }
+
+        .example-title {
+            font-weight: bold;
+            color: var(--success);
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: clamp(0.95rem, 2.5vw, 1rem);
+        }
+
+        .type-card {
+            background: rgba(253, 121, 168, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .type-card:hover {
+            background: rgba(253, 121, 168, 0.2);
+            transform: scale(1.01);
+        }
+
+        .type-title {
+            color: var(--accent);
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: clamp(1.2rem, 3.5vw, 1.4rem);
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, rgba(108, 92, 231, 0.2) 0%, rgba(108, 92, 231, 0) 100%);
+            padding: 0.15rem 0.3rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .feature-box {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: clamp(2rem, 5vw, 2.2rem);
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+
+        .feature-title {
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            margin-bottom: 0.4rem;
+            color: var(--dark);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            color: var(--dark);
+            opacity: 0.7;
+            font-size: clamp(0.8rem, 2.5vw, 0.85rem);
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0.5rem;
+            }
+
+            h1 {
+                font-size: clamp(1.8rem, 5.5vw, 2rem);
+            }
+
+            .subtitle {
+                font-size: clamp(0.9rem, 2.8vw, 1rem);
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+
+            .card {
+                padding: 1rem;
+                border-radius: 10px;
+            }
+
+            h2 {
+                font-size: clamp(1.3rem, 3.8vw, 1.5rem);
+            }
+
+            .definition {
+                font-size: clamp(0.9rem, 2.3vw, 0.95rem);
+                padding-left: 0.5rem;
+            }
+
+            .type-card {
+                padding: 0.8rem;
+                border-radius: 8px;
+            }
+
+            .type-title {
+                font-size: clamp(1.1rem, 3.2vw, 1.2rem);
+            }
+
+            .feature-box {
+                padding: 0.8rem;
+            }
+
+            .feature-icon {
+                font-size: clamp(1.8rem, 4.5vw, 2rem);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0.3rem;
+            }
+
+            h1 {
+                font-size: clamp(1.5rem, 5vw, 1.8rem);
+            }
+
+            .card {
+                padding: 0.8rem;
+                margin-bottom: 1rem;
+            }
+
+            .grid {
+                gap: 0.5rem;
+            }
+
+            ul li {
+                font-size: clamp(0.85rem, 2.3vw, 0.9rem);
+                padding-left: 1rem;
+            }
+
+            .example {
+                padding: 0.6rem;
+            }
+
+            footer {
+                padding: 0.8rem;
+                font-size: clamp(0.75rem, 2.3vw, 0.8rem);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header class="animate">
+        <h1>Pronoun <span class="hindi">(सर्वनाम)</span></h1>
+        <p class="subtitle">Words that replace nouns to avoid repetition and make sentences clear</p>
+    </header>
+
+    <section class="card animate delay-1">
+        <h2><i class="fas fa-book-open"></i> Definition / परिभाषा</h2>
+        <div class="definition">
+            <p class="english">A pronoun is a word that takes the place of a noun or a group of nouns. It helps avoid repetition and makes sentences more concise. Pronouns can function as subjects, objects, or complements in sentences.</p>
+            <p class="hindi">सर्वनाम वह शब्द है जो संज्ञा या संज्ञा समूह की जगह लेता है। यह दोहराव से बचाता है और वाक्यों को अधिक संक्षिप्त बनाता है। सर्वनाम वाक्यों में कर्ता, कर्म या पूरक के रूप में कार्य कर सकते हैं।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Example</div>
+                <p class="english">In "<span class="highlight">Rahul</span> loves books, but <span class="highlight">he</span> prefers novels", <span class="highlight">he</span> is a pronoun replacing <span class="highlight">Rahul</span>.</p>
+                <p class="hindi">"राहुल को किताबें पसंद हैं, लेकिन <span class="highlight">वह</span> उपन्यास पसंद करता है" में, <span class="highlight">वह</span> एक सर्वनाम है जो <span class="highlight">राहुल</span> की जगह लेता है।</p>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="feature-box floating">
+                <div class="feature-icon"><i class="fas fa-user"></i></div>
+                <h3 class="feature-title">Personal</h3>
+                <p class="hindi">वैयक्तिक</p>
+                <p>I, you, he, she, we</p>
+            </div>
+
+            <div class="feature-box floating" style="animation-delay: 0.3s;">
+                <div class="feature-icon"><i class="fas fa-hand-point-right"></i></div>
+                <h3 class="feature-title">Demonstrative</h3>
+                <p class="hindi">संकेतवाचक</p>
+                <p>this, that, these, those</p>
+            </div>
+
+            <div class="feature-box floating" style="animation-delay: 0.6s;">
+                <div class="feature-icon"><i class="fas fa-question"></i></div>
+                <h3 class="feature-title">Interrogative</h3>
+                <p class="hindi">प्रश्नवाचक</p>
+                <p>who, what, which</p>
+            </div>
+
+            <div class="feature-box floating" style="animation-delay: 0.9s;">
+                <div class="feature-icon"><i class="fas fa-lock"></i></div>
+                <h3 class="feature-title">Possessive</h3>
+                <p class="hindi">स्वामिवाचक</p>
+                <p>mine, yours, his, hers</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-2">
+        <h2><i class="fas fa-layer-group"></i> Types of Pronouns / सर्वनाम के प्रकार</h2>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-user-tag"></i> Personal Pronoun (वैयक्तिक सर्वनाम)</h3>
+            <p class="english">A personal pronoun refers to a specific person or thing and changes form based on number, person, gender, and case.</p>
+            <p class="hindi">वैयक्तिक सर्वनाम किसी विशिष्ट व्यक्ति या वस्तु को संदर्भित करता है और संख्या, पुरुष, लिंग और कारक के आधार पर रूप बदलता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">I, you, he, she, it, we, they</span></li>
+                    <li><span class="hindi">मैं, तुम, वह, यह, हम, वे</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-lock"></i> Possessive Pronoun (स्वामिवाचक सर्वनाम)</h3>
+            <p class="english">A possessive pronoun shows ownership and replaces a noun to indicate possession without using an apostrophe.</p>
+            <p class="hindi">स्वामिवाचक सर्वनाम स्वामित्व दिखाता है और संज्ञा को प्रतिस्थापित कर बिना अपोस्ट्रॉफ के स्वामित्व दर्शाता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">mine, yours, his, hers, ours, theirs</span></li>
+                    <li><span class="hindi">मेरा, तुम्हारा, उसका, उसकी, हमारा, उनका</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-reply"></i> Reflexive Pronoun (निजवाचक सर्वनाम)</h3>
+            <p class="english">A reflexive pronoun refers back to the subject of the sentence and is used when the subject and object are the same.</p>
+            <p class="hindi">निजवाचक सर्वनाम वाक्य के कर्ता को वापस संदर्भित करता है और तब उपयोग होता है जब कर्ता और कर्म एक ही हों।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">myself, yourself, himself, herself, itself, ourselves, themselves</span></li>
+                    <li><span class="hindi">स्वयं, तुम स्वयं, वह स्वयं, वह स्वयं (स्त्री), यह स्वयं, हम स्वयं, वे स्वयं</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-hand-point-right"></i> Demonstrative Pronoun (संकेतवाचक सर्वनाम)</h3>
+            <p class="english">A demonstrative pronoun points to a specific thing or things and indicates their position relative to the speaker.</p>
+            <p class="hindi">संकेतवाचक सर्वनाम किसी विशिष्ट वस्तु या वस्तुओं की ओर इशारा करता है और वक्ता के सापेक्ष उनकी स्थिति दर्शाता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">this, that, these, those</span></li>
+                    <li><span class="hindi">यह, वह, ये, वे</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-question"></i> Interrogative Pronoun (प्रश्नवाचक सर्वनाम)</h3>
+            <p class="english">An interrogative pronoun is used to ask questions about an unknown person or thing.</p>
+            <p class="hindi">प्रश्नवाचक सर्वनाम किसी अज्ञात व्यक्ति या वस्तु के बारे में सवाल पूछने के लिए उपयोग होता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">who, whom, whose, what, which</span></li>
+                    <li><span class="hindi">कौन, किसे, किसका, क्या, कौन सा</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-link"></i> Relative Pronoun (संबंधवाचक सर्वनाम)</h3>
+            <p class="english">A relative pronoun introduces a relative clause and connects it to the noun it describes.</p>
+            <p class="hindi">संबंधवाचक सर्वनाम एक संबंधवाचक खंड को प्रस्तुत करता है और इसे उस संज्ञा से जोड़ता है जिसका वर्णन करता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">who, whom, whose, which, that</span></li>
+                    <li><span class="hindi">जो, जिसे, जिसका, जो (वस्तु), कि</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-users"></i> Indefinite Pronoun (अनिश्चयवाचक सर्वनाम)</h3>
+            <p class="english">An indefinite pronoun refers to an unspecified person or thing and does not point to any particular noun.</p>
+            <p class="hindi">अनिश्चयवाचक सर्वनाम किसी अनिर्दिष्ट व्यक्ति या वस्तु को संदर्भित करता है और किसी विशेष संज्ञा की ओर इशारा नहीं करता।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">somebody, anybody, everyone, nothing, several</span></li>
+                    <li><span class="hindi">कोई, हर कोई, कुछ भी नहीं, कई</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-3">
+        <h2><i class="fas fa-lightbulb"></i> Key Points About Pronouns / सर्वनाम के बारे में मुख्य बिंदु</h2>
+        <ul>
+            <li><span class="english">Pronouns replace nouns to avoid repetition.</span> <span class="hindi">सर्वनाम दोहराव से बचने के लिए संज्ञाओं की जगह लेते हैं।</span></li>
+            <li><span class="english">Pronouns must agree with their antecedents in number, gender, and person.</span> <span class="hindi">सर्वनाम को अपने पूर्ववर्ती के साथ संख्या, लिंग और पुरुष में सहमत होना चाहिए।</span></li>
+            <li><span class="english">Pronouns can be singular or plural.</span> <span class="hindi">सर्वनाम एकवचन या बहुवचन हो सकते हैं।</span></li>
+            <li><span class="english">Pronouns change form based on grammatical case (e.g., subjective, objective, possessive).</span> <span class="hindi">सर्वनाम व्याकरणिक कारक (जैसे, कर्ता, कर्म, स्वामित्व) के आधार पर रूप बदलते हैं।</span></li>
+            <li><span class="english">Some pronouns can act as adjectives (e.g., "my" in "my book").</span> <span class="hindi">कुछ सर्वनाम विशेषण के रूप में कार्य कर सकते हैं (उदाहरण, "मेरी किताब" में "मेरी")।</span></li>
+            <li><span class="english">Pronouns can be used to ask questions or introduce clauses.</span> <span class="hindi">सर्वनाम सवाल पूछने या खंड प्रस्तुत करने के लिए उपयोग किए जा सकते हैं।</span></li>
+            <li><span class="english">Indefinite pronouns refer to non-specific entities.</span> <span class="hindi">अनिश्चयवाचक सर्वनाम गैर-विशिष्ट इकाइयों को संदर्भित करते हैं।</span></li>
+            <li><span class="english">Reflexive pronouns emphasize the subject or show identity.</span> <span class="hindi">निजवाचक सर्वनाम कर्ता पर जोर देते हैं या समानता दिखाते हैं।</span></li>
+            <li><span class="english">Pronouns can be first, second, or third person.</span> <span class="hindi">सर्वनाम प्रथम, द्वितीय या तृतीय पुरुष हो सकते हैं।</span></li>
+            <li><span class="english">Incorrect pronoun use can lead to unclear sentences.</span> <span class="hindi">सर्वनाम का गलत उपयोग अस्पष्ट वाक्यों को जन्म दे सकता है।</span></li>
+        </ul>
+    </section>
+
+    <section class="card animate delay-4">
+        <h2><i class="fas fa-question-circle"></i> How to Identify Pronouns / सर्वनाम की पहचान कैसे करें</h2>
+        <ul>
+            <li><span class="english">Look for words that replace nouns in a sentence.</span> <span class="hindi">वाक्य में संज्ञाओं की जगह लेने वाले शब्दों को देखें।</span></li>
+            <li><span class="english">Check if the word refers to a person, place, thing, or idea without naming it.</span> <span class="hindi">जाँच करें कि क्या शब्द किसी व्यक्ति, स्थान, वस्तु या विचार को बिना नाम दिए संदर्भित करता है।</span></li>
+            <li><span class="english">Identify words that change based on number, gender, or case (e.g., I/me, he/him).</span> <span class="hindi">ऐसे शब्दों की पहचान करें जो संख्या, लिंग या कारक के आधार पर बदलते हैं (उदाहरण, मैं/मुझे, वह/उसे)।</span></li>
+            <li><span class="english">Look for words that can stand alone or introduce clauses (e.g., who, which).</span> <span class="hindi">ऐसे शब्दों को देखें जो अकेले खड़े हो सकते हैं या खंड प्रस्तुत कर सकते हैं (उदाहरण, कौन, जो)।</span></li>
+            <li><span class="english">Check if the word can be used to ask a question (e.g., what, who).</span> <span class="hindi">जाँच करें कि क्या शब्द का उपयोग सवाल पूछने के लिए किया जा सकता है (उदाहरण, क्या, कौन)।</span></li>
+        </ul>
+
+        <div class="example">
+            <div class="example-title"><i class="fas fa-star"></i> Practice Examples</div>
+            <p class="english">Identify the pronouns in these sentences:</p>
+            <p class="hindi">इन वाक्यों में सर्वनाम पहचानें:</p>
+            <ul>
+                <li><span class="english"><span class="highlight">She</span> gave <span class="highlight">him</span> a book about <span class="highlight">India</span>.</span></li>
+                <li><span class="hindi"><span class="highlight">उसने</span> <span class="highlight">उसे</span> भारत के बारे में एक किताब दी।</span></li>
+                <li><span class="english"><span class="highlight">This</span> is <span class="highlight">mine</span>, not <span class="highlight">yours</span>.</span></li>
+                <li><span class="hindi"><span class="highlight">यह</span> <span class="highlight">मेरा</span> है, <span class="highlight">तुम्हारा</span> नहीं।</span></li>
+                <li><span class="english"><span class="highlight">Who</span> won the <span class="highlight">trophy</span>?</span></li>
+                <li><span class="hindi"><span class="highlight">कौन</span> ने <span class="highlight">ट्रॉफी</span> जीती?</span></li>
+            </ul>
+        </div>
+
+        <div class="example">
+            <div class="example-title"><i class="fas fa-lightbulb"></i> Tip for Beginners</div>
+            <p class="english">To practice identifying pronouns, read a sentence and look for words that could replace a person, place, or thing mentioned earlier. Try substituting the pronoun with the noun it refers to and see if the sentence still makes sense.</p>
+            <p class="hindi">सर्वनाम की पहचान का अभ्यास करने के लिए, एक वाक्य पढ़ें और ऐसे शब्दों को देखें जो पहले उल्लिखित व्यक्ति, स्थान या वस्तु की जगह ले सकते हों। सर्वनाम को उसके द्वारा संदर्भित संज्ञा से बदलने की कोशिश करें और देखें कि क्या वाक्य अभी भी अर्थपूर्ण है।</p>
+        </div>
+    </section>
+
+    <section class="card animate delay-4">
+        <h2><i class="fas fa-exclamation-circle"></i> Common Mistakes with Pronouns / सर्वनाम के साथ सामान्य गलतियाँ</h2>
+        <ul>
+            <li><span class="english">Using the wrong case (e.g., "Me went to the store" instead of "I went").</span> <span class="hindi">गलत कारक का उपयोग (उदाहरण, "मुझे दुकान गया" के बजाय "मैं दुकान गया")।</span></li>
+            <li><span class="english">Incorrect agreement with antecedents (e.g., "The team lost their game" instead of "its game").</span> <span class="hindi">पूर्ववर्ती के साथ गलत समझौता (उदाहरण, "टीम ने उनका खेल हारा" के बजाय "उसका खेल हारा")।</span></li>
+            <li><span class="english">Confusing "who" and "whom" (e.g., "Who did you give it to?" instead of "Whom").</span> <span class="hindi">"कौन" और "किसे" में भ्रम (उदाहरण, "कौन तुमने इसे दिया?" के बजाय "किसे")।</span></li>
+            <li><span class="english">Using plural pronouns for singular nouns (e.g., "Everyone forgot their book" instead of "his/her book").</span> <span class="hindi">एकवचन संज्ञा के लिए बहुवचन सर्वनाम का उपयोग (उदाहरण, "हर कोई अपनी किताब भूल गया" के बजाय "उसकी किताब")।</span></li>
+            <li><span class="english">Ambiguous pronoun references (e.g., "Rahul and Arjun fought, and he won" – unclear who "he" is).</span> <span class="hindi">अस्पष्ट सर्वनाम संदर्भ (उदाहरण, "राहुल और अर्जुन लड़े, और वह जीता" – अस्पष्ट कि "वह" कौन है)।</span></li>
+        </ul>
+        <div class="example">
+            <div class="example-title"><i class="fas fa-star"></i> Correct the Mistakes</div>
+            <p class="english">Incorrect: "Me and her went to Delhi." Correct: "<span class="highlight">She</span> and <span class="highlight">I</span> went to Delhi."</p>
+            <p class="hindi">गलत: "मुझे और उसने दिल्ली गया।" सही: "<span class="highlight">वह</span> और <span class="highlight">मैं</span> दिल्ली गए।"</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Vocab Doctor App - Comprehensive Pronoun Guide</p>
+        <p>Master English and Hindi grammar with interactive, engaging lessons</p>
+    </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fruits Dictionary</title>
+    <style>
+        :root {
+            --primary-color: #ff7b25;
+            --secondary-color: #ff5200;
+            --accent-color: #ffab07;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --danger-color: #e74c3c;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header-stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: scale(1.05);
+        }
+
+        .search-container {
+            margin: 30px auto;
+            max-width: 600px;
+            position: relative;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        #search {
+            width: 100%;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        #search:focus {
+            outline: none;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .category-tab {
+            padding: 10px 20px;
+            background-color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-tab:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-tab.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .fruits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .fruit-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .fruit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .fruit-image {
+            height: 180px;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .fruit-card:hover .fruit-image {
+            transform: scale(1.05);
+        }
+
+        .fruit-info {
+            padding: 20px;
+        }
+
+        .fruit-name {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            color: var(--dark-color);
+        }
+
+        .hindi-name {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .fruit-scientific {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .fruit-category {
+            display: inline-block;
+            padding: 3px 10px;
+            background-color: var(--light-color);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .fruit-season {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            margin-left: 5px;
+        }
+
+        .fruit-description {
+            font-size: 0.95rem;
+            color: #555;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .fruit-icons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .fruit-icon {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            transition: transform 0.3s ease;
+        }
+
+        .fruit-icon:hover {
+            transform: scale(1.2);
+        }
+
+        .no-results {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 50px;
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        .category-count {
+            margin-left: 5px;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .fruits-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .fruits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-stats {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+        }
+
+        /* Animation classes */
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Color coding for categories */
+        .tropical { background-color: #ffddcc; color: #ff5200; }
+        .citrus { background-color: #fff3cd; color: #ffab07; }
+        .berry { background-color: #ffcce0; color: #e91e63; }
+        .melon { background-color: #d1f1e1; color: #0c6e4e; }
+        .stone { background-color: #e6ccff; color: #7b1fa2; }
+        .pome { background-color: #ccffff; color: #006666; }
+        .exotic { background-color: #ffe6cc; color: #cc7a00; }
+
+        /* Color coding for seasons */
+        .summer { background-color: #ffddcc; color: #ff6600; }
+        .winter { background-color: #ccffff; color: #006666; }
+        .spring { background-color: #ffcce5; color: #cc0066; }
+        .autumn { background-color: #ffe6cc; color: #cc7a00; }
+        .year-round { background-color: #e6ffe6; color: #006600; }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<header>
+    <div class="container">
+        <h1>Fruits Dictionary</h1>
+        <p>Explore the delicious world of fruits</p>
+        <div class="header-stats">
+            <div class="stat-box pulse">
+                <i class="fas fa-apple-alt"></i> Total Fruits: <span id="total-count">0</span>
+            </div>
+            <div class="stat-box">
+                <i class="fas fa-list"></i> Categories: <span id="category-count">0</span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="search-container">
+        <input type="text" id="search" placeholder="Search for fruits...">
+        <i class="fas fa-search search-icon"></i>
+    </div>
+
+    <div class="category-tabs">
+        <button class="category-tab active" data-category="all">All Fruits</button>
+        <button class="category-tab" data-category="tropical">Tropical <span class="category-count">0</span></button>
+        <button class="category-tab" data-category="citrus">Citrus <span class="category-count">0</span></button>
+        <button class="category-tab" data-category="berry">Berries <span class="category-count">0</span></button>
+        <button class="category-tab" data-category="melon">Melons <span class="category-count">0</span></button>
+        <button class="category-tab" data-category="stone">Stone <span class="category-count">0</span></button>
+        <button class="category-tab" data-category="pome">Pome <span class="category-count">0</span></button>
+        <button class="category-tab" data-category="exotic">Exotic <span class="category-count">0</span></button>
+    </div>
+
+    <div class="fruits-grid" id="fruits-container">
+        <!-- Fruit cards will be inserted here by JavaScript -->
+        <div class="no-results">
+            <i class="fas fa-spinner fa-spin"></i> Loading fruits...
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>© 2025 Vocab Doctor App. All rights reserved.</p>
+</footer>
+
+<script>
+    // Fruit data
+    const fruits = [
+        {
+            name: "Mango",
+            hindi: "आम",
+            scientific: "Mangifera indica",
+            category: "tropical",
+            season: "summer",
+            description: "Mango is a sweet, juicy tropical fruit with a unique flavor. It's rich in vitamins A and C and is often called the 'king of fruits'.",
+            image: "https://source.unsplash.com/random/600x400/?mango",
+            icons: ["fa-umbrella-beach", "fa-sun", "fa-crown"]
+        },
+        {
+            name: "Orange",
+            hindi: "संतरा",
+            scientific: "Citrus × sinensis",
+            category: "citrus",
+            season: "winter",
+            description: "Oranges are round, orange-colored citrus fruits known for their juicy segments and high vitamin C content. They grow on flowering trees.",
+            image: "https://source.unsplash.com/random/600x400/?orange",
+            icons: ["fa-sun", "fa-tint", "fa-plus-square"]
+        },
+        {
+            name: "Strawberry",
+            hindi: "स्ट्रॉबेरी",
+            scientific: "Fragaria × ananassa",
+            category: "berry",
+            season: "spring",
+            description: "Strawberries are bright red, juicy, and sweet berries with tiny seeds on the outside. They're packed with antioxidants and vitamin C.",
+            image: "https://source.unsplash.com/random/600x400/?strawberry",
+            icons: ["fa-heart", "fa-seedling", "fa-wine-bottle"]
+        },
+        {
+            name: "Watermelon",
+            hindi: "तरबूज",
+            scientific: "Citrullus lanatus",
+            category: "melon",
+            season: "summer",
+            description: "Watermelon is a large, refreshing fruit with sweet, watery red flesh and black seeds. It's over 90% water, perfect for hot days.",
+            image: "https://source.unsplash.com/random/600x400/?watermelon",
+            icons: ["fa-tint", "fa-sun", "fa-swimming-pool"]
+        },
+        {
+            name: "Peach",
+            hindi: "आड़ू",
+            scientific: "Prunus persica",
+            category: "stone",
+            season: "summer",
+            description: "Peaches are soft, fuzzy fruits with sweet, juicy flesh around a hard central pit. They come in yellow and white varieties.",
+            image: "https://source.unsplash.com/random/600x400/?peach",
+            icons: ["fa-leaf", "fa-paint-brush", "fa-smile"]
+        },
+        {
+            name: "Apple",
+            hindi: "सेब",
+            scientific: "Malus domestica",
+            category: "pome",
+            season: "autumn",
+            description: "Apples are crisp, sweet or tart fruits that grow on trees. They come in many varieties and colors including red, green, and yellow.",
+            image: "https://source.unsplash.com/random/600x400/?apple",
+            icons: ["fa-tree", "fa-apple-alt", "fa-school"]
+        },
+        {
+            name: "Dragon Fruit",
+            hindi: "ड्रैगन फ्रूट",
+            scientific: "Hylocereus undatus",
+            category: "exotic",
+            season: "summer",
+            description: "Dragon fruit has bright pink skin with green scales and white or red flesh dotted with black seeds. It has a mildly sweet, refreshing taste.",
+            image: "https://source.unsplash.com/random/600x400/?dragon-fruit",
+            icons: ["fa-dragon", "fa-magic", "fa-star"]
+        },
+        {
+            name: "Blueberry",
+            hindi: "ब्लूबेरी",
+            scientific: "Vaccinium sect. Cyanococcus",
+            category: "berry",
+            season: "summer",
+            description: "Blueberries are small, sweet, dark blue berries packed with antioxidants. They grow on bushes and are often called a 'superfood'.",
+            image: "https://source.unsplash.com/random/600x400/?blueberry",
+            icons: ["fa-brain", "fa-seedling", "fa-paint-brush"]
+        },
+        {
+            name: "Pineapple",
+            hindi: "अनानास",
+            scientific: "Ananas comosus",
+            category: "tropical",
+            season: "summer",
+            description: "Pineapple is a tropical fruit with sweet, tangy yellow flesh and a tough, spiky skin. It contains bromelain, an enzyme that aids digestion.",
+            image: "https://source.unsplash.com/random/600x400/?pineapple",
+            icons: ["fa-umbrella-beach", "fa-crown", "fa-cocktail"]
+        },
+        {
+            name: "Kiwi",
+            hindi: "कीवी",
+            scientific: "Actinidia deliciosa",
+            category: "exotic",
+            season: "winter",
+            description: "Kiwi has fuzzy brown skin and bright green flesh with tiny black seeds. It's rich in vitamin C and has a sweet-tart flavor.",
+            image: "https://source.unsplash.com/random/600x400/?kiwi",
+            icons: ["fa-globe-americas", "fa-leaf", "fa-heartbeat"]
+        },
+        {
+            name: "Cherry",
+            hindi: "चेरी",
+            scientific: "Prunus avium",
+            category: "stone",
+            season: "summer",
+            description: "Cherries are small, round stone fruits that grow in pairs. They come in sweet and tart varieties and can be red, yellow, or almost black.",
+            image: "https://source.unsplash.com/random/600x400/?cherry",
+            icons: ["fa-heart", "fa-wine-glass-alt", "fa-tree"]
+        },
+        {
+            name: "Banana",
+            hindi: "केला",
+            scientific: "Musa",
+            category: "tropical",
+            season: "year-round",
+            description: "Bananas are elongated, curved fruits with soft, sweet flesh inside a thick peel. They're rich in potassium and a great energy source.",
+            image: "https://source.unsplash.com/random/600x400/?banana",
+            icons: ["fa-pepper-hot", "fa-running", "fa-smile"]
+        }
+    ];
+
+    // DOM elements
+    const fruitsContainer = document.getElementById('fruits-container');
+    const searchInput = document.getElementById('search');
+    const categoryTabs = document.querySelectorAll('.category-tab');
+    const totalCountElement = document.getElementById('total-count');
+    const categoryCountElement = document.getElementById('category-count');
+
+    // Initialize the page
+    function init() {
+        displayFruits(fruits);
+        updateCounts();
+        setupEventListeners();
+    }
+
+    // Display fruits in the grid
+    function displayFruits(fruitsToDisplay) {
+        fruitsContainer.innerHTML = '';
+
+        if (fruitsToDisplay.length === 0) {
+            fruitsContainer.innerHTML = `
+                <div class="no-results">
+                    <i class="fas fa-search"></i> No fruits found matching your search.
+                </div>
+            `;
+            return;
+        }
+
+        fruitsToDisplay.forEach(fruit => {
+            const fruitCard = document.createElement('div');
+            fruitCard.className = `fruit-card fade-in ${fruit.category}`;
+            fruitCard.innerHTML = `
+                <img src="${fruit.image}" alt="${fruit.name}" class="fruit-image">
+                <div class="fruit-info">
+                    <h3 class="fruit-name">${fruit.name}</h3>
+                    <p class="hindi-name">${fruit.hindi}</p>
+                    <p class="fruit-scientific">${fruit.scientific}</p>
+                    <span class="fruit-category ${fruit.category}">${formatCategory(fruit.category)}</span>
+                    <span class="fruit-season ${fruit.season}">${formatSeason(fruit.season)}</span>
+                    <p class="fruit-description">${fruit.description}</p>
+                    <div class="fruit-icons">
+                        ${fruit.icons.map(icon => `<i class="fas ${icon} fruit-icon"></i>`).join('')}
+                    </div>
+                </div>
+            `;
+            fruitsContainer.appendChild(fruitCard);
+        });
+    }
+
+    // Format category name for display
+    function formatCategory(category) {
+        if (category === "pome") return "Pome Fruit";
+        return category.charAt(0).toUpperCase() + category.slice(1);
+    }
+
+    // Format season name for display
+    function formatSeason(season) {
+        if (season === 'year-round') return 'Year Round';
+        return season.charAt(0).toUpperCase() + season.slice(1);
+    }
+
+    // Update total and category counts
+    function updateCounts() {
+        totalCountElement.textContent = fruits.length;
+
+        // Count fruits in each category
+        const categoryCounts = {
+            tropical: fruits.filter(f => f.category === 'tropical').length,
+            citrus: fruits.filter(f => f.category === 'citrus').length,
+            berry: fruits.filter(f => f.category === 'berry').length,
+            melon: fruits.filter(f => f.category === 'melon').length,
+            stone: fruits.filter(f => f.category === 'stone').length,
+            pome: fruits.filter(f => f.category === 'pome').length,
+            exotic: fruits.filter(f => f.category === 'exotic').length
+        };
+
+        // Update category counts in tabs
+        categoryTabs.forEach(tab => {
+            const category = tab.dataset.category;
+            if (category !== 'all') {
+                const countElement = tab.querySelector('.category-count');
+                countElement.textContent = categoryCounts[category];
+            }
+        });
+
+        // Count unique categories
+        const uniqueCategories = new Set(fruits.map(f => f.category));
+        categoryCountElement.textContent = uniqueCategories.size;
+    }
+
+    // Filter fruits based on search and category
+    function filterFruits() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const activeCategory = document.querySelector('.category-tab.active').dataset.category;
+
+        let filteredFruits = fruits;
+
+        // Filter by category
+        if (activeCategory !== 'all') {
+            filteredFruits = filteredFruits.filter(fruit => fruit.category === activeCategory);
+        }
+
+        // Filter by search term
+        if (searchTerm) {
+            filteredFruits = filteredFruits.filter(fruit =>
+                fruit.name.toLowerCase().includes(searchTerm) ||
+                fruit.hindi.toLowerCase().includes(searchTerm) ||
+                fruit.scientific.toLowerCase().includes(searchTerm) ||
+                fruit.description.toLowerCase().includes(searchTerm) ||
+                fruit.season.toLowerCase().includes(searchTerm)
+            );
+        }
+
+        displayFruits(filteredFruits);
+    }
+
+    // Set up event listeners
+    function setupEventListeners() {
+        // Search input
+        searchInput.addEventListener('input', filterFruits);
+
+        // Category tabs
+        categoryTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                categoryTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                filterFruits();
+            });
+        });
+    }
+
+    // Initialize the app when DOM is loaded
+    document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

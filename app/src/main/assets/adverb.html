@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adverb (क्रिया-विशेषण) - Grammar App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --light: #f8f9fa;
+            --dark: #2d3436;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --info: #0984e3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 100%;
+            width: 100%;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 1s ease;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 6vw, 2.5rem);
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            color: var(--dark);
+            opacity: 0.8;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+        }
+
+        h2 i {
+            color: var(--accent);
+        }
+
+        .definition {
+            font-size: clamp(0.95rem, 2.5vw, 1rem);
+            margin-bottom: 1rem;
+            padding-left: 0.8rem;
+            border-left: 3px solid var(--secondary);
+        }
+
+        .hindi {
+            color: #e84393;
+            font-weight: 500;
+        }
+
+        .english {
+            color: var(--info);
+            font-weight: 500;
+        }
+
+        ul {
+            list-style-type: none;
+            margin-bottom: 1rem;
+        }
+
+        ul li {
+            padding: 0.4rem 0;
+            padding-left: 1.2rem;
+            position: relative;
+            font-size: clamp(0.9rem, 2.5vw, 0.95rem);
+        }
+
+        ul li::before {
+            content: '•';
+            color: var(--accent);
+            font-size: 1.2rem;
+            position: absolute;
+            left: 0;
+            top: 0.2rem;
+        }
+
+        .example {
+            background: rgba(106, 176, 76, 0.1);
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin: 0.8rem 0;
+            border-left: 3px solid var(--success);
+        }
+
+        .example-title {
+            font-weight: bold;
+            color: var(--success);
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: clamp(0.95rem, 2.5vw, 1rem);
+        }
+
+        .type-card {
+            background: rgba(253, 121, 168, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .type-card:hover {
+            background: rgba(253, 121, 168, 0.2);
+            transform: scale(1.01);
+        }
+
+        .type-title {
+            color: var(--accent);
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: clamp(1.2rem, 3.5vw, 1.4rem);
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, rgba(108, 92, 231, 0.2) 0%, rgba(108, 92, 231, 0) 100%);
+            padding: 0.15rem 0.3rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .feature-box {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: clamp(2rem, 5vw, 2.2rem);
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+
+        .feature-title {
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            margin-bottom: 0.4rem;
+            color: var(--dark);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            color: var(--dark);
+            opacity: 0.7;
+            font-size: clamp(0.8rem, 2.5vw, 0.85rem);
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0.5rem;
+            }
+
+            h1 {
+                font-size: clamp(1.8rem, 5.5vw, 2rem);
+            }
+
+            .subtitle {
+                font-size: clamp(0.9rem, 2.8vw, 1rem);
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+
+            .card {
+                padding: 1rem;
+                border-radius: 10px;
+            }
+
+            h2 {
+                font-size: clamp(1.3rem, 3.8vw, 1.5rem);
+            }
+
+            .definition {
+                font-size: clamp(0.9rem, 2.3vw, 0.95rem);
+                padding-left: 0.5rem;
+            }
+
+            .type-card {
+                padding: 0.8rem;
+                border-radius: 8px;
+            }
+
+            .type-title {
+                font-size: clamp(1.1rem, 3.2vw, 1.2rem);
+            }
+
+            .feature-box {
+                padding: 0.8rem;
+            }
+
+            .feature-icon {
+                font-size: clamp(1.8rem, 4.5vw, 2rem);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0.3rem;
+            }
+
+            h1 {
+                font-size: clamp(1.5rem, 5vw, 1.8rem);
+            }
+
+            .card {
+                padding: 0.8rem;
+                margin-bottom: 1rem;
+            }
+
+            .grid {
+                gap: 0.5rem;
+            }
+
+            ul li {
+                font-size: clamp(0.85rem, 2.3vw, 0.9rem);
+                padding-left: 1rem;
+            }
+
+            .example {
+                padding: 0.6rem;
+            }
+
+            footer {
+                padding: 0.8rem;
+                font-size: clamp(0.75rem, 2.3vw, 0.8rem);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header class="animate">
+        <h1>Adverb <span class="hindi">(क्रिया-विशेषण)</span></h1>
+        <p class="subtitle">Words that modify verbs, adjectives, or other adverbs to add detail</p>
+    </header>
+
+    <section class="card animate delay-1">
+        <h2><i class="fas fa-book-open"></i> Definition / परिभाषा</h2>
+        <div class="definition">
+            <p class="english">An adverb is a word that modifies a verb, adjective, another adverb, or an entire sentence, providing information about how, when, where, or to what extent something happens. Adverbs enhance sentence clarity and detail.</p>
+            <p class="hindi">क्रिया-विशेषण वह शब्द है जो क्रिया, विशेषण, किसी अन्य क्रिया-विशेषण, या पूरे वाक्य को संशोधित करता है, यह बताता है कि कोई चीज कैसे, कब, कहाँ, या किस हद तक होती है। क्रिया-विशेषण वाक्य की स्पष्टता और विवरण को बढ़ाते हैं।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Example</div>
+                <p class="english">In "She sings <span class="highlight">beautifully</span>", <span class="highlight">beautifully</span> is an adverb modifying the verb sings.</p>
+                <p class="hindi">"वह <span class="highlight">सुंदरता से</span> गाती है" में, <span class="highlight">सुंदरता से</span> एक क्रिया-विशेषण है जो क्रिया गाती को संशोधित करता है।</p>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="feature-box floating">
+                <div class="feature-icon"><i class="fas fa-walking"></i></div>
+                <h3 class="feature-title">Manner</h3>
+                <p class="hindi">रीति</p>
+                <p>quickly, slowly, well</p>
+            </div>
+
+            <div class="feature-box floating" style="animation-delay: 0.3s;">
+                <div class="feature-icon"><i class="fas fa-map-marker-alt"></i></div>
+                <h3 class="feature-title">Place</h3>
+                <p class="hindi">स्थान</p>
+                <p>here, there, everywhere</p>
+            </div>
+
+            <div class="feature-box floating" style="animation-delay: 0.6s;">
+                <div class="feature-icon"><i class="fas fa-clock"></i></div>
+                <h3 class="feature-title">Time</h3>
+                <p class="hindi">काल</p>
+                <p>now, then, yesterday</p>
+            </div>
+
+            <div class="feature-box floating" style="animation-delay: 0.9s;">
+                <div class="feature-icon"><i class="fas fa-balance-scale"></i></div>
+                <h3 class="feature-title">Degree</h3>
+                <p class="hindi">मात्रा</p>
+                <p>very, too, almost</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-2">
+        <h2><i class="fas fa-layer-group"></i> Types of Adverbs / क्रिया-विशेषण के प्रकार</h2>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-walking"></i> Adverb of Manner (रीति क्रिया-विशेषण)</h3>
+            <p class="english">An adverb of manner describes how an action is performed or the way something happens.</p>
+            <p class="hindi">रीति क्रिया-विशेषण यह बताता है कि कोई कार्य कैसे किया जाता है या कोई चीज किस तरह होती है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">quickly, slowly, carefully, well, loudly</span></li>
+                    <li><span class="hindi">जल्दी, धीरे, सावधानी से, अच्छी तरह, जोर से</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-map-marker-alt"></i> Adverb of Place (स्थान क्रिया-विशेषण)</h3>
+            <p class="english">An adverb of place indicates where an action occurs or the location of something.</p>
+            <p class="hindi">स्थान क्रिया-विशेषण यह दर्शाता है कि कोई कार्य कहाँ होता है या किसी चीज का स्थान।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">here, there, everywhere, upstairs, outside</span></li>
+                    <li><span class="hindi">यहाँ, वहाँ, हर जगह, ऊपर, बाहर</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-clock"></i> Adverb of Time (काल क्रिया-विशेषण)</h3>
+            <p class="english">An adverb of time tells when an action occurs or its duration.</p>
+            <p class="hindi">काल क्रिया-विशेषण यह बताता है कि कोई कार्य कब होता है या उसकी अवधि।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">now, then, yesterday, today, soon</span></li>
+                    <li><span class="hindi">अब, तब, कल, आज, जल्दी</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-redo"></i> Adverb of Frequency (आवृत्ति क्रिया-विशेषण)</h3>
+            <p class="english">An adverb of frequency describes how often an action occurs.</p>
+            <p class="hindi">आवृत्ति क्रिया-विशेषण यह बताता है कि कोई कार्य कितनी बार होता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">always, often, sometimes, never, rarely</span></li>
+                    <li><span class="hindi">हमेशा, अक्सर, कभी-कभी, कभी नहीं, शायद ही</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-balance-scale"></i> Adverb of Degree (मात्रा क्रिया-विशेषण)</h3>
+            <p class="english">An adverb of degree indicates the intensity, extent, or degree of an action, adjective, or another adverb.</p>
+            <p class="hindi">मात्रा क्रिया-विशेषण किसी कार्य, विशेषण, या अन्य क्रिया-विशेषण की तीव्रता, सीमा, या डिग्री को दर्शाता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">very, too, quite, almost, enough</span></li>
+                    <li><span class="hindi">बहुत, अति, काफी, लगभग, पर्याप्त</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-question"></i> Interrogative Adverb (प्रश्नवाचक क्रिया-विशेषण)</h3>
+            <p class="english">An interrogative adverb is used to ask questions about manner, place, time, or reason.</p>
+            <p class="hindi">प्रश्नवाचक क्रिया-विशेषण रीति, स्थान, समय, या कारण के बारे में सवाल पूछने के लिए उपयोग होता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">how, when, where, why</span></li>
+                    <li><span class="hindi">कैसे, कब, कहाँ, क्यों</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-link"></i> Conjunctive Adverb (संयोजक क्रिया-विशेषण)</h3>
+            <p class="english">A conjunctive adverb connects two independent clauses, showing relationships like cause, contrast, or sequence.</p>
+            <p class="hindi">संयोजक क्रिया-विशेषण दो स्वतंत्र खंडों को जोड़ता है, जो कारण, विरोध, या क्रम जैसे संबंध दिखाता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">however, therefore, meanwhile, consequently, nevertheless</span></li>
+                    <li><span class="hindi">हालांकि, इसलिए, इस बीच, परिणामस्वरूप, फिर भी</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-arrows-alt-h"></i> Adverb Placement (क्रिया-विशेषण की स्थिति)</h3>
+            <p class="english">Adverbs can be placed at the beginning, middle, or end of a sentence, depending on their type and emphasis, though placement affects meaning.</p>
+            <p class="hindi">क्रिया-विशेषण को वाक्य की शुरुआत, मध्य, या अंत में रखा जा सकता है, जो उनके प्रकार और जोर पर निर्भर करता है, हालांकि स्थिति अर्थ को प्रभावित करती है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">Quickly, she ran (beginning); She quickly ran (middle); She ran quickly (end).</span></li>
+                    <li><span class="hindi">जल्दी, वह दौड़ी (शुरुआत); वह जल्दी दौड़ी (मध्य); वह दौड़ी जल्दी (अंत)।</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-3">
+        <h2><i class="fas fa-lightbulb"></i> Key Points About Adverbs / क्रिया-विशेषण के बारे में मुख्य बिंदु</h2>
+        <ul>
+            <li><span class="english">Adverbs modify verbs, adjectives, other adverbs, or entire sentences.</span> <span class="hindi">क्रिया-विशेषण क्रिया, विशेषण, अन्य क्रिया-विशेषण, या पूरे वाक्य को संशोधित करते हैं।</span></li>
+            <li><span class="english">Many adverbs are formed by adding -ly to adjectives (e.g., quick → quickly).</span> <span class="hindi">कई क्रिया-विशेषण विशेषणों में -ly जोड़कर बनते हैं (उदाहरण, त्वरित → त्वरित रूप से)।</span></li>
+            <li><span class="english">Adverbs can appear in various positions in a sentence for emphasis.</span> <span class="hindi">क्रिया-विशेषण जोर देने के लिए वाक्य में विभिन्न स्थानों पर प्रकट हो सकते हैं।</span></li>
+            <li><span class="english">Adverbs of degree can intensify adjectives (e.g., very beautiful).</span> <span class="hindi">मात्रा के क्रिया-विशेषण विशेषणों को तीव्र कर सकते हैं (उदाहरण, बहुत सुंदर)।</span></li>
+            <li><span class="english">Adverbs can modify other adverbs (e.g., very quickly).</span> <span class="hindi">क्रिया-विशेषण अन्य क्रिया-विशेषणों को संशोधित कर सकते हैं (उदाहरण, बहुत जल्दी)।</span></li>
+            <li><span class="english">Some adverbs have irregular forms (e.g., good → well).</span> <span class="hindi">कुछ क्रिया-विशेषणों के अनियमित रूप होते हैं (उदाहरण, अच्छा → अच्छी तरह)।</span></li>
+            <li><span class="english">Adverbs of frequency often come before the main verb.</span> <span class="hindi">आवृत्ति के क्रिया-विशेषण अक्सर मुख्य क्रिया से पहले आते हैं।</span></li>
+            <li><span class="english">Conjunctive adverbs require punctuation like semicolons or commas.</span> <span class="hindi">संयोजक क्रिया-विशेषणों को सेमीकोलन या अल्पविराम जैसे विराम चिह्नों की आवश्यकता होती है।</span></li>
+            <li><span class="english">Adverbs can change meaning based on placement (e.g., Only she runs vs. She only runs).</span> <span class="hindi">क्रिया-विशेषण स्थिति के आधार पर अर्थ बदल सकते हैं (उदाहरण, केवल वह दौड़ती है बनाम वह केवल दौड़ती है)।</span></li>
+            <li><span class="english">Incorrect adverb use can make sentences unclear or awkward.</span> <span class="hindi">क्रिया-विशेषण का गलत उपयोग वाक्यों को अस्पष्ट या अटपटा बना सकता है।</span></li>
+        </ul>
+    </section>
+
+    <section class="card animate delay-4">
+        <h2><i class="fas fa-question-circle"></i> How to Identify Adverbs / क्रिया-विशेषण की पहचान कैसे करें</h2>
+        <ul>
+            <li><span class="english">Look for words that modify a verb, adjective, or another adverb.</span> <span class="hindi">ऐसे शब्दों को देखें जो क्रिया, विशेषण, या किसी अन्य क्रिया-विशेषण को संशोधित करते हैं।</span></li>
+            <li><span class="english">Check if the word answers "how?", "when?", "where?", "how often?", or "to what extent?"</span> <span class="hindi">जाँच करें कि क्या शब्द "कैसे?", "कब?", "कहाँ?", "कितनी बार?", या "किस हद तक?" का जवाब देता है।</span></li>
+            <li><span class="english">Identify words ending in -ly, though not all adverbs have this ending.</span> <span class="hindi">ऐसे शब्दों की पहचान करें जो -ly में समाप्त होते हैं, हालांकि सभी क्रिया-विशेषण इस अंत के नहीं होते।</span></li>
+            <li><span class="english">Look for words that can move within a sentence without changing its core meaning.</span> <span class="hindi">ऐसे शब्दों को देखें जो वाक्य के मूल अर्थ को बदले बिना वाक्य में स्थानांतरित हो सकते हैं।</span></li>
+            <li><span class="english">Check if the word enhances the description of an action or quality.</span> <span class="hindi">जाँच करें कि क्या शब्द किसी कार्य या गुणवत्ता के वर्णन को बढ़ाता है।</span></li>
+        </ul>
+
+        <div class="example">
+            <div class="example-title"><i class="fas fa-star"></i> Practice Examples</div>
+            <p class="english">Identify the adverbs in these sentences:</p>
+            <p class="hindi">इन वाक्यों में क्रिया-विशेषण पहचानें:</p>
+            <ul>
+                <li><span class="english">She runs <span class="highlight">quickly</span>.</span></li>
+                <li><span class="hindi">वह <span class="highlight">जल्दी</span> दौड़ती है।</span></li>
+                <li><span class="english">The garden is <span class="highlight">very</span> beautiful.</span></li>
+                <li><span class="hindi">बगीचा <span class="highlight">बहुत</span> सुंदर है।</span></li>
+                <li><span class="english">He sings <span class="highlight">extremely</span> well.</span></li>
+                <li><span class="hindi">वह <span class="highlight">अत्यंत</span> अच्छा गाता है।</span></li>
+            </ul>
+        </div>
+
+        <div class="example">
+            <div class="example-title"><i class="fas fa-lightbulb"></i> Tip for Beginners</div>
+            <p class="english">To practice identifying adverbs, read a sentence and look for words that add extra information about an action, quality, or another description. Try removing the word to see if the sentence still makes sense but loses some detail.</p>
+            <p class="hindi">क्रिया-विशेषण की पहचान का अभ्यास करने के लिए, एक वाक्य पढ़ें और ऐसे शब्दों को ढूंढें जो किसी कार्य, गुणवत्ता, या अन्य वर्णन के बारे में अतिरिक्त जानकारी जोड़ते हों। शब्द को हटाकर देखें कि क्या वाक्य अभी भी अर्थपूर्ण है लेकिन कुछ विवरण खो देता है।</p>
+        </div>
+    </section>
+
+    <section class="card animate delay-4">
+        <h2><i class="fas fa-exclamation-circle"></i> Common Mistakes with Adverbs / क्रिया-विशेषण के साथ सामान्य गलतियाँ</h2>
+        <ul>
+            <li><span class="english">Confusing adverbs with adjectives (e.g., "She sings good" instead of "well").</span> <span class="hindi">क्रिया-विशेषण और विशेषण में भ्रम (उदाहरण, "वह अच्छा गाती है" के बजाय "अच्छी तरह")।</span></li>
+            <li><span class="english">Incorrect placement of adverbs (e.g., "She quickly only ran" instead of "She only quickly ran").</span> <span class="hindi">क्रिया-विशेषण का गलत स्थान (उदाहरण, "वह जल्दी केवल दौड़ी" के बजाय "वह केवल जल्दी दौड़ी")।</span></li>
+            <li><span class="english">Overusing adverbs, making sentences redundant (e.g., "She shouted loudly noisily").</span> <span class="hindi">क्रिया-विशेषण का अत्यधिक उपयोग, जिससे वाक्य अतिरिक्त हो जाते हैं (उदाहरण, "वह जोर से शोर से चिल्लाई")।</span></li>
+            <li><span class="english">Using double negatives with adverbs (e.g., "I don’t know nothing" instead of "anything").</span> <span class="hindi">क्रिया-विशेषण के साथ दोहरे नकारात्मक का उपयोग (उदाहरण, "मुझे कुछ नहीं पता" के बजाय "कुछ भी")।</span></li>
+            <li><span class="english">Incorrect irregular adverb forms (e.g., "He runs good" instead of "well").</span> <span class="hindi">अनियमित क्रिया-विशेषण रूपों का गलत उपयोग (उदाहरण, "वह अच्छा दौड़ता है" के बजाय "अच्छी तरह")।</span></li>
+        </ul>
+        <div class="example">
+            <div class="example-title"><i class="fas fa-star"></i> Correct the Mistakes</div>
+            <p class="english">Incorrect: "He speaks loud." Correct: "He speaks <span class="highlight">loudly</span>."</p>
+            <p class="hindi">गलत: "वह जोर से बोलता है।" सही: "वह <span class="highlight">जोर से</span> बोलता है।"</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Vocab Doctor App - Comprehensive Adverb Guide</p>
+        <p>Master English and Hindi grammar with interactive, engaging lessons</p>
+    </footer>
+</div>
+</body>
+</html>

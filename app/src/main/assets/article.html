@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article (आर्टिकल्स) - Grammar App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --light: #f8f9fa;
+            --dark: #2d3436;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --info: #0984e3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 100%;
+            width: 100%;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 1s ease;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 6vw, 2.5rem);
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            color: var(--dark);
+            opacity: 0.8;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+        }
+
+        h2 i {
+            color: var(--accent);
+        }
+
+        .definition {
+            font-size: clamp(0.95rem, 2.5vw, 1rem);
+            margin-bottom: 1rem;
+            padding-left: 0.8rem;
+            border-left: 3px solid var(--secondary);
+        }
+
+        .hindi {
+            color: #e84393;
+            font-weight: 500;
+        }
+
+        .english {
+            color: var(--info);
+            font-weight: 500;
+        }
+
+        ul {
+            list-style-type: none;
+            margin-bottom: 1rem;
+        }
+
+        ul li {
+            padding: 0.4rem 0;
+            padding-left: 1.2rem;
+            position: relative;
+            font-size: clamp(0.9rem, 2.5vw, 0.95rem);
+        }
+
+        ul li::before {
+            content: '•';
+            color: var(--accent);
+            font-size: 1.2rem;
+            position: absolute;
+            left: 0;
+            top: 0.2rem;
+        }
+
+        .example {
+            background: rgba(106, 176, 76, 0.1);
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin: 0.8rem 0;
+            border-left: 3px solid var(--success);
+        }
+
+        .example-title {
+            font-weight: bold;
+            color: var(--success);
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: clamp(0.95rem, 2.5vw, 1rem);
+        }
+
+        .type-card {
+            background: rgba(253, 121, 168, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .type-card:hover {
+            background: rgba(253, 121, 168, 0.2);
+            transform: scale(1.01);
+        }
+
+        .type-title {
+            color: var(--accent);
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: clamp(1.2rem, 3.5vw, 1.4rem);
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, rgba(108, 92, 231, 0.2) 0%, rgba(108, 92, 231, 0) 100%);
+            padding: 0.15rem 0.3rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .feature-box {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: clamp(2rem, 5vw, 2.2rem);
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+
+        .feature-title {
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            margin-bottom: 0.4rem;
+            color: var(--dark);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            color: var(--dark);
+            opacity: 0.7;
+            font-size: clamp(0.8rem, 2.5vw, 0.85rem);
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0.5rem;
+            }
+
+            h1 {
+                font-size: clamp(1.8rem, 5.5vw, 2rem);
+            }
+
+            .subtitle {
+                font-size: clamp(0.9rem, 2.8vw, 1rem);
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+
+            .card {
+                padding: 1rem;
+                border-radius: 10px;
+            }
+
+            h2 {
+                font-size: clamp(1.3rem, 3.8vw, 1.5rem);
+            }
+
+            .definition {
+                font-size: clamp(0.9rem, 2.3vw, 0.95rem);
+                padding-left: 0.5rem;
+            }
+
+            .type-card {
+                padding: 0.8rem;
+                border-radius: 8px;
+            }
+
+            .type-title {
+                font-size: clamp(1.1rem, 3.2vw, 1.2rem);
+            }
+
+            .feature-box {
+                padding: 0.8rem;
+            }
+
+            .feature-icon {
+                font-size: clamp(1.8rem, 4.5vw, 2rem);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0.3rem;
+            }
+
+            h1 {
+                font-size: clamp(1.5rem, 5vw, 1.8rem);
+            }
+
+            .card {
+                padding: 0.8rem;
+                margin-bottom: 1rem;
+            }
+
+            .grid {
+                gap: 0.5rem;
+            }
+
+            ul li {
+                font-size: clamp(0.85rem, 2.3vw, 0.9rem);
+                padding-left: 1rem;
+            }
+
+            .example {
+                padding: 0.6rem;
+            }
+
+            footer {
+                padding: 0.8rem;
+                font-size: clamp(0.75rem, 2.3vw, 0.8rem);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header class="animate">
+        <h1>Article <span class="hindi">(आर्टिकल्स)</span></h1>
+        <p class="subtitle">Words that specify or limit nouns in a sentence</p>
+    </header>
+
+    <section class="card animate delay-1">
+        <h2><i class="fas fa-book-open"></i> Definition / परिभाषा</h2>
+        <div class="definition">
+            <p class="english">An article is a word used before a noun to indicate its definiteness or indefiniteness. Articles help specify whether a noun is particular (definite) or general (indefinite), enhancing clarity in sentences.</p>
+            <p class="hindi">आर्टिकल्स ऐसे शब्द हैं जो संज्ञा के पहले आते हैं और बताते हैं कि संज्ञा विशिष्ट है या सामान्य। ये वाक्य को और स्पष्ट करते हैं।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Example</div>
+                <p class="english">In "<span class="highlight">The</span> cat is on <span class="highlight">a</span> mat", <span class="highlight">the</span> specifies a particular cat, while <span class="highlight">a</span> indicates any mat.</p>
+                <p class="hindi">"बिल्ली <span class="highlight">एक</span> चटाई पर है" में <span class="highlight">the</span> एक खास बिल्ली को दर्शाता है, जबकि <span class="highlight">एक</span> किसी भी चटाई को बताता है।</p>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="feature-box floating">
+                <div class="feature-icon"><i class="fas fa-check-circle"></i></div>
+                <h3 class="feature-title">Definite</h3>
+                <p class="hindi">विशिष्ट</p>
+                <p>the</p>
+            </div>
+
+            <div class="feature-box floating" style="animation-delay: 0.3s;">
+                <div class="feature-icon"><i class="fas fa-question-circle"></i></div>
+                <h3 class="feature-title">Indefinite</h3>
+                <p class="hindi">सामान्य</p>
+                <p>a, an</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-2">
+        <h2><i class="fas fa-layer-group"></i> Types of Articles / आर्टिकल्स के प्रकार</h2>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-check-circle"></i> Definite Article (विशिष्ट आर्टिकल)</h3>
+            <p class="english">The definite article "the" is used to refer to a specific noun that is known to the speaker and listener.</p>
+            <p class="hindi">"The" एक विशिष्ट संज्ञा को दर्शाता है जो बोलने वाले और सुनने वाले दोनों को पता होती है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples of Definite Article</div>
+                <ul>
+                    <li>
+                        <strong class="english">The:</strong> Refers to a specific or unique noun.
+                        <ul>
+                            <li><span class="english">Usage: Used when the noun is known or previously mentioned.</span></li>
+                            <li><span class="hindi">उपयोग: जब संज्ञा पहले से जानी-पहचानी हो या पहले बताई गई हो।</span></li>
+                            <li><span class="english">Rules: Use "the" with singular, plural, countable, or uncountable nouns when specific.</span></li>
+                            <li><span class="hindi">नियम: "The" का उपयोग एकवचन, बहुवचन, गिनने योग्य, या अगिनने योग्य संज्ञाओं के साथ करें जब वे विशिष्ट हों।</span></li>
+                            <li><span class="english">Example: <span class="highlight">The</span> sun is bright today.</span></li>
+                            <li><span class="hindi">उदाहरण: <span class="highlight">The</span> सूरज आज चमक रहा है।</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-question-circle"></i> Indefinite Articles (सामान्य आर्टिकल्स)</h3>
+            <p class="english">Indefinite articles "a" and "an" are used to refer to a non-specific noun that is not known to the listener.</p>
+            <p class="hindi">"A" और "an" का उपयोग ऐसी संज्ञा के लिए होता है जो सुनने वाले को विशिष्ट रूप से पता न हो।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples of Indefinite Articles</div>
+                <ul>
+                    <li>
+                        <strong class="english">A:</strong> Used before a singular countable noun starting with a consonant sound.
+                        <ul>
+                            <li><span class="english">Usage: Refers to any one of a group, not specific.</span></li>
+                            <li><span class="hindi">उपयोग: किसी समूह में से कोई एक, जो खास न हो।</span></li>
+                            <li><span class="english">Rules: Use "a" with consonant sounds (e.g., a cat, a book).</span></li>
+                            <li><span class="hindi">नियम: "A" का उपयोग व्यंजन ध्वनि वाले शब्दों के साथ करें (जैसे, a cat, a book)।</span></li>
+                            <li><span class="english">Example: I saw <span class="highlight">a</span> dog in the park.</span></li>
+                            <li><span class="hindi">उदाहरण: मैंने पार्क में <span class="highlight">एक</span> कुत्ता देखा।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">An:</strong> Used before a singular countable noun starting with a vowel sound.
+                        <ul>
+                            <li><span class="english">Usage: Refers to any one of a group, not specific.</span></li>
+                            <li><span class="hindi">उपयोग: किसी समूह में से कोई एक, जो खास न हो।</span></li>
+                            <li><span class="english">Rules: Use "an" with vowel sounds (e.g., an apple, an hour).</span></li>
+                            <li><span class="hindi">नियम: "An" का उपयोग स्वर ध्वनि वाले शब्दों के साथ करें (जैसे, an apple, an hour)।</span></li>
+                            <li><span class="english">Example: She ate <span class="highlight">an</span> orange.</span></li>
+                            <li><span class="hindi">उदाहरण: उसने <span class="highlight">एक</span> संतरा खाया।</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-volume-up"></i> Pronunciation of Articles (आर्टिकल्स का उच्चारण)</h3>
+            <p class="english">Articles have specific pronunciations that vary based on context, emphasis, or the following word.</p>
+            <p class="hindi">आर्टिकल्स का उच्चारण उनके उपयोग, जोर, या अगले शब्द के आधार पर बदलता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Pronunciation Guide</div>
+                <ul>
+                    <li>
+                        <strong class="english">The:</strong> Pronounced /ðə/ (unstressed) or /ðiː/ (stressed or before a vowel sound).
+                        <ul>
+                            <li><span class="english">Usage: /ðə/ in "the cat" (unstressed); /ðiː/ in "the apple" (before a vowel sound).</span></li>
+                            <li><span class="hindi">उपयोग: "The cat" में /ðə/ (बिना जोर); "the apple" में /ðiː/ (स्वर ध्वनि से पहले)।</span></li>
+                            <li><span class="english">Example: /ðə/ book vs. /ðiː/ elephant.</span></li>
+                            <li><span class="hindi">उदाहरण: /ðə/ book बनाम /ðiː/ elephant।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">A:</strong> Pronounced /ə/ (unstressed) or /eɪ/ (stressed).
+                        <ul>
+                            <li><span class="english">Usage: /ə/ in "a dog" (unstressed); /eɪ/ when emphasized (e.g., "I need A book").</span></li>
+                            <li><span class="hindi">उपयोग: "A dog" में /ə/ (बिना जोर); जोर देने पर /eɪ/ (जैसे, "मुझे A book चाहिए")।</span></li>
+                            <li><span class="english">Example: /ə/ car vs. /eɪ/ specific item.</span></li>
+                            <li><span class="hindi">उदाहरण: /ə/ car बनाम /eɪ/ खास चीज।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">An:</strong> Pronounced /æn/ (standard) or /ən/ (unstressed).
+                        <ul>
+                            <li><span class="english">Usage: /æn/ in "an apple" (standard); /ən/ in fast speech.</span></li>
+                            <li><span class="hindi">उपयोग: "An apple" में /æn/ (सामान्य); तेज बोलने में /ən/।</span></li>
+                            <li><span class="english">Example: /æn/ orange vs. /ən/ hour.</span></li>
+                            <li><span class="hindi">उदाहरण: /æn/ orange बनाम /ən/ hour।</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-3">
+        <h2><i class="fas fa-align-left"></i> Use of A/An (A/An का उपयोग)</h2>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-font"></i> Definitions and Rules</h3>
+            <p class="english">"A" and "an" are indefinite articles used with singular countable nouns to indicate a non-specific item. The choice depends on the sound (not the letter) of the following word.</p>
+            <p class="hindi">"A" और "an" का उपयोग एकवचन संज्ञा के साथ होता है जब हम किसी सामान्य चीज की बात करते हैं। इनका चयन अगले शब्द की ध्वनि पर निर्भर करता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Rules for A/An</div>
+                <ul>
+                    <li><span class="english">Use "a" before consonant sounds (e.g., a book, a cat).</span> <span class="hindi">"A" का उपयोग व्यंजन ध्वनि वाले शब्दों के साथ करें (जैसे, एक किताब, एक बिल्ली)।</span></li>
+                    <li><span class="english">Use "an" before vowel sounds (e.g., an apple, an hour).</span> <span class="hindi">"An" का उपयोग स्वर ध्वनि वाले शब्दों के साथ करें (जैसे, एक सेब, एक घंटा)।</span></li>
+                    <li><span class="english">Focus on sound, not spelling (e.g., an honest man, a university).</span> <span class="hindi">ध्वनि पर ध्यान दें, वर्तनी पर नहीं (जैसे, an honest man, a university)।</span></li>
+                    <li><span class="english">Used only with singular countable nouns, not plural or uncountable (e.g., a chair, not a chairs or a water).</span> <span class="hindi">केवल एकवचन गिनने योग्य संज्ञा के साथ उपयोग करें, बहुवचन या अगिनने योग्य के साथ नहीं (जैसे, एक कुर्सी, न कि कुर्सियाँ या पानी)।</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-volume-up"></i> Vowels vs. Consonants</h3>
+            <p class="english">The choice of "a" or "an" depends on whether the next word starts with a vowel sound (a, e, i, o, u) or a consonant sound. This is based on pronunciation, not spelling.</p>
+            <p class="hindi">"A" या "an" का चयन इस बात पर निर्भर करता है कि अगला शब्द स्वर ध्वनि (जैसे, a, e, i, o, u) से शुरू होता है या व्यंजन ध्वनि से। यह उच्चारण पर आधारित है, न कि वर्तनी पर।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english"><span class="highlight">An</span> hour (vowel sound /aʊə/).</span> <span class="hindi"><span class="highlight">एक</span> घंटा (स्वर ध्वनि /aʊə/)।</span></li>
+                    <li><span class="english"><span class="highlight">A</span> university (consonant sound /juː/).</span> <span class="hindi"><span class="highlight">एक</span> विश्वविद्यालय (व्यंजन ध्वनि /juː/)।</span></li>
+                    <li><span class="english"><span class="highlight">An</span> honest man (vowel sound /ɒ/).</span> <span class="hindi"><span class="highlight">एक</span> ईमानदार आदमी (स्वर ध्वनि /ɒ/)।</span></li>
+                    <li><span class="english"><span class="highlight">A</span> European city (consonant sound /jʊ/).</span> <span class="hindi"><span class="highlight">एक</span> यूरोपीय शहर (व्यंजन ध्वनि /jʊ/)।</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-plus-circle"></i> Extra Uses of A/An</h3>
+            <p class="english">"A" and "an" are used in expressions, idioms, and to indicate quantity or extent, beyond their basic role with nouns.</p>
+            <p class="hindi">"A" और "an" का उपयोग मुहावरों, अभिव्यक्तियों, और मात्रा दिखाने के लिए भी होता है, जो संज्ञा के साथ उनके सामान्य उपयोग से अलग है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">With quantities: <span class="highlight">A</span> few books (some, not many).</span> <span class="hindi">मात्रा के साथ: <span class="highlight">कुछ</span> किताबें (थोड़ी, ज्यादा नहीं)।</span></li>
+                    <li><span class="english">In idioms: It’s <span class="highlight">a</span> piece of cake (easy).</span> <span class="hindi">मुहावरों में: यह <span class="highlight">बिल्कुल</span> आसान है।</span></li>
+                    <li><span class="english">With professions: She is <span class="highlight">a</span> doctor.</span> <span class="hindi">पेशों के साथ: वह <span class="highlight">एक</span> डॉक्टर है।</span></li>
+                    <li><span class="english">With measurements: <span class="highlight">An</span> hour ago.</span> <span class="hindi">माप के साथ: <span class="highlight">एक</span> घंटा पहले।</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-tags"></i> Use with Nouns</h3>
+            <p class="english">"A" and "an" are used with singular countable nouns to indicate non-specific items, while "the" can be used with both countable and uncountable nouns for specific references.</p>
+            <p class="hindi">"A" और "an" का उपयोग एकवचन गिनने योग्य संज्ञा के साथ होता है जब हम किसी सामान्य चीज की बात करते हैं, जबकि "the" गिनने योग्य और अगिनने योग्य दोनों संज्ञाओं के साथ विशिष्ट चीजों के लिए उपयोग होता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">Non-specific: I need <span class="highlight">a</span> pen (any pen).</span> <span class="hindi">सामान्य: मुझे <span class="highlight">एक</span> पेन चाहिए (कोई भी पेन)।</span></li>
+                    <li><span class="english">Specific: <span class="highlight">The</span> pen on the table (that particular pen).</span> <span class="hindi">विशिष्ट: <span class="highlight">The</span> टेबल पर रखा पेन (वह खास पेन)।</span></li>
+                    <li><span class="english">Uncountable: <span class="highlight">The</span> water in the glass (specific).</span> <span class="hindi">अगिनने योग्य: <span class="highlight">The</span> गिलास में पानी (खास पानी)।</span></li>
+                    <li><span class="english">Incorrect: <span class="highlight">A</span> water (uncountable).</span> <span class="hindi">गलत: <span class="highlight">एक</span> पानी (अगिनने योग्य)।</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-4">
+        <h2><i class="fas fa-arrows-alt"></i> Position of Articles in Sentences (वाक्यों में आर्टिकल्स की स्थिति)</h2>
+        <p class="english">Articles typically appear before nouns or noun phrases, but their position can vary depending on adjectives, phrases, or sentence structure.</p>
+        <p class="hindi">आर्टिकल्स आमतौर पर संज्ञा या संज्ञा वाक्यांशों से पहले आते हैं, लेकिन विशेषण, वाक्यांश, या वाक्य की बनावट के आधार पर उनकी जगह बदल सकती है।</p>
+        <div class="example">
+            <div class="example-title"><i class="fas fa-star"></i> Examples of Article Positions</div>
+            <ul>
+                <li><span class="english">Before a noun: <span class="highlight">A</span> cat sleeps.</span> <span class="hindi">संज्ञा से पहले: <span class="highlight">एक</span> बिल्ली सोती है।</span></li>
+                <li><span class="english">With an adjective: <span class="highlight">The</span> big dog barked.</span> <span class="hindi">विशेषण के साथ: <span class="highlight">The</span> बड़ा कुत्ता भौंका।</span></li>
+                <li><span class="english">In a phrase: She is <span class="highlight">an</span> excellent teacher.</span> <span class="hindi">वाक्यांश में: वह <span class="highlight">एक</span> शानदार शिक्षिका है।</span></li>
+                <li><span class="english">After certain verbs: He became <span class="highlight">a</span> leader.</span> <span class="hindi">कुछ क्रिया के बाद: वह <span class="highlight">एक</span> नेता बना।</span></li>
+                <li><span class="english">Exception: No article with proper nouns (e.g., I met John, not I met <span class="highlight">the</span> John).</span> <span class="hindi">अपवाद: व्यक्तिवाचक संज्ञा के साथ आर्टिकल नहीं (जैसे, मैं जॉन से मिला, न कि <span class="highlight">the</span> जॉन से)।</span></li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="card animate delay-3">
+        <h2><i class="fas fa-lightbulb"></i> Key Points About Articles / आर्टिकल्स के बारे में मुख्य बातें</h2>
+        <ul>
+            <li><span class="english">Articles specify whether a noun is definite ("the") or indefinite ("a," "an").</span> <span class="hindi">आर्टिकल्स बताते हैं कि संज्ञा विशिष्ट ("the") है या सामान्य ("a," "an")।</span></li>
+            <li><span class="english">"A" and "an" are used only with singular countable nouns, not plural or uncountable.</span> <span class="hindi">"A" और "an" केवल एकवचन गिनने योग्य संज्ञा के साथ उपयोग होते हैं, बहुवचन या अगिनने योग्य के साथ नहीं।</span></li>
+            <li><span class="english">"The" can be used with singular, plural, countable, or uncountable nouns when specific.</span> <span class="hindi">"The" का उपयोग एकवचन, बहुवचन, गिनने योग्य, या अगिनने योग्य संज्ञा के साथ होता है जब वे विशिष्ट हों।</span></li>
+            <li><span class="english">Articles are omitted with proper nouns, uncountable nouns (general sense), or plural nouns (general sense).</span> <span class="hindi">आर्टिकल्स का उपयोग व्यक्तिवाचक संज्ञा, सामान्य अगिनने योग्य संज्ञा, या सामान्य बहुवचन संज्ञा के साथ नहीं होता।</span></li>
+            <li><span class="english">Special cases: No article with geographical names (e.g., India), unique entities (e.g., sun), or abstract nouns (e.g., love).</span> <span class="hindi">विशेष मामले: भौगोलिक नाम (जैसे, भारत), अद्वितीय चीजें (जैसे, सूरज), या अमूर्त संज्ञा (जैसे, प्रेम) के साथ आर्टिकल नहीं।</span></li>
+            <li><span class="english">Pronunciation of articles varies based on stress or the following sound.</span> <span class="hindi">आर्टिकल्स का उच्चारण जोर या अगले शब्द की ध्वनि के आधार पर बदलता है।</span></li>
+            <li><span class="english">"A/an" are used in idiomatic expressions (e.g., a lot of, a few).</span> <span class="hindi">"A/an" का उपयोग मुहावरों में होता है (जैसे, a lot of, a few)।</span></li>
+            <li><span class="english">Incorrect article use can change meaning (e.g., "the book" vs. "a book").</span> <span class="hindi">गलत आर्टिकल उपयोग से अर्थ बदल सकता है (जैसे, "the book" बनाम "a book")।</span></li>
+            <li><span class="english">Articles are placed before nouns or adjective-noun combinations, not after.</span> <span class="hindi">आर्टिकल्स संज्ञा या विशेषण-संज्ञा संयोजन से पहले आते हैं, बाद में नहीं।</span></li>
+            <li><span class="english">In formal writing, avoid omitting articles where required for clarity.</span> <span class="hindi">औपचारिक लेखन में, स्पष्टता के लिए जरूरी आर्टिकल्स को छोड़ें नहीं।</span></li>
+        </ul>
+    </section>
+
+    <section class="card animate delay-4">
+        <h2><i class="fas fa-question-circle"></i> How to Identify Articles / आर्टिकल्स की पहचान कैसे करें</h2>
+        <ul>
+            <li><span class="english">Look for "a," "an," or "the" before a noun or noun phrase.</span> <span class="hindi">"A," "an," या "the" को संज्ञा या संज्ञा वाक्यांश से पहले देखें।</span></li>
+            <li><span class="english">Check if the article specifies a noun as definite ("the") or indefinite ("a," "an").</span> <span class="hindi">देखें कि आर्टिकल संज्ञा को विशिष्ट ("the") या सामान्य ("a," "an") बनाता है।</span></li>
+            <li><span class="english">Ensure "a" or "an" is used with singular countable nouns, not plural or uncountable.</span> <span class="hindi">सुनिश्चित करें कि "a" या "an" केवल एकवचन गिनने योग्य संज्ञा के साथ हो, बहुवचन या अगिनने योग्य के साथ नहीं।</span></li>
+            <li><span class="english">Verify the sound of the following word to choose "a" (consonant) or "an" (vowel).</span> <span class="hindi">अगले शब्द की ध्वनि देखें कि "a" (व्यंजन) या "an" (स्वर) उपयोग करना है।</span></li>
+            <li><span class="english">Test by removing the article; the sentence should still be grammatical but less specific.</span> <span class="hindi">आर्टिकल हटाकर देखें; वाक्य व्याकरणिक रहना चाहिए, लेकिन कम विशिष्ट होगा।</span></li>
+        </ul>
+
+        <div class="example">
+            <div class="example-title"><i class="fas fa-star"></i> Practice Examples</div>
+            <p class="english">Identify the articles and their type (definite or indefinite) in these sentences:</p>
+            <p class="hindi">इन वाक्यों में आर्टिकल्स और उनके प्रकार (विशिष्ट या सामान्य) की पहचान करें:</p>
+            <ul>
+                <li><span class="english">I bought <span class="highlight">a</span> book yesterday.</span> <span class="hindi">मैंने कल <span class="highlight">एक</span> किताब खरीदी।</span></li>
+                <li><span class="english"><span class="highlight">The</span> moon is full tonight.</span> <span class="hindi"><span class="highlight">The</span> चाँद आज रात पूरा है।</span></li>
+                <li><span class="english">She is <span class="highlight">an</span> honest person.</span> <span class="hindi">वह <span class="highlight">एक</span> ईमानदार इंसान है।</span></li>
+                <li><span class="english">He needs <span class="highlight">a</span> European visa.</span> <span class="hindi">उसे <span class="highlight">एक</span> यूरोपीय वीजा चाहिए।</span></li>
+                <li><span class="english"><span class="highlight">The</span> water in the bottle is cold.</span> <span class="hindi"><span class="highlight">The</span> बोतल का पानी ठंडा है।</span></li>
+            </ul>
+        </div>
+
+        <div class="example">
+            <div class="example-title"><i class="fas fa-lightbulb"></i> Tip for Beginners</div>
+            <p class="english">To identify articles, look for "a," "an," or "the" directly before a noun or adjective-noun combination. Check if "a" or "an" is used with a singular noun and if the sound of the next word determines the choice (e.g., "an hour" but "a house").</p>
+            <p class="hindi">आर्टिकल्स की पहचान के लिए, "a," "an," या "the" को संज्ञा या विशेषण-संज्ञा संयोजन से ठीक पहले देखें। जाँच करें कि "a" या "an" एकवचन संज्ञा के साथ है और अगले शब्द की ध्वनि सही आर्टिकल तय करती है (जैसे, "an hour" लेकिन "a house")।</p>
+        </div>
+    </section>
+
+    <section class="card animate delay-4">
+        <h2><i class="fas fa-exclamation-circle"></i> Common Mistakes with Articles / आर्टिकल्स की सामान्य गलतियाँ</h2>
+        <ul>
+            <li><span class="english">Using "a" instead of "an" before vowel sounds (e.g., "a apple" instead of "an apple").</span> <span class="hindi">स्वर ध्वनि से पहले "a" की जगह "an" नहीं लगाना (जैसे, "a apple" के बजाय "an apple")।</span></li>
+            <li><span class="english">Omitting articles where needed (e.g., "I have dog" instead of "I have a dog").</span> <span class="hindi">जरूरी जगह पर आर्टिकल छोड़ देना (जैसे, "मेरे पास कुत्ता है" के बजाय "मेरे पास एक कुत्ता है")।</span></li>
+            <li><span class="english">Using "a" or "an" with uncountable nouns (e.g., "a water" instead of "water").</span> <span class="hindi">अगिनने योग्य संज्ञा के साथ "a" या "an" लगाना (जैसे, "a water" के बजाय "water")।</span></li>
+            <li><span class="english">Overusing "the" with general nouns (e.g., "The life is beautiful" instead of "Life is beautiful").</span> <span class="hindi">सामान्य संज्ञा के साथ "the" का गलत उपयोग (जैसे, "The life is beautiful" के बजाय "Life is beautiful")।</span></li>
+            <li><span class="english">Using articles with proper nouns (e.g., "The India" instead of "India").</span> <span class="hindi">व्यक्तिवाचक संज्ञा के साथ आर्टिकल लगाना (जैसे, "The India" के बजाय "India")।</span></li>
+        </ul>
+        <div class="example">
+            <div class="example-title"><i class="fas fa-star"></i> Correct the Mistakes</div>
+            <p class="english">Incorrect: "I need a hour." Correct: "I need <span class="highlight">an</span> hour."</p>
+            <p class="hindi">गलत: "मुझे a hour चाहिए।" सही: "मुझे <span class="highlight">an</span> hour चाहिए।"</p>
+            <p class="english">Incorrect: "The love is eternal." Correct: "Love is eternal."</p>
+            <p class="hindi">गलत: "The love अनंत है।" सही: "प्रेम अनंत है।"</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Vocab Doctor App - Comprehensive Article Guide</p>
+        <p>Master English and Hindi grammar with interactive, engaging lessons</p>
+    </footer>
+</div>
+</body>
+</html>

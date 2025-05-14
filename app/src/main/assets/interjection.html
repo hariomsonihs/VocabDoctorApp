@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interjection (विस्मयादिबोधक) - Grammar App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --light: #f8f9fa;
+            --dark: #2d3436;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --info: #0984e3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 100%;
+            width: 100%;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 1s ease;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 6vw, 2.5rem);
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            color: var(--dark);
+            opacity: 0.8;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+        }
+
+        h2 i {
+            color: var(--accent);
+        }
+
+        .definition {
+            font-size: clamp(0.95rem, 2.5vw, 1rem);
+            margin-bottom: 1rem;
+            padding-left: 0.8rem;
+            border-left: 3px solid var(--secondary);
+        }
+
+        .hindi {
+            color: #e84393;
+            font-weight: 500;
+        }
+
+        .english {
+            color: var(--info);
+            font-weight: 500;
+        }
+
+        ul {
+            list-style-type: none;
+            margin-bottom: 1rem;
+        }
+
+        ul li {
+            padding: 0.4rem 0;
+            padding-left: 1.2rem;
+            position: relative;
+            font-size: clamp(0.9rem, 2.5vw, 0.95rem);
+        }
+
+        ul li::before {
+            content: '•';
+            color: var(--accent);
+            font-size: 1.2rem;
+            position: absolute;
+            left: 0;
+            top: 0.2rem;
+        }
+
+        .example {
+            background: rgba(106, 176, 76, 0.1);
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin: 0.8rem 0;
+            border-left: 3px solid var(--success);
+        }
+
+        .example-title {
+            font-weight: bold;
+            color: var(--success);
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: clamp(0.95rem, 2.5vw, 1rem);
+        }
+
+        .type-card {
+            background: rgba(253, 121, 168, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .type-card:hover {
+            background: rgba(253, 121, 168, 0.2);
+            transform: scale(1.01);
+        }
+
+        .type-title {
+            color: var(--accent);
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: clamp(1.2rem, 3.5vw, 1.4rem);
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, rgba(108, 92, 231, 0.2) 0%, rgba(108, 92, 231, 0) 100%);
+            padding: 0.15rem 0.3rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .feature-box {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: clamp(2rem, 5vw, 2.2rem);
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+
+        .feature-title {
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            margin-bottom: 0.4rem;
+            color: var(--dark);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            color: var(--dark);
+            opacity: 0.7;
+            font-size: clamp(0.8rem, 2.5vw, 0.85rem);
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0.5rem;
+            }
+
+            h1 {
+                font-size: clamp(1.8rem, 5.5vw, 2rem);
+            }
+
+            .subtitle {
+                font-size: clamp(0.9rem, 2.8vw, 1rem);
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+
+            .card {
+                padding: 1rem;
+                border-radius: 10px;
+            }
+
+            h2 {
+                font-size: clamp(1.3rem, 3.8vw, 1.5rem);
+            }
+
+            .definition {
+                font-size: clamp(0.9rem, 2.3vw, 0.95rem);
+                padding-left: 0.5rem;
+            }
+
+            .type-card {
+                padding: 0.8rem;
+                border-radius: 8px;
+            }
+
+            .type-title {
+                font-size: clamp(1.1rem, 3.2vw, 1.2rem);
+            }
+
+            .feature-box {
+                padding: 0.8rem;
+            }
+
+            .feature-icon {
+                font-size: clamp(1.8rem, 4.5vw, 2rem);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0.3rem;
+            }
+
+            h1 {
+                font-size: clamp(1.5rem, 5vw, 1.8rem);
+            }
+
+            .card {
+                padding: 0.8rem;
+                margin-bottom: 1rem;
+            }
+
+            .grid {
+                gap: 0.5rem;
+            }
+
+            ul li {
+                font-size: clamp(0.85rem, 2.3vw, 0.9rem);
+                padding-left: 1rem;
+            }
+
+            .example {
+                padding: 0.6rem;
+            }
+
+            footer {
+                padding: 0.8rem;
+                font-size: clamp(0.75rem, 2.3vw, 0.8rem);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header class="animate">
+        <h1>Interjection <span class="hindi">(विस्मयादिबोधक)</span></h1>
+        <p class="subtitle">Words or phrases that express sudden emotions, reactions, or exclamations</p>
+    </header>
+
+    <section class="card animate delay-1">
+        <h2><i class="fas fa-book-open"></i> Definition / परिभाषा</h2>
+        <div class="definition">
+            <p class="english">An interjection is a word or phrase that expresses sudden emotions, reactions, or exclamations. It is grammatically independent from the rest of the sentence and often conveys feelings like joy, surprise, pain, or urgency.</p>
+            <p class="hindi">विस्मयादिबोधक एक शब्द या वाक्यांश है जो अचानक भावनाओं, प्रतिक्रियाओं, या विस्मय को व्यक्त करता है। यह व्याकरणिक रूप से वाक्य के बाकी हिस्सों से स्वतंत्र होता है और अक्सर खुशी, आश्चर्य, दर्द, या तात्कालिकता जैसी भावनाओं को व्यक्त करता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Example</div>
+                <p class="english">In "<span class="highlight">Wow!</span> That’s amazing!", <span class="highlight">Wow</span> is an interjection expressing surprise.</p>
+                <p class="hindi">"<span class="highlight">वाह!</span> यह कमाल है!" में, <span class="highlight">वाह</span> एक विस्मयादिबोधक है जो आश्चर्य व्यक्त करता है।</p>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="feature-box floating">
+                <div class="feature-icon"><i class="fas fa-exclamation"></i></div>
+                <h3 class="feature-title">Exclamatory</h3>
+                <p class="hindi">विस्मयसूचक</p>
+                <p>wow, ouch</p>
+            </div>
+
+            <div class="feature-box floating" style="animation-delay: 0.3s;">
+                <div class="feature-icon"><i class="fas fa-handshake"></i></div>
+                <h3 class="feature-title">Greeting</h3>
+                <p class="hindi">अभिवादन</p>
+                <p>hello, hey</p>
+            </div>
+
+            <div class="feature-box floating" style="animation-delay: 0.6s;">
+                <div class="feature-icon"><i class="fas fa-lightbulb"></i></div>
+                <h3 class="feature-title">Cognitive</h3>
+                <p class="hindi">ज्ञानात्मक</p>
+                <p>oh, ah</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-2">
+        <h2><i class="fas fa-layer-group"></i> Types of Interjections / विस्मयादिबोधक के प्रकार</h2>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-exclamation"></i> Exclamatory Interjections (विस्मयसूचक विस्मयादिबोधक)</h3>
+            <p class="english">Exclamatory interjections express strong emotions such as surprise, joy, pain, or anger. They are often followed by an exclamation mark.</p>
+            <p class="hindi">विस्मयसूचक विस्मयादिबोधक आश्चर्य, खुशी, दर्द, या क्रोध जैसी तीव्र भावनाओं को व्यक्त करते हैं। इनके बाद अक्सर विस्मयादि चिह्न होता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Common Exclamatory Interjections</div>
+                <ul>
+                    <li>
+                        <strong class="english">Wow:</strong> Expresses surprise or admiration.
+                        <ul>
+                            <li><span class="english">Usage: Used to show amazement or enthusiasm.</span></li>
+                            <li><span class="hindi">उपयोग: आश्चर्य या उत्साह दिखाने के लिए उपयोग किया जाता है।</span></li>
+                            <li><span class="english">Rules: Often stands alone or starts a sentence, followed by an exclamation mark.</span></li>
+                            <li><span class="hindi">नियम: अक्सर अकेले खड़ा होता है या वाक्य शुरू करता है, इसके बाद विस्मयादि चिह्न होता है।</span></li>
+                            <li><span class="english">Example: <span class="highlight">Wow!</span> That’s incredible!</span></li>
+                            <li><span class="hindi">उदाहरण: <span class="highlight">वाह!</span> यह अविश्वसनीय है!</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">Ouch:</strong> Expresses pain or discomfort.
+                        <ul>
+                            <li><span class="english">Usage: Used to react to physical pain or injury.</span></li>
+                            <li><span class="hindi">उपयोग: शारीरिक दर्द या चोट के प्रति प्रतिक्रिया के लिए उपयोग किया जाता है।</span></li>
+                            <li><span class="english">Rules: Typically stands alone with an exclamation mark.</span></li>
+                            <li><span class="hindi">नियम: आमतौर पर विस्मयादि चिह्न के साथ अकेले खड़ा होता है।</span></li>
+                            <li><span class="english">Example: <span class="highlight">Ouch!</span> That hurt!</span></li>
+                            <li><span class="hindi">उदाहरण: <span class="highlight">आउच!</span> इससे दर्द हुआ!</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">Yay:</strong> Expresses joy or excitement.
+                        <ul>
+                            <li><span class="english">Usage: Used to show happiness or celebration.</span></li>
+                            <li><span class="hindi">उपयोग: खुशी या उत्सव दिखाने के लिए उपयोग किया जाता है।</span></li>
+                            <li><span class="english">Rules: Often used alone or with an exclamation mark in informal contexts.</span></li>
+                            <li><span class="hindi">नियम: अक्सर अनौपचारिक संदर्भों में अकेले या विस्मयादि चिह्न के साथ उपयोग किया जाता है।</span></li>
+                            <li><span class="english">Example: <span class="highlight">Yay!</span> We won!</span></li>
+                            <li><span class="hindi">उदाहरण: <span class="highlight">हुर्रे!</span> हम जीत गए!</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-handshake"></i> Greeting Interjections (अभिवादन विस्मयादिबोधक)</h3>
+            <p class="english">Greeting interjections are used to address or greet someone, often in a friendly or informal manner.</p>
+            <p class="hindi">अभिवादन विस्मयादिबोधक किसी को संबोधित करने या अभिवादन करने के लिए उपयोग किए जाते हैं, अक्सर दोस्ताना या अनौपचारिक तरीके से।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Common Greeting Interjections</div>
+                <ul>
+                    <li>
+                        <strong class="english">Hello:</strong> Used to greet or attract attention.
+                        <ul>
+                            <li><span class="english">Usage: Initiates a conversation or calls someone’s attention.</span></li>
+                            <li><span class="hindi">उपयोग: बातचीत शुरू करता है या किसी का ध्यान आकर्षित करता है।</span></li>
+                            <li><span class="english">Rules: Can stand alone or be followed by a name, often with an exclamation mark.</span></li>
+                            <li><span class="hindi">नियम: अकेले खड़ा हो सकता है या नाम के साथ, अक्सर विस्मयादि चिह्न के साथ।</span></li>
+                            <li><span class="english">Example: <span class="highlight">Hello!</span> How are you?</span></li>
+                            <li><span class="hindi">उदाहरण: <span class="highlight">नमस्ते!</span> आप कैसे हैं?</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">Hey:</strong> Used for informal greetings or attention.
+                        <ul>
+                            <li><span class="english">Usage: A casual way to greet or call out to someone.</span></li>
+                            <li><span class="hindi">उपयोग: किसी को अनौपचारिक रूप से अभिवादन करने या पुकारने का तरीका।</span></li>
+                            <li><span class="english">Rules: Informal, often used with an exclamation mark or followed by a name.</span></li>
+                            <li><span class="hindi">नियम: अनौपचारिक, अक्सर विस्मयादि चिह्न के साथ या नाम के साथ उपयोग किया जाता है।</span></li>
+                            <li><span class="english">Example: <span class="highlight">Hey!</span> Over here!</span></li>
+                            <li><span class="hindi">उदाहरण: <span class="highlight">हाय!</span> इधर!</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-lightbulb"></i> Cognitive Interjections (ज्ञानात्मक विस्मयादिबोधक)</h3>
+            <p class="english">Cognitive interjections express thoughts, realizations, or reactions to new information, often reflecting understanding or surprise.</p>
+            <p class="hindi">ज्ञानात्मक विस्मयादिबोधक विचारों, बोध, या नई जानकारी के प्रति प्रतिक्रियाओं को व्यक्त करते हैं, अक्सर समझ या आश्चर्य को दर्शाते हैं।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Common Cognitive Interjections</div>
+                <ul>
+                    <li>
+                        <strong class="english">Oh:</strong> Expresses realization or surprise.
+                        <ul>
+                            <li><span class="english">Usage: Used to show sudden understanding, surprise, or disappointment.</span></li>
+                            <li><span class="hindi">उपयोग: अचानक समझ, आश्चर्य, या निराशा दिखाने के लिए उपयोग किया जाता है।</span></li>
+                            <li><span class="english">Rules: Can stand alone or be part of a sentence, often with a comma or exclamation mark.</span></li>
+                            <li><span class="hindi">नियम: अकेले खड़ा हो सकता है या वाक्य का हिस्सा हो सकता है, अक्सर अल्पविराम या विस्मयादि चिह्न के साथ।</span></li>
+                            <li><span class="english">Example: <span class="highlight">Oh!</span> I forgot my keys!</span></li>
+                            <li><span class="hindi">उदाहरण: <span class="highlight">ओह!</span> मैं अपनी चाबियाँ भूल गया!</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">Ah:</strong> Expresses understanding or relief.
+                        <ul>
+                            <li><span class="english">Usage: Used to indicate comprehension, relief, or pleasure.</span></li>
+                            <li><span class="hindi">उपयोग: समझ, राहत, या आनंद को दर्शाने के लिए उपयोग किया जाता है।</span></li>
+                            <li><span class="english">Rules: Often used with a comma or exclamation mark, depending on context.</span></li>
+                            <li><span class="hindi">नियम: संदर्भ के आधार पर अक्सर अल्पविराम या विस्मयादि चिह्न के साथ उपयोग किया जाता है।</span></li>
+                            <li><span class="english">Example: <span class="highlight">Ah,</span> now I understand.</span></li>
+                            <li><span class="hindi">उदाहरण: <span class="highlight">आह,</span> अब मैं समझ गया।</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-hand-point-right"></i> Volitive Interjections (इच्छासूचक विस्मयादिबोधक)</h3>
+            <p class="english">Volitive interjections express a wish, command, or desire, often directing action or attention.</p>
+            <p class="hindi">इच्छासूचक विस्मयादिबोधक इच्छा, आदेश, या इच्छा को व्यक्त करते हैं, अक्सर क्रिया या ध्यान को निर्देशित करते हैं।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Common Volitive Interjections</div>
+                <ul>
+                    <li>
+                        <strong class="english">Shh:</strong> Requests silence.
+                        <ul>
+                            <li><span class="english">Usage: Used to ask for quietness or to hush someone.</span></li>
+                            <li><span class="hindi">उपयोग: शांति माँगने या किसी को चुप कराने के लिए उपयोग किया जाता है।</span></li>
+                            <li><span class="english">Rules: Typically stands alone, often with an exclamation mark.</span></li>
+                            <li><span class="hindi">नियम: आमतौर पर अकेले खड़ा होता है, अक्सर विस्मयादि चिह्न के साथ।</span></li>
+                            <li><span class="english">Example: <span class="highlight">Shh!</span> The baby is sleeping.</span></li>
+                            <li><span class="hindi">उदाहरण: <span class="highlight">श्ह!</span> बच्चा सो रहा है।</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">Psst:</strong> Attracts attention secretly.
+                        <ul>
+                            <li><span class="english">Usage: Used to call someone’s attention quietly or discreetly.</span></li>
+                            <li><span class="hindi">उपयोग: चुपके से या सावधानी से किसी का ध्यान आकर्षित करने के लिए उपयोग किया जाता है।</span></li>
+                            <li><span class="english">Rules: Informal, often stands alone with an exclamation mark.</span></li>
+                            <li><span class="hindi">नियम: अनौपचारिक, अक्सर विस्मयादि चिह्न के साथ अकेले खड़ा होता है।</span></li>
+                            <li><span class="english">Example: <span class="highlight">Psst!</span> Look over here!</span></li>
+                            <li><span class="hindi">उदाहरण: <span class="highlight">प्स्ट!</span> इधर देखो!</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-cubes"></i> Primary vs. Secondary Interjections (प्राथमिक बनाम गौण विस्मयादिबोधक)</h3>
+            <p class="english">Interjections can be classified as primary (words used solely as interjections) or secondary (words from other parts of speech used as interjections).</p>
+            <p class="hindi">विस्मयादिबोधक को प्राथमिक (केवल विस्मयादिबोधक के रूप में उपयोग किए जाने वाले शब्द) या गौण (अन्य भागों से शब्द जो विस्मयादिबोधक के रूप में उपयोग किए जाते हैं) के रूप में वर्गीकृत किया जा सकता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Examples of Primary and Secondary Interjections</div>
+                <ul>
+                    <li>
+                        <strong class="english">Primary Interjections:</strong> Words like "wow," "ouch," or "hey" that function only as interjections.
+                        <ul>
+                            <li><span class="english">Usage: Exclusively express emotions or reactions, with no other grammatical role.</span></li>
+                            <li><span class="hindi">उपयोग: विशेष रूप से भावनाओं या प्रतिक्रियाओं को व्यक्त करते हैं, बिना किसी अन्य व्याकरणिक भूमिका के।</span></li>
+                            <li><span class="english">Example: <span class="highlight">Yay!</span> We’re going on a trip!</span></li>
+                            <li><span class="hindi">उदाहरण: <span class="highlight">हुर्रे!</span> हम यात्रा पर जा रहे हैं!</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="english">Secondary Interjections:</strong> Words like "well," "goodness," or "please" that also serve as other parts of speech.
+                        <ul>
+                            <li><span class="english">Usage: Borrowed from nouns, adverbs, or other categories to express emotion or reaction.</span></li>
+                            <li><span class="hindi">उपयोग: संज्ञा, क्रिया-विशेषण, या अन्य श्रेणियों से उधार लिए गए भावना या प्रतिक्रिया व्यक्त करने के लिए।</span></li>
+                            <li><span class="english">Example: <span class="highlight">Well,</span> I didn’t expect that!</span></li>
+                            <li><span class="hindi">उदाहरण: <span class="highlight">खैर,</span> मुझे यह उम्मीद नहीं थी!</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-3">
+        <h2><i class="fas fa-lightbulb"></i> Key Points About Interjections / विस्मयादिबोधक के बारे में मुख्य बिंदु</h2>
+        <ul>
+            <li><span class="english">Interjections express sudden emotions, reactions, or exclamations, often standing alone.</span> <span class="hindi">विस्मयादिबोधक अचानक भावनाओं, प्रतिक्रियाओं, या विस्मय को व्यक्त करते हैं, अक्सर अकेले खड़े होते हैं।</span></li>
+            <li><span class="english">They are grammatically independent and do not affect sentence structure.</span> <span class="hindi">वे व्याकरणिक रूप से स्वतंत्र हैं और वाक्य संरचना को प्रभावित नहीं करते।</span></li>
+            <li><span class="english">Interjections are common in informal speech and writing but rare in formal contexts.</span> <span class="hindi">विस्मयादिबोधक अनौपचारिक भाषण और लेखन में आम हैं लेकिन औपचारिक संदर्भों में दुर्लभ हैं।</span></li>
+            <li><span class="english">They are often followed by an exclamation mark or comma, depending on intensity.</span> <span class="hindi">उनके बाद अक्सर विस्मयादि चिह्न या अल्पविराम होता है, जो तीव्रता पर निर्भर करता है।</span></li>
+            <li><span class="english">Primary interjections have no other role, while secondary interjections are borrowed from other parts of speech.</span> <span class="hindi">प्राथमिक विस्मयादिबोधकों की कोई अन्य भूमिका नहीं होती, जबकि गौण विस्मयादिबोधक अन्य भाषण भागों से उधार लिए जाते हैं।</span></li>
+            <li><span class="english">Interjections add emotional tone to sentences, enhancing expressiveness.</span> <span class="hindi">विस्मयादिबोधक वाक्यों में भावनात्मक स्वर जोड़ते हैं, अभिव्यक्ति को बढ़ाते हैं।</span></li>
+            <li><span class="english">Overusing interjections in formal writing can reduce professionalism.</span> <span class="hindi">औपचारिक लेखन में विस्मयादिबोधकों का अत्यधिक उपयोग व्यावसायिकता को कम कर सकता है।</span></li>
+            <li><span class="english">Some interjections (e.g., "oh," "ah") can vary in meaning based on tone or context.</span> <span class="hindi">कुछ विस्मयादिबोधक (उदाहरण, "ओह," "आह") स्वर या संदर्भ के आधार पर अर्थ में भिन्न हो सकते हैं।</span></li>
+            <li><span class="english">Interjections differ from adverbs or conjunctions as they don’t modify or connect sentence parts.</span> <span class="hindi">विस्मयादिबोधक क्रिया-विशेषण या समुच्चयबोधकों से भिन्न हैं क्योंकि वे वाक्य भागों को संशोधित या जोड़ते नहीं हैं।</span></li>
+            <li><span class="english">Punctuation is critical with interjections to convey the intended emotion accurately.</span> <span class="hindi">विस्मयादिबोधकों के साथ विराम चिह्न महत्वपूर्ण है ताकि इच्छित भावना सटीक रूप से व्यक्त हो।</span></li>
+        </ul>
+    </section>
+
+    <section class="card animate delay-4">
+        <h2><i class="fas fa-question-circle"></i> How to Identify Interjections / विस्मयादिबोधक की पहचान कैसे करें</h2>
+        <ul>
+            <li><span class="english">Look for words or phrases that express sudden emotions, reactions, or exclamations.</span> <span class="hindi">ऐसे शब्दों या वाक्यांशों को देखें जो अचानक भावनाओं, प्रतिक्रियाओं, या विस्मय को व्यक्त करते हैं।</span></li>
+            <li><span class="english">Check if the word stands alone or is separated by punctuation (e.g., exclamation mark, comma).</span> <span class="hindi">जाँच करें कि क्या शब्द अकेले खड़ा है या विराम चिह्न (उदाहरण, विस्मयादि चिह्न, अल्पविराम) द्वारा अलग किया गया है।</span></li>
+            <li><span class="english">Identify words that don’t connect or modify other sentence parts (unlike conjunctions or adverbs).</span> <span class="hindi">ऐसे शब्दों की पहचान करें जो वाक्य के अन्य हिस्सों को जोड़ते या संशोधित नहीं करते (समुच्चयबोधकों या क्रिया-विशेषणों के विपरीत)।</span></li>
+            <li><span class="english">Look for words like "wow," "ouch," or "hey" that convey feelings or attract attention.</span> <span class="hindi">"वाह," "आउच," या "हाय" जैसे शब्दों को देखें जो भावनाओं को व्यक्त करते हैं या ध्यान आकर्षित करते हैं।</span></li>
+            <li><span class="english">Test by removing the word; the sentence should remain grammatically complete.</span> <span class="hindi">शब्द को हटाकर परीक्षण करें; वाक्य व्याकरणिक रूप से पूर्ण रहना चाहिए।</span></li>
+        </ul>
+
+        <div class="example">
+            <div class="example-title"><i class="fas fa-star"></i> Practice Examples</div>
+            <p class="english">Identify the interjections in these sentences:</p>
+            <p class="hindi">इन वाक्यों में विस्मयादिबोधक पहचानें:</p>
+            <ul>
+                <li><span class="english"><span class="highlight">Wow!</span> That’s a beautiful sunset!</span></li>
+                <li><span class="hindi"><span class="highlight">वाह!</span> यह एक सुंदर सूर्यास्त है!</span></li>
+                <li><span class="english"><span class="highlight">Ouch!</span> I stubbed my toe!</span></li>
+                <li><span class="hindi"><span class="highlight">आउच!</span> मैंने अपने पैर का अंगूठा ठोकर मारा!</span></li>
+                <li><span class="english"><span class="highlight">Hello!</span> It’s nice to see you!</span></li>
+                <li><span class="hindi"><span class="highlight">नमस्ते!</span> आपसे मिलकर अच्छा लगा!</span></li>
+                <li><span class="english"><span class="highlight">Oh,</span> I didn’t know that!</span></li>
+                <li><span class="hindi"><span class="highlight">ओह,</span> मुझे यह नहीं पता था!</span></li>
+                <li><span class="english"><span class="highlight">Shh!</span> The movie is starting!</span></li>
+                <li><span class="hindi"><span class="highlight">श्ह!</span> फिल्म शुरू हो रही है!</span></li>
+            </ul>
+        </div>
+
+        <div class="example">
+            <div class="example-title"><i class="fas fa-lightbulb"></i> Tip for Beginners</div>
+            <p class="english">To identify interjections, look for words or phrases that stand out emotionally in a sentence, often separated by punctuation like an exclamation mark or comma. Test by removing them; if the sentence remains complete, it’s likely an interjection (e.g., "Ouch! That hurts" becomes "That hurts").</p>
+            <p class="hindi">विस्मयादिबोधकों की पहचान के लिए, वाक्य में भावनात्मक रूप से अलग दिखने वाले शब्दों या वाक्यांशों को देखें, जो अक्सर विस्मयादि चिह्न या अल्पविराम जैसे विराम चिह्नों द्वारा अलग होते हैं। उन्हें हटाकर परीक्षण करें; यदि वाक्य पूर्ण रहता है, तो यह संभवतः एक विस्मयादिबोधक है (उदाहरण, "आउच! इससे दर्द होता है" "इससे दर्द होता है" बन जाता है)।</p>
+        </div>
+    </section>
+
+    <section class="card animate delay-4">
+        <h2><i class="fas fa-exclamation-circle"></i> Common Mistakes with Interjections / विस्मयादिबोधक के साथ सामान्य गलतियाँ</h2>
+        <ul>
+            <li><span class="english">Overusing interjections in formal writing (e.g., "Wow! This report is great" in a professional email).</span> <span class="hindi">औपचारिक लेखन में विस्मयादिबोधकों का अत्यधिक उपयोग (उदाहरण, एक पेशेवर ईमेल में "वाह! यह रिपोर्ट शानदार है")।</span></li>
+            <li><span class="english">Incorrect punctuation (e.g., "Ouch that hurts" instead of "Ouch! That hurts").</span> <span class="hindi">गलत विराम चिह्न (उदाहरण, "आउच यह दर्द करता है" के बजाय "आउच! यह दर्द करता है")।</span></li>
+            <li><span class="english">Confusing interjections with adverbs (e.g., "Well, I tried" where "well" is an interjection, not an adverb).</span> <span class="hindi">विस्मयादिबोधकों को क्रिया-विशेषणों से भ्रमित करना (उदाहरण, "खैर, मैंने कोशिश की" जहाँ "खैर" एक विस्मयादिबोधक है, क्रिया-विशेषण नहीं)।</span></li>
+            <li><span class="english">Using secondary interjections incorrectly (e.g., "Goodness! I forgot" instead of context-appropriate use).</span> <span class="hindi">गौण विस्मयादिबोधकों का गलत उपयोग (उदाहरण, "गुडनेस! मैं भूल गया" के बजाय संदर्भ-उपयुक्त उपयोग)।</span></li>
+            <li><span class="english">Misplacing interjections within sentences, disrupting flow (e.g., "I, wow, love this").</span> <span class="hindi">वाक्यों में विस्मयादिबोधकों को गलत स्थान पर रखना, प्रवाह को बाधित करना (उदाहरण, "मैं, वाह, इसे प्यार करता हूँ")।</span></li>
+        </ul>
+        <div class="example">
+            <div class="example-title"><i class="fas fa-star"></i> Correct the Mistakes</div>
+            <p class="english">Incorrect: "Wow this is amazing." Correct: "<span class="highlight">Wow!</span> This is amazing."</p>
+            <p class="hindi">गलत: "वाह यह कमाल है।" सही: "<span class="highlight">वाह!</span> यह कमाल है।"</p>
+            <p class="english">Incorrect: "I oh forgot my lines." Correct: "<span class="highlight">Oh,</span> I forgot my lines."</p>
+            <p class="hindi">गलत: "मैं ओह अपनी पंक्तियाँ भूल गया।" सही: "<span class="highlight">ओह,</span> मैं अपनी पंक्तियाँ भूल गया।"</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Vocab Doctor App - Comprehensive Interjection Guide</p>
+        <p>Master English and Hindi grammar with interactive, engaging lessons</p>
+    </footer>
+</div>
+</body>
+</html>

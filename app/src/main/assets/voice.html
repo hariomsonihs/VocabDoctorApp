@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice (वाच्य) - Grammar App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --light: #f8f9fa;
+            --dark: #2d3436;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --info: #0984e3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 100%;
+            width: 100%;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 1s ease;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 6vw, 2.5rem);
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            color: var(--dark);
+            opacity: 0.8;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+        }
+
+        h2 i {
+            color: var(--accent);
+        }
+
+        .definition {
+            font-size: clamp(0.95rem, 2.5vw, 1rem);
+            margin-bottom: 1rem;
+            padding-left: 0.8rem;
+            border-left: 3px solid var(--secondary);
+        }
+
+        .hindi {
+            color: #e84393;
+            font-weight: 500;
+        }
+
+        .english {
+            color: var(--info);
+            font-weight: 500;
+        }
+
+        ul {
+            list-style-type: none;
+            margin-bottom: 1rem;
+        }
+
+        ul li {
+            padding: 0.4rem 0;
+            padding-left: 1.2rem;
+            position: relative;
+            font-size: clamp(0.9rem, 2.5vw, 0.95rem);
+        }
+
+        ul li::before {
+            content: '•';
+            color: var(--accent);
+            font-size: 1.2rem;
+            position: absolute;
+            left: 0;
+            top: 0.2rem;
+        }
+
+        .example {
+            background: rgba(106, 176, 76, 0.1);
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin: 0.8rem 0;
+            border-left: 3px solid var(--success);
+        }
+
+        .example-title {
+            font-weight: bold;
+            color: var(--success);
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: clamp(0.95rem, 2.5vw, 1rem);
+        }
+
+        .type-card {
+            background: rgba(253, 121, 168, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .type-card:hover {
+            background: rgba(253, 121, 168, 0.2);
+            transform: scale(1.01);
+        }
+
+        .type-title {
+            color: var(--accent);
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: clamp(1.2rem, 3.5vw, 1.4rem);
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, rgba(108, 92, 231, 0.2) 0%, rgba(108, 92, 231, 0) 100%);
+            padding: 0.15rem 0.3rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .feature-box {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: clamp(2rem, 5vw, 2.2rem);
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+
+        .feature-title {
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            margin-bottom: 0.4rem;
+            color: var(--dark);
+        }
+
+       /* Ensure tables are scrollable and maintain readability */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    min-width: 600px; /* Ensures table is wide enough to need scrolling on small screens */
+}
+
+th, td {
+    border: 1px solid var(--secondary);
+    padding: 0.8rem;
+    text-align: left;
+    font-size: clamp(0.9rem, 2.5vw, 0.95rem);
+    white-space: nowrap; /* Prevents text wrapping to maintain column width */
+}
+
+th {
+    background: var(--primary);
+    color: white;
+}
+
+tr:nth-child(even) {
+    background: rgba(253, 121, 168, 0.1);
+}
+
+/* Scrollable container for tables */
+div[style*="overflow-x: auto"] {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) var(--light);
+}
+
+div[style*="overflow-x: auto"]::-webkit-scrollbar {
+    height: 8px;
+}
+
+div[style*="overflow-x: auto"]::-webkit-scrollbar-track {
+    background: var(--light);
+}
+
+div[style*="overflow-x: auto"]::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 4px;
+}
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            color: var(--dark);
+            opacity: 0.7;
+            font-size: clamp(0.8rem, 2.5vw, 0.85rem);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0.5rem;
+            }
+
+            h1 {
+                font-size: clamp(1.8rem, 5.5vw, 2rem);
+            }
+
+            .subtitle {
+                font-size: clamp(0.9rem, 2.8vw, 1rem);
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+
+            .card {
+                padding: 1rem;
+                border-radius: 10px;
+            }
+
+            h2 {
+                font-size: clamp(1.3rem, 3.8vw, 1.5rem);
+            }
+
+            .definition {
+                font-size: clamp(0.9rem, 2.3vw, 0.95rem);
+                padding-left: 0.5rem;
+            }
+
+            .type-card {
+                padding: 0.8rem;
+                border-radius: 8px;
+            }
+
+            .type-title {
+                font-size: clamp(1.1rem, 3.2vw, 1.2rem);
+            }
+
+            .feature-box {
+                padding: 0.8rem;
+            }
+
+            .feature-icon {
+                font-size: clamp(1.8rem, 4.5vw, 2rem);
+            }
+
+            table {
+                font-size: clamp(0.85rem, 2.3vw, 0.9rem);
+            }
+
+            th, td {
+                padding: 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0.3rem;
+            }
+
+            h1 {
+                font-size: clamp(1.5rem, 5vw, 1.8rem);
+            }
+
+            .card {
+                padding: 0.8rem;
+                margin-bottom: 1rem;
+            }
+
+            .grid {
+                gap: 0.5rem;
+            }
+
+            ul li {
+                font-size: clamp(0.85rem, 2.3vw, 0.9rem);
+                padding-left: 1rem;
+            }
+
+            .example {
+                padding: 0.6rem;
+            }
+
+            footer {
+                padding: 0.8rem;
+                font-size: clamp(0.75rem, 2.3vw, 0.8rem);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header class="animate">
+        <h1>Voice <span class="hindi">(वाच्य)</span></h1>
+        <p class="subtitle">Understanding how verbs express the relationship between subject and action</p>
+    </header>
+
+    <section class="card animate delay-1">
+        <h2><i class="fas fa-book-open"></i> Definition / परिभाषा</h2>
+        <div class="definition">
+            <p class="english"><span class="highlight">Voice</span> is a grammatical category that describes the relationship between the action (or state) expressed by the verb and the participants (subject and object) in a sentence. It indicates whether the subject performs or receives the action.</p>
+            <p class="hindi"><span class="highlight">वाच्य</span> एक व्याकरणिक श्रेणी है जो क्रिया द्वारा व्यक्त की गई क्रिया (या स्थिति) और वाक्य में भाग लेने वालों (कर्ता और कर्म) के बीच संबंध को वर्णित करती है। यह दर्शाता है कि कर्ता क्रिया को करता है या उसका प्रभाव झेलता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Example</div>
+                <p class="english">Active: She <span class="highlight">writes</span> a letter. (Subject performs action)</p>
+                <p class="hindi">सकर्मक: वह एक पत्र <span class="highlight">लिखती है</span>। (कर्ता क्रिया करता है)</p>
+                <p class="english">Passive: A letter <span class="highlight">is written</span> by her. (Subject receives action)</p>
+                <p class="hindi">निष्क्रिय: एक पत्र उसके द्वारा <span class="highlight">लिखा जाता है</span>। (कर्ता क्रिया का प्रभाव झेलता है)</p>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="feature-box floating">
+                <div class="feature-icon"><i class="fas fa-arrow-right"></i></div>
+                <h3 class="feature-title">Active Voice</h3>
+                <p class="hindi">सकर्मक वाच्य</p>
+                <p>Subject performs action</p>
+            </div>
+            <div class="feature-box floating" style="animation-delay: 0.3s;">
+                <div class="feature-icon"><i class="fas fa-arrow-left"></i></div>
+                <h3 class="feature-title">Passive Voice</h3>
+                <p class="hindi">निष्क्रिय वाच्य</p>
+                <p>Subject receives action</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-2">
+        <h2><i class="fas fa-list"></i> Types of Voice / वाच्य के प्रकार</h2>
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-arrow-right"></i> Active Voice (सकर्मक वाच्य)</h3>
+            <p class="english">In Active Voice, the subject performs the action expressed by the verb. It emphasizes the doer of the action.</p>
+            <p class="hindi">सकर्मक वाच्य में, कर्ता क्रिया द्वारा व्यक्त की गई क्रिया को करता है। यह क्रिया करने वाले पर जोर देता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Key Points</div>
+                <ul>
+                    <li><span class="english">Subject is the doer of the action.</span> <span class="hindi">कर्ता क्रिया का कर्ता है।</span></li>
+                    <li><span class="english">Direct and engaging tone.</span> <span class="hindi">प्रत्यक्ष और आकर्षक लहजा।</span></li>
+                    <li><span class="english">Used when the doer is important.</span> <span class="hindi">जब कर्ता महत्वपूर्ण हो तब उपयोग।</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> How to Identify</div>
+                <ul>
+                    <li><span class="english">Subject + verb + object structure.</span> <span class="hindi">कर्ता + क्रिया + कर्म संरचना।</span></li>
+                    <li><span class="english">No form of 'be' + V3 (past participle).</span> <span class="hindi">'be' + V3 (भूतकालिक कृदंत) का कोई रूप नहीं।</span></li>
+                    <li><span class="english">Example: She <span class="highlight">writes</span> a letter.</span> <span class="hindi">उदाहरण: वह पत्र <span class="highlight">लिखती है</span>।</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Practical Applications</div>
+                <ul>
+                    <li><span class="english">Narrative writing: He <span class="highlight">climbed</span> the mountain bravely.</span> <span class="hindi">कथात्मक लेखन: उसने पहाड़ <span class="highlight">नन्हें से चढ़ा</span>।</span></li>
+                    <li><span class="english">Instructions: <span class="highlight">Mix</span> the ingredients well.</span> <span class="hindi">निर्देश: सामग्री को अच्छे से <span class="highlight">मिलाएँ</span>।</span></li>
+                    <li><span class="english">Conversational English: I <span class="highlight">love</span> this book.</span> <span class="hindi">बातचीत में: मुझे यह किताब <span class="highlight">पसंद है</span>।</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">She <span class="highlight">paints</span> the house.</span> <span class="hindi">वह घर <span class="highlight">रंगती है</span>।</span></li>
+                    <li><span class="english">They <span class="highlight">will play</span> football.</span> <span class="hindi">वे फुटबॉल <span class="highlight">खेलेंगे</span>।</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-arrow-left"></i> Passive Voice (निष्क्रिय वाच्य)</h3>
+            <p class="english">In Passive Voice, the subject receives the action expressed by the verb. It emphasizes the action or the object receiving the action.</p>
+            <p class="hindi">निष्क्रिय वाच्य में, कर्ता क्रिया द्वारा व्यक्त की गई क्रिया का प्रभाव झेलता है। यह क्रिया या कर्म पर जोर देता है।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Key Points</div>
+                <ul>
+                    <li><span class="english">Subject is the receiver of the action.</span> <span class="hindi">कर्ता क्रिया का प्रभाव झेलता है।</span></li>
+                    <li><span class="english">Focus on action or object, not doer.</span> <span class="hindi">क्रिया या कर्म पर ध्यान, कर्ता पर नहीं।</span></li>
+                    <li><span class="english">Doer may be omitted if unknown or unimportant.</span> <span class="hindi">कर्ता को छोड़ा जा सकता है यदि अज्ञात या महत्वहीन हो।</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> How to Identify</div>
+                <ul>
+                    <li><span class="english">Contains form of 'be' + V3 (past participle).</span> <span class="hindi">'be' का रूप + V3 (भूतकालिक कृदंत) होता है।</span></li>
+                    <li><span class="english">Optional 'by + agent' at the end.</span> <span class="hindi">वैकल्पिक 'द्वारा + कर्ता' अंत में।</span></li>
+                    <li><span class="english">Example: The letter <span class="highlight">is written</span> by her.</span> <span class="hindi">उदाहरण: पत्र उसके द्वारा <span class="highlight">लिखा जाता है</span>।</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Practical Applications</div>
+                <ul>
+                    <li><span class="english">Reports: The project <span class="highlight">was completed</span> on time.</span> <span class="hindi">रिपोर्ट: परियोजना समय पर <span class="highlight">पूरा की गई</span>।</span></li>
+                    <li><span class="english">Scientific writing: The samples <span class="highlight">were tested</span> thoroughly.</span> <span class="hindi">वैज्ञानिक लेखन: नमूनों का <span class="highlight">पूरी तरह परीक्षण किया गया</span>।</span></li>
+                    <li><span class="english">Formal announcements: The event <span class="highlight">has been canceled</span>.</span> <span class="hindi">औपचारिक घोषणाएँ: आयोजन <span class="highlight">रद्द कर दिया गया है</span>।</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                <ul>
+                    <li><span class="english">The house <span class="highlight">is painted</span> by her.</span> <span class="hindi">घर उसके द्वारा <span class="highlight">रंगा जाता है</span>।</span></li>
+                    <li><span class="english">Football <span class="highlight">will be played</span> by them.</span> <span class="hindi">फुटबॉल उनके द्वारा <span class="highlight">खेला जाएगा</span>।</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="card animate delay-4">
+        <h2><i class="fas fa-cogs"></i> Passive Voice Formation / निष्क्रिय वाच्य निर्माण</h2>
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-info-circle"></i> General Rules</h3>
+            <p class="english">To form the passive voice: Object of active sentence becomes the subject + appropriate form of 'be' + Past Participle (V3) + (optional 'by' + agent).</p>
+            <p class="hindi">निष्क्रिय वाच्य बनाने के लिए: सकर्मक वाक्य का कर्म कर्ता बनता है + 'be' का उपयुक्त रूप + भूतकालिक कृदंत (V3) + (वैकल्पिक 'द्वारा' + कर्ता)।</p>
+            <div class="example">
+                <div class="example-title"><i class="fas fa-star"></i> Key Points</div>
+                <ul>
+                    <li><span class="english">Requires transitive verbs with objects.</span> <span class="hindi">कर्म के साथ सकर्मक क्रियाओं की आवश्यकता।</span></li>
+                    <li><span class="english">Uses appropriate 'be' form based on tense.</span> <span class="hindi">काल के आधार पर उपयुक्त 'be' रूप का उपयोग।</span></li>
+                    <li><span class="english">V3 is mandatory for passive construction.</span> <span class="hindi">निष्क्रिय निर्माण के लिए V3 अनिवार्य।</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> How to Identify</div>
+                <ul>
+                    <li><span class="english">Check for 'be' + V3 in the verb phrase.</span> <span class="hindi">क्रिया वाक्यांश में 'be' + V3 की जाँच करें।</span></li>
+                    <li><span class="english">Subject is the object of the active sentence.</span> <span class="hindi">कर्ता सकर्मक वाक्य का कर्म है।</span></li>
+                    <li><span class="english">May include 'by + agent' for doer.</span> <span class="hindi">कर्ता के लिए 'द्वारा + कर्ता' शामिल हो सकता है।</span></li>
+                </ul>
+                <div class="example-title"><i class="fas fa-star"></i> Practical Applications</div>
+                <ul>
+                    <li><span class="english">Official documents: The policy <span class="highlight">was approved</span> by the board.</span> <span class="hindi">आधिकारिक दस्तावेज: नीति बोर्ड द्वारा <span class="highlight">स्वीकृत की गई</span>।</span></li>
+                    <li><span class="english">News reporting: The suspect <span class="highlight">was arrested</span> yesterday.</span> <span class="hindi">समाचार: संदिग्ध को कल <span class="highlight">गिरफ्तार किया गया</span>।</span></li>
+                    <li><span class="english">Academic writing: The data <span class="highlight">was analyzed</span> systematically.</span> <span class="hindi">शैक्षणिक लेखन: डेटा का <span class="highlight">विश्लेषण व्यवस्थित रूप से किया गया</span>।</span></li>
+                </ul>
+            </div>
+            <ul>
+                <li><span class="english">Use the correct tense of 'be' (is, was, will be, etc.).</span> <span class="hindi">'Be' का सही काल उपयोग करें (है, था, होगा, आदि)।</span></li>
+                <li><span class="english">Always use V3 (Past Participle).</span> <span class="hindi">हमेशा V3 (भूतकालिक कृदंत) उपयोग करें।</span></li>
+                <li><span class="english">Include 'by + agent' only if necessary.</span> <span class="hindi">'द्वारा + कर्ता' केवल आवश्यक होने पर शामिल करें।</span></li>
+                <li><span class="english">Only transitive verbs (with objects) can be passive.</span> <span class="hindi">केवल सकर्मक क्रियाएँ (कर्म के साथ) निष्क्रिय हो सकती हैं।</span></li>
+            </ul>
+        </div>
+
+        <!-- Passive Verb Forms for All Tenses -->
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-table"></i> Passive Verb Forms for All Tenses</h3>
+            <p class="english">Below are the passive voice structures for all 12 tenses with key points, identification methods, and practical applications.</p>
+            <p class="hindi">नीचे सभी 12 कालों के लिए निष्क्रिय वाच्य संरचनाएँ, मुख्य बिंदु, पहचान के तरीके, और व्यावहारिक अनुप्रयोग दिए गए हैं।</p>
+
+            <!-- Present Tenses -->
+            <div class="type-card">
+                <h3 class="type-title"><i class="fas fa-sun"></i> Present Indefinite Tense (वर्तमान अनिश्चित काल)</h3>
+                <p class="english"><strong>Structure:</strong> Subject + am/is/are + V3 + (by + agent)</p>
+                <p class="hindi"><strong>संरचना:</strong> कर्ता + am/is/are + V3 + (द्वारा + कर्ता)</p>
+                <div class="example">
+                    <div class="example-title"><i class="fas fa-star"></i> Key Points</div>
+                    <ul>
+                        <li><span class="english">Uses am/is/are based on subject.</span> <span class="hindi">कर्ता के आधार पर am/is/are का उपयोग।</span></li>
+                        <li><span class="english">Focus on regular or general actions.</span> <span class="hindi">नियमित या सामान्य क्रियाओं पर ध्यान।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> How to Identify</div>
+                    <ul>
+                        <li><span class="english">Contains am/is/are + V3.</span> <span class="hindi">Am/is/are + V3 होता है।</span></li>
+                        <li><span class="english">No 'being' in structure.</span> <span class="hindi">संरचना में 'being' नहीं।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> Practical Applications</div>
+                    <ul>
+                        <li><span class="english">General statements: Books <span class="highlight">are read</span> daily.</span> <span class="hindi">सामान्य कथन: किताबें रोज <span class="highlight">पढ़ी जाती हैं</span>।</span></li>
+                        <li><span class="english">Rules: Mobile phones <span class="highlight">are prohibited</span>.</span> <span class="hindi">नियम: मोबाइल फोन <span class="highlight">निषिद्ध हैं</span>।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                    <ul>
+                        <li><span class="english">Active: She writes a letter.</span> <span class="hindi">सकर्मक: वह पत्र लिखती है।</span></li>
+                        <li><span class="english">Passive: A letter <span class="highlight">is written</span> by her.</span> <span class="hindi">निष्क्रिय: पत्र उसके द्वारा <span class="highlight">लिखा जाता है</span>।</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="type-card">
+                <h3 class="type-title"><i class="fas fa-running"></i> Present Continuous Tense (वर्तमान सतत काल)</h3>
+                <p class="english"><strong>Structure:</strong> Subject + am/is/are + being + V3 + (by + agent)</p>
+                <p class="hindi"><strong>संरचना:</strong> कर्ता + am/is/are + being + V3 + (द्वारा + कर्ता)</p>
+                <div class="example">
+                    <div class="example-title"><i class="fas fa-star"></i> Key Points</div>
+                    <ul>
+                        <li><span class="english">Indicates ongoing action in present.</span> <span class="hindi">वर्तमान में चल रही क्रिया को दर्शाता है।</span></li>
+                        <li><span class="english">Always includes 'being' before V3.</span> <span class="hindi">V3 से पहले हमेशा 'being'।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> How to Identify</div>
+                    <ul>
+                        <li><span class="english">Contains am/is/are + being + V3.</span> <span class="hindi">Am/is/are + being + V3 होता है।</span></li>
+                        <li><span class="english">Time markers: now, currently.</span> <span class="hindi">समय चिह्न: अब, वर्तमान में।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> Practical Applications</div>
+                    <ul>
+                        <li><span class="english">Current projects: The building <span class="highlight">is being constructed</span>.</span> <span class="hindi">वर्तमान परियोजनाएँ: इमारत <span class="highlight">निर्मित की जा रही है</span>।</span></li>
+                        <li><span class="english">Live reporting: The match <span class="highlight">is being played</span>.</span> <span class="hindi">लाइव रिपोर्टिंग: मैच <span class="highlight">खेला जा रहा है</span>।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                    <ul>
+                        <li><span class="english">Active: She is writing a letter.</span> <span class="hindi">सकर्मक: वह पत्र लिख रही है।</span></li>
+                        <li><span class="english">Passive: A letter <span class="highlight">is being written</span> by her.</span> <span class="hindi">निष्क्रिय: पत्र उसके द्वारा <span class="highlight">लिखा जा रहा है</span>।</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="type-card">
+                <h3 class="type-title"><i class="fas fa-check-circle"></i> Present Perfect Tense (वर्तमान पूर्ण काल)</h3>
+                <p class="english"><strong>Structure:</strong> Subject + have/has + been + V3 + (by + agent)</p>
+                <p class="hindi"><strong>संरचना:</strong> कर्ता + have/has + been + V3 + (द्वारा + कर्ता)</p>
+                <div class="example">
+                    <div class="example-title"><i class="fas fa-star"></i> Key Points</div>
+                    <ul>
+                        <li><span class="english">Shows completed action with present relevance.</span> <span class="hindi">वर्तमान प्रासंगिकता के साथ पूर्ण क्रिया दिखाता है।</span></li>
+                        <li><span class="english">Uses have/has + been.</span> <span class="hindi">Have/has + been का उपयोग।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> How to Identify</div>
+                    <ul>
+                        <li><span class="english">Contains have/has + been + V3.</span> <span class="hindi">Have/has + been + V3 होता है।</span></li>
+                        <li><span class="english">Time markers: just, already, yet.</span> <span class="hindi">समय चिह्न: अभी, पहले से, अभी तक।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> Practical Applications</div>
+                    <ul>
+                        <li><span class="english">Announcements: The results <span class="highlight">have been declared</span>.</span> <span class="hindi">घोषणाएँ: परिणाम <span class="highlight">घोषित किए गए हैं</span>।</span></li>
+                        <li><span class="english">Records: The book <span class="highlight">has been published</span>.</span> <span class="hindi">रिकॉर्ड: किताब <span class="highlight">प्रकाशित की गई है</span>।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                    <ul>
+                        <li><span class="english">Active: She has written a letter.</span> <span class="hindi">सकर्मक: उसने पत्र लिखा है।</span></li>
+                        <li><span class="english">Passive: A letter <span class="highlight">has been written</span> by her.</span> <span class="hindi">निष्क्रिय: पत्र उसके द्वारा <span class="highlight">लिखा गया है</span>।</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="type-card">
+                <h3 class="type-title"><i class="fas fa-hourglass"></i> Present Perfect Continuous Tense (वर्तमान पूर्ण सतत काल)</h3>
+                <p class="english"><strong>Note:</strong> This tense is rarely used in passive voice due to its continuous nature, but theoretically possible.</p>
+                <p class="hindi"><strong>नोट:</strong> इस काल का निष्क्रिय वाच्य में उपयोग दुर्लभ है क्योंकि यह सतत है, लेकिन सैद्धांतिक रूप से संभव है।</p>
+                <p class="english"><strong>Structure:</strong> Subject + have/has + been + being + V3 + (by + agent)</p>
+                <p class="hindi"><strong>संरचना:</strong> कर्ता + have/has + been + being + V3 + (द्वारा + कर्ता)</p>
+                <div class="example">
+                    <div class="example-title"><i class="fas fa-star"></i> Key Points</div>
+                    <ul>
+                        <li><span class="english">Rarely used due to complexity.</span> <span class="hindi">जटिलता के कारण दुर्लभ उपयोग।</span></li>
+                        <li><span class="english">Emphasizes ongoing action duration.</span> <span class="hindi">चल रही क्रिया की अवधि पर जोर।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> How to Identify</div>
+                    <ul>
+                        <li><span class="english">Contains have/has + been + being + V3.</span> <span class="hindi">Have/has + been + being + V3 होता है।</span></li>
+                        <li><span class="english">Time markers: for, since.</span> <span class="hindi">समय चिह्न: के लिए, से।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> Practical Applications</div>
+                    <ul>
+                        <li><span class="english">Rare, but possible in technical writing: The system <span class="highlight">has been being monitored</span>.</span> <span class="hindi">दुर्लभ, लेकिन तकनीकी लेखन में संभव: सिस्टम <span class="highlight">निगरानी की जा रही है</span>।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                    <ul>
+                        <li><span class="english">Active: She has been writing a letter.</span> <span class="hindi">सकर्मक: वह पत्र लिख रही है।</span></li>
+                        <li><span class="english">Passive: A letter <span class="highlight">has been being written</span> by her. (Rare)</span> <span class="hindi">निष्क्रिय: पत्र उसके द्वारा <span class="highlight">लिखा जा रहा है</span>। (दुर्लभ)</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Past Tenses -->
+            <div class="type-card">
+                <h3 class="type-title"><i class="fas fa-history"></i> Past Indefinite Tense (भूतकाल अनिश्चित काल)</h3>
+                <p class="english"><strong>Structure:</strong> Subject + was/were + V3 + (by + agent)</p>
+                <p class="hindi"><strong>संरचना:</strong> कर्ता + was/were + V3 + (द्वारा + कर्ता)</p>
+                <div class="example">
+                    <div class="example-title"><i class="fas fa-star"></i> Key Points</div>
+                    <ul>
+                        <li><span class="english">Uses was/were based on subject.</span> <span class="hindi">कर्ता के आधार पर was/were का उपयोग।</span></li>
+                        <li><span class="english">Describes completed past actions.</span> <span class="hindi">पूर्ण भूतकाल क्रियाओं का वर्णन।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> How to Identify</div>
+                    <ul>
+                        <li><span class="english">Contains was/were + V3.</span> <span class="hindi">Was/were + V3 होता है।</span></li>
+                        <li><span class="english">Time markers: yesterday, last week.</span> <span class="hindi">समय चिह्न: कल, पिछले हफ्ते।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> Practical Applications</div>
+                    <ul>
+                        <li><span class="english">Historical reports: The treaty <span class="highlight">was signed</span> in 1945.</span> <span class="hindi">ऐतिहासिक रिपोर्ट: संधि 1945 में <span class="highlight">हस्ताक्षरित की गई</span>।</span></li>
+                        <li><span class="english">News: The crime <span class="highlight">was reported</span> yesterday.</span> <span class="hindi">समाचार: अपराध कल <span class="highlight">रिपोर्ट किया गया</span>।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                    <ul>
+                        <li><span class="english">Active: She wrote a letter.</span> <span class="hindi">सकर्मक: उसने पत्र लिखा।</span></li>
+                        <li><span class="english">Passive: A letter <span class="highlight">was written</span> by her.</span> <span class="hindi">निष्क्रिय: पत्र उसके द्वारा <span class="highlight">लिखा गया</span>।</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="type-card">
+                <h3 class="type-title"><i class="fas fa-running"></i> Past Continuous Tense (भूतकाल सतत काल)</h3>
+                <p class="english"><strong>Structure:</strong> Subject + was/were + being + V3 + (by + agent)</p>
+                <p class="hindi"><strong>संरचना:</strong> कर्ता + was/were + being + V3 + (द्वारा + कर्ता)</p>
+                <div class="example">
+                    <div class="example-title"><i class="fas fa-star"></i> Key Points</div>
+                    <ul>
+                        <li><span class="english">Shows ongoing past action.</span> <span class="hindi">चल रही भूतकाल क्रिया दिखाता है।</span></li>
+                        <li><span class="english">Includes 'being' before V3.</span> <span class="hindi">V3 से पहले 'being' शामिल।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> How to Identify</div>
+                    <ul>
+                        <li><span class="english">Contains was/were + being + V3.</span> <span class="hindi">Was/were + being + V3 होता है।</span></li>
+                        <li><span class="english">Time markers: at that time, while.</span> <span class="hindi">समय चिह्न: उस समय, जब।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> Practical Applications</div>
+                    <ul>
+                        <li><span class="english">Event descriptions: The house <span class="highlight">was being renovated</span> last year.</span> <span class="hindi">घटना वर्णन: घर पिछले साल <span class="highlight">नवीनीकरण किया जा रहा था</span>।</span></li>
+                        <li><span class="english">Background actions: The speech <span class="highlight">was being delivered</span> when it rained.</span> <span class="hindi">पृष्ठभूमि क्रिया: भाषण <span class="highlight">दिया जा रहा था</span> जब बारिश हुई।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                    <ul>
+                        <li><span class="english">Active: She was writing a letter.</span> <span class="hindi">सकर्मक: वह पत्र लिख रही थी।</span></li>
+                        <li><span class="english">Passive: A letter <span class="highlight">was being written</span> by her.</span> <span class="hindi">निष्क्रिय: पत्र उसके द्वारा <span class="highlight">लिखा जा रहा था</span>।</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="type-card">
+                <h3 class="type-title"><i class="fas fa-check-circle"></i> Past Perfect Tense (भूतकाल पूर्ण काल)</h3>
+                <p class="english"><strong>Structure:</strong> Subject + had + been + V3 + (by + agent)</p>
+                <p class="hindi"><strong>संरचना:</strong> कर्ता + had + been + V3 + (द्वारा + कर्ता)</p>
+                <div class="example">
+                    <div class="example-title"><i class="fas fa-star"></i> Key Points</div>
+                    <ul>
+                        <li><span class="english">Action completed before another past event.</span> <span class="hindi">किसी अन्य भूतकाल घटना से पहले पूर्ण क्रिया।</span></li>
+                        <li><span class="english">Uses had + been.</span> <span class="hindi">Had + been का उपयोग।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> How to Identify</div>
+                    <ul>
+                        <li><span class="english">Contains had + been + V3.</span> <span class="hindi">Had + been + V3 होता है।</span></li>
+                        <li><span class="english">Time markers: before, by the time.</span> <span class="hindi">समय चिह्न: पहले, उस समय तक।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> Practical Applications</div>
+                    <ul>
+                        <li><span class="english">Historical accounts: The city <span class="highlight">had been rebuilt</span> before the war.</span> <span class="hindi">ऐतिहासिक विवरण: शहर युद्ध से पहले <span class="highlight">पुनर्निर्मित किया गया था</span>।</span></li>
+                        <li><span class="english">Legal documents: The contract <span class="highlight">had been signed</span>.</span> <span class="hindi">कानूनी दस्तावेज: अनुबंध <span class="highlight">हस्ताक्षरित किया गया था</span>।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                    <ul>
+                        <li><span class="english">Active: She had written a letter.</span> <span class="hindi">सकर्मक: उसने पत्र लिखा था।</span></li>
+                        <li><span class="english">Passive: A letter <span class="highlight">had been written</span> by her.</span> <span class="hindi">निष्क्रिय: पत्र उसके द्वारा <span class="highlight">लिखा गया था</span>।</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="type-card">
+                <h3 class="type-title"><i class="fas fa-hourglass"></i> Past Perfect Continuous Tense (भूतकाल पूर्ण सतत काल)</h3>
+                <p class="english"><strong>Note:</strong> Rarely used in passive voice due to complexity.</p>
+                <p class="hindi"><strong>नोट:</strong> जटिलता के कारण निष्क्रिय वाच्य में दुर्लभ उपयोग।</p>
+                <p class="english"><strong>Structure:</strong> Subject + had + been + being + V3 + (by + agent)</p>
+                <p class="hindi"><strong>संरचना:</strong> कर्ता + had + been + being + V3 + (द्वारा + कर्ता)</p>
+                <div class="example">
+                    <div class="example-title"><i class="fas fa-star"></i> Key Points</div>
+                    <ul>
+                        <li><span class="english">Very rare due to complex structure.</span> <span class="hindi">जटिल संरचना के कारण बहुत दुर्लभ।</span></li>
+                        <li><span class="english">Shows duration before past event.</span> <span class="hindi">भूतकाल घटना से पहले अवधि दिखाता है।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> How to Identify</div>
+                    <ul>
+                        <li><span class="english">Contains had + been + being + V3.</span> <span class="hindi">Had + been + being + V3 होता है।</span></li>
+                        <li><span class="english">Time markers: for, since.</span> <span class="hindi">समय चिह्न: के लिए, से।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> Practical Applications</div>
+                    <ul>
+                        <li><span class="english">Rare, but possible in detailed reports: The issue <span class="highlight">had been being investigated</span>.</span> <span class="hindi">दुर्लभ, लेकिन विस्तृत रिपोर्ट में संभव: मुद्दे की <span class="highlight">जाँच की जा रही थी</span>।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                    <ul>
+                        <li><span class="english">Active: She had been writing a letter.</span> <span class="hindi">सकर्मक: वह पत्र लिख रही थी।</span></li>
+                        <li><span class="english">Passive: A letter <span class="highlight">had been being written</span> by her. (Rare)</span> <span class="hindi">निष्क्रिय: पत्र उसके द्वारा <span class="highlight">लिखा जा रहा था</span>। (दुर्लभ)</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Future Tenses -->
+            <div class="type-card">
+                <h3 class="type-title"><i class="fas fa-rocket"></i> Simple Future Tense (भविष्य सरल काल)</h3>
+                <p class="english"><strong>Structure:</strong> Subject + will + be + V3 + (by + agent)</p>
+                <p class="hindi"><strong>संरचना:</strong> कर्ता + will + be + V3 + (द्वारा + कर्ता)</p>
+                <div class="example">
+                    <div class="example-title"><i class="fas fa-star"></i> Key Points</div>
+                    <ul>
+                        <li><span class="english">Describes future completed actions.</span> <span class="hindi">भविष्य में पूर्ण क्रियाओं का वर्णन।</span></li>
+                        <li><span class="english">Uses will + be.</span> <span class="hindi">Will + be का उपयोग।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> How to Identify</div>
+                    <ul>
+                        <li><span class="english">Contains will + be + V3.</span> <span class="hindi">Will + be + V3 होता है।</span></li>
+                        <li><span class="english">Time markers: tomorrow, next week.</span> <span class="hindi">समय चिह्न: कल, अगले हफ्ते।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> Practical Applications</div>
+                    <ul>
+                        <li><span class="english">Future plans: The event <span class="highlight">will be held</span> next month.</span> <span class="hindi">भविष्य योजनाएँ: आयोजन अगले महीने <span class="highlight">आयोजित किया जाएगा</span>।</span></li>
+                        <li><span class="english">Predictions: The issue <span class="highlight">will be resolved</span> soon.</span> <span class="hindi">भविष्यवाणियाँ: मुद्दा जल्द <span class="highlight">हल किया जाएगा</span>।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                    <ul>
+                        <li><span class="english">Active: She will write a letter.</span> <span class="hindi">सकर्मक: वह पत्र लिखेगी।</span></li>
+                        <li><span class="english">Passive: A letter <span class="highlight">will be written</span> by her.</span> <span class="hindi">निष्क्रिय: पत्र उसके द्वारा <span class="highlight">लिखा जाएगा</span>।</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="type-card">
+                <h3 class="type-title"><i class="fas fa-running"></i> Future Continuous Tense (भविष्य सतत काल)</h3>
+                <p class="english"><strong>Note:</strong> Rarely used in passive voice due to continuous nature.</p>
+                <p class="hindi"><strong>नोट:</strong> सतत प्रकृति के कारण निष्क्रिय वाच्य में दुर्लभ उपयोग।</p>
+                <p class="english"><strong>Structure:</strong> Subject + will + be + being + V3 + (by + agent)</p>
+                <p class="hindi"><strong>संरचना:</strong> कर्ता + will + be + being + V3 + (द्वारा + कर्ता)</p>
+                <div class="example">
+                    <div class="example-title"><i class="fas fa-star"></i> Key Points</div>
+                    <ul>
+                        <li><span class="english">Rare due to complex structure.</span> <span class="hindi">जटिल संरचना के कारण दुर्लभ।</span></li>
+                        <li><span class="english">Shows ongoing future action.</span> <span class="hindi">चल रही भविष्य क्रिया दिखाता है।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> How to Identify</div>
+                    <ul>
+                        <li><span class="english">Contains will + be + being + V3.</span> <span class="hindi">Will + be + being + V3 होता है।</span></li>
+                        <li><span class="english">Time markers: at that time, tomorrow.</span> <span class="hindi">समय चिह्न: उस समय, कल।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> Practical Applications</div>
+                    <ul>
+                        <li><span class="english">Rare, but possible in schedules: The meeting <span class="highlight">will be being conducted</span> tomorrow.</span> <span class="hindi">दुर्लभ, लेकिन समय-सारिणी में संभव: बैठक कल <span class="highlight">आयोजित की जा रही होगी</span>।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                    <ul>
+                        <li><span class="english">Active: She will be writing a letter.</span> <span class="hindi">सकर्मक: वह पत्र लिख रही होगी।</span></li>
+                        <li><span class="english">Passive: A letter <span class="highlight">will be being written</span> by her. (Rare)</span> <span class="hindi">निष्क्रिय: पत्र उसके द्वारा <span class="highlight">लिखा जा रहा होगा</span>। (दुर्लभ)</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="type-card">
+                <h3 class="type-title"><i class="fas fa-check-circle"></i> Future Perfect Tense (भविष्य पूर्ण काल)</h3>
+                <p class="english"><strong>Structure:</strong> Subject + will + have + been + V3 + (by + agent)</p>
+                <p class="hindi"><strong>संरचना:</strong> कर्ता + will + have + been + V3 + (द्वारा + कर्ता)</p>
+                <div class="example">
+                    <div class="example-title"><i class="fas fa-star"></i> Key Points</div>
+                    <ul>
+                        <li><span class="english">Action completed by future time.</span> <span class="hindi">भविष्य समय तक पूर्ण क्रिया।</span></li>
+                        <li><span class="english">Uses will + have + been.</span> <span class="hindi">Will + have + been का उपयोग।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> How to Identify</div>
+                    <ul>
+                        <li><span class="english">Contains will + have + been + V3.</span> <span class="hindi">Will + have + been + V3 होता है।</span></li>
+                        <li><span class="english">Time markers: by tomorrow, by 2026.</span> <span class="hindi">समय चिह्न: कल तक, 2026 तक।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> Practical Applications</div>
+                    <ul>
+                        <li><span class="english">Project deadlines: The work <span class="highlight">will have been completed</span> by next week.</span> <span class="hindi">परियोजना समय-सीमा: कार्य अगले हफ्ते तक <span class="highlight">पूरा किया गया होगा</span>।</span></li>
+                        <li><span class="english">Future reports: The survey <span class="highlight">will have been conducted</span> by 2026.</span> <span class="hindi">भविष्य रिपोर्ट: सर्वेक्षण 2026 तक <span class="highlight">किया गया होगा</span>।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                    <ul>
+                        <li><span class="english">Active: She will have written a letter.</span> <span class="hindi">सकर्मक: उसने पत्र लिखा होगा।</span></li>
+                        <li><span class="english">Passive: A letter <span class="highlight">will have been written</span> by her.</span> <span class="hindi">निष्क्रिय: पत्र उसके द्वारा <span class="highlight">लिखा गया होगा</span>।</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="type-card">
+                <h3 class="type-title"><i class="fas fa-hourglass"></i> Future Perfect Continuous Tense (भविष्य पूर्ण सतत काल)</h3>
+                <p class="english"><strong>Note:</strong> Extremely rare in passive voice and generally avoided.</p>
+                <p class="hindi"><strong>नोट:</strong> निष्क्रिय वाच्य में अत्यंत दुर्लभ और आमतौर पर बचा जाता है।</p>
+                <p class="english"><strong>Structure:</strong> Subject + will + have + been + being + V3 + (by + agent)</p>
+                <p class="hindi"><strong>संरचना:</strong> कर्ता + will + have + been + being + V3 + (द्वारा + कर्ता)</p>
+                <div class="example">
+                    <div class="example-title"><i class="fas fa-star"></i> Key Points</div>
+                    <ul>
+                        <li><span class="english">Extremely rare due to complexity.</span> <span class="hindi">जटिलता के कारण अत्यंत दुर्लभ।</span></li>
+                        <li><span class="english">Shows duration up to future point.</span> <span class="hindi">भविष्य बिंदु तक अवधि दिखाता है।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> How to Identify</div>
+                    <ul>
+                        <li><span class="english">Contains will + have + been + being + V3.</span> <span class="hindi">Will + have + been + being + V3 होता है।</span></li>
+                        <li><span class="english">Time markers: for, since, by 2026.</span> <span class="hindi">समय चिह्न: के लिए, से, 2026 तक।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> Practical Applications</div>
+                    <ul>
+                        <li><span class="english">Extremely rare, but possible in technical contexts: The system <span class="highlight">will have been being monitored</span>.</span> <span class="hindi">अत्यंत दुर्लभ, लेकिन तकनीकी संदर्भ में संभव: सिस्टम <span class="highlight">निगरानी की जा रही होगी</span>।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                    <ul>
+                        <li><span class="english">Active: She will have been writing a letter.</span> <span class="hindi">सकर्मक: वह पत्र लिख रही होगी।</span></li>
+                        <li><span class="english">Passive: A letter <span class="highlight">will have been being written</span> by her. (Extremely rare)</span> <span class="hindi">निष्क्रिय: पत्र उसके द्वारा <span class="highlight">लिखा जा रहा होगा</span>। (अत्यंत दुर्लभ)</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Passive of Modal Auxiliaries -->
+            <div class="type-card">
+                <h3 class="type-title"><i class="fas fa-tools"></i> Passive of Modal Auxiliaries (सहायक मोडल का निष्क्रिय वाच्य)</h3>
+                <p class="english">Modal auxiliaries (can, could, may, might, shall, should, will, would, must, etc.) can form passive voice using the structure: Modal + be + V3.</p>
+                <p class="hindi">सहायक मोडल (can, could, may, might, shall, should, will, would, must, आदि) निष्क्रिय वाच्य बना सकते हैं: Modal + be + V3।</p>
+                <div class="example">
+                    <div class="example-title"><i class="fas fa-star"></i> Key Points</div>
+                    <ul>
+                        <li><span class="english">Combines modal with passive structure.</span> <span class="hindi">मोडल को निष्क्रिय संरचना के साथ जोड़ता है।</span></li>
+                        <li><span class="english">Modal indicates possibility, obligation, etc.</span> <span class="hindi">मोडल संभावना, कर्तव्य आदि दर्शाता है।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> How to Identify</div>
+                    <ul>
+                        <li><span class="english">Contains modal + be + V3.</span> <span class="hindi">Modal + be + V3 होता है।</span></li>
+                        <li><span class="english">No tense-specific 'be' form (e.g., was, is).</span> <span class="hindi">काल-विशिष्ट 'be' रूप (जैसे, था, है) नहीं।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> Practical Applications</div>
+                    <ul>
+                        <li><span class="english">Rules: The law <span class="highlight">must be obeyed</span>.</span> <span class="hindi">नियम: कानून का <span class="highlight">पालन किया जाना चाहिए</span>।</span></li>
+                        <li><span class="english">Permissions: The area <span class="highlight">may be entered</span>.</span> <span class="hindi">अनुमति: क्षेत्र में <span class="highlight">प्रवेश किया जा सकता है</span>।</span></li>
+                        <li><span class="english">Advice: The plan <span class="highlight">should be revised</span>.</span> <span class="hindi">सुझाव: योजना को <span class="highlight">संशोधित किया जाना चाहिए</span>।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> Structure</div>
+                    <ul>
+                        <li><span class="english">Active: Modal + V1</span> <span class="hindi">सकर्मक: Modal + V1</span></li>
+                        <li><span class="english">Passive: Modal + be + V3</span> <span class="hindi">निष्क्रिय: Modal + be + V3</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> Examples</div>
+                    <ul>
+                        <li><span class="english">Active: She can write a letter.</span> <span class="hindi">सकर्मक: वह पत्र लिख सकती है।</span></li>
+                        <li><span class="english">Passive: A letter <span class="highlight">can be written</span> by her.</span> <span class="hindi">निष्क्रिय: पत्र उसके द्वारा <span class="highlight">लिखा जा सकता है</span>।</span></li>
+                        <li><span class="english">Active: You must finish the task.</span> <span class="hindi">सकर्मक: तुम्हें कार्य पूरा करना होगा।</span></li>
+                        <li><span class="english">Passive: The task <span class="highlight">must be finished</span> by you.</span> <span class="hindi">निष्क्रिय: कार्य तुम्हारे द्वारा <span class="highlight">पूरा किया जाना चाहिए</span>।</span></li>
+                    </ul>
+                    <div class="example-title"><i class="fas fa-star"></i> Uses</div>
+                    <ul>
+                        <li><span class="english">Possibility: The book <span class="highlight">may be read</span> by students.</span> <span class="hindi">संभावना: पुस्तक छात्रों द्वारा <span class="highlight">पढ़ी जा सकती है</span>।</span></li>
+                        <li><span class="english">Obligation: The rules <span class="highlight">must be followed</span>.</span> <span class="hindi">कर्तव्य: नियमों का <span class="highlight">पालन किया जाना चाहिए</span>।</span></li>
+                        <li><span class="english">Advice: The project <span class="highlight">should be completed</span> soon.</span> <span class="hindi">सुझाव: परियोजना जल्द <span class="highlight">पूरा की जानी चाहिए</span>।</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="card animate delay-3">
+        <h2><i class="fas fa-exclamation-triangle"></i> Common Mistakes in Passive Voice / निष्क्रिय वाच्य में सामान्य गलतियाँ</h2>
+        <div class="type-card">
+            <p class="english">Avoid these common errors when using passive voice.</p>
+            <p class="hindi">निष्क्रिय वाच्य का उपयोग करते समय इन सामान्य त्रुटियों से बचें।</p>
+            <ul>
+                <li><span class="english">Using intransitive verbs: Wrong: "He <span class="highlight">is slept</span>." (Sleep has no object)</span> <span class="hindi">अकर्मक क्रिया का उपयोग: गलत: "वह <span class="highlight">सोया जाता है</span>।" (सोने का कोई कर्म नहीं)</span></li>
+                <li><span class="english">Incorrect 'be' form: Wrong: "The letter <span class="highlight">was being write</span>." Correct: "was being written."</span> <span class="hindi">गलत 'be' रूप: गलत: "पत्र <span class="highlight">लिखा जा रहा था</span>।" सही: "लिखा जा रहा था।"</span></li>
+                <li><span class="english">Omitting V3: Wrong: "The book <span class="highlight">is write</span>." Correct: "is written."</span> <span class="hindi">V3 छोड़ना: गलत: "पुस्तक <span class="highlight">लिखी जाती है</span>।" सही: "लिखी जाती है।"</span></li>
+                <li><span class="english">Overusing passive: Avoid passive when active is clearer.</span> <span class="hindi">अधिक निष्क्रिय उपयोग: सकर्मक स्पष्ट होने पर निष्क्रिय से बचें।</span></li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="card animate delay-4">
+        <h2><i class="fas fa-table"></i> Passive Voice Quick Reference Chart / निष्क्रिय वाच्य त्वरित संदर्भ चार्ट</h2>
+        <div class="type-card">
+            <h3 class="type-title"><i class="fas fa-chart-line"></i> Passive Structures Overview</h3>
+            <p class="english">This chart summarizes the passive voice structures for all tenses.</p>
+            <p class="hindi">यह चार्ट सभी कालों के लिए निष्क्रिय वाच्य संरचनाओं का सारांश देता है।</p>
+            <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+            <table>
+                <tr>
+                    <th>Tense (काल)</th>
+                    <th>Passive Structure (निष्क्रिय संरचना)</th>
+                    <th>Example (उदाहरण)</th>
+                </tr>
+                <tr>
+                    <td>Present Indefinite</td>
+                    <td>am/is/are + V3</td>
+                    <td>The letter <span class="highlight">is written</span>.</td>
+                </tr>
+                <tr>
+                    <td>Present Continuous</td>
+                    <td>am/is/are + being + V3</td>
+                    <td>The letter <span class="highlight">is being written</span>.</td>
+                </tr>
+                <tr>
+                    <td>Present Perfect</td>
+                    <td>have/has + been + V3</td>
+                    <td>The letter <span class="highlight">has been written</span>.</td>
+                </tr>
+                <tr>
+                    <td>Present Perfect Continuous</td>
+                    <td>have/has + been + being + V3 (Rare)</td>
+                    <td>The letter <span class="highlight">has been being written</span>. (Rare)</td>
+                </tr>
+                <tr>
+                    <td>Past Indefinite</td>
+                    <td>was/were + V3</td>
+                    <td>The letter <span class="highlight">was written</span>.</td>
+                </tr>
+                <tr>
+                    <td>Past Continuous</td>
+                    <td>was/were + being + V3</td>
+                    <td>The letter <span class="highlight">was being written</span>.</td>
+                </tr>
+                <tr>
+                    <td>Past Perfect</td>
+                    <td>had + been + V3</td>
+                    <td>The letter <span class="highlight">had been written</span>.</td>
+                </tr>
+                <tr>
+                    <td>Past Perfect Continuous</td>
+                    <td>had + been + being + V3 (Rare)</td>
+                    <td>The letter <span class="highlight">had been being written</span>. (Rare)</td>
+                </tr>
+                <tr>
+                    <td>Simple Future</td>
+                    <td>will + be + V3</td>
+                    <td>The letter <span class="highlight">will be written</span>.</td>
+                </tr>
+                <tr>
+                    <td>Future Continuous</td>
+                    <td>will + be + being + V3 (Rare)</td>
+                    <td>The letter <span class="highlight">will be being written</span>. (Rare)</td>
+                </tr>
+                <tr>
+                    <td>Future Perfect</td>
+                    <td>will + have + been + V3</td>
+                    <td>The letter <span class="highlight">will have been written</span>.</td>
+                </tr>
+                <tr>
+                    <td>Future Perfect Continuous</td>
+                    <td>will + have + been + being + V3 (Extremely Rare)</td>
+                    <td>The letter <span class="highlight">will have been being written</span>. (Extremely Rare)</td>
+                </tr>
+                <tr>
+                    <td>Modal Auxiliaries</td>
+                    <td>Modal + be + V3</td>
+                    <td>The letter <span class="highlight">can be written</span>.</td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Grammar App. All rights reserved.</p>
+        <p class="hindi">© 2025 व्याकरण ऐप। सर्वाधिकार सुरक्षित।</p>
+    </footer>
+</div>
+</body>
+</html>
