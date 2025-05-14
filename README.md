@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center">
-  <img src="https://img.icons8.com/color/96/dictionary.png" width="100"/>
+  <img src="https://github.com/hariomsonihs/VocabDoctorApp/blob/master/app/src/main/res/drawable/logo.png" width="100"/>
 </p>
 
 <p align="center">
@@ -220,6 +220,5 @@ Hariom Soni – [LinkedIn](https://www.linkedin.com/hariomsonihs) • [Email](ma
 ---
 
 <p align="center">
-  Made with ❤️ by **Hariom Soni** for English learners.
+  Made with ❤️ by Hariom Soni for English learners.
 </p>
----
