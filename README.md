@@ -101,14 +101,6 @@
 
 💾 Assets Folder for Offline Data
 
-📦 Material Design Components
----
-
-Here's a well-crafted and **modern** `README.md` file for your **Vocab Doctor Android app**. It’s designed to look stylish and professional on GitHub, using **Markdown features, emojis, badges, gradients, icons, and structure**. Since GitHub doesn’t support CSS or animations directly in `README.md`, we’ll simulate modern effects through visuals, layout, and formatting.
-
----
-
-````markdown
 <h1 align="center">
   📘✨ Vocab Doctor - Your Ultimate English Learning Companion ✨📘
 </h1>
