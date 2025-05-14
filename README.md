@@ -220,8 +220,6 @@ Hariom Soni – [LinkedIn](https://www.linkedin.com/hariomsonihs) • [Email](ma
 ---
 
 <p align="center">
-  Made with ❤️ for English learners.
+  Made with ❤️ by **Hariom Soni** for English learners.
 </p>
-```
-
 ---
