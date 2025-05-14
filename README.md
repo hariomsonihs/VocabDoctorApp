@@ -92,3 +92,13 @@
 
 ---
 
+🛠 Tech Stack
+📱 Android SDK
+
+🔤 Kotlin / Java
+
+🧾 XML for UI
+
+💾 Assets Folder for Offline Data
+
+📦 Material Design Components
