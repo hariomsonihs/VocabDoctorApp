@@ -16,22 +16,57 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
+import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
+import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private DrawerLayout drawerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
         // Set up toolbar
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
+
+        // Initialize DrawerLayout and NavigationView
+        drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+
+        // Set up menu icon click to open drawer
+        ImageView menuIcon = findViewById(R.id.menu_icon);
+        menuIcon.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
+
+        // Set up navigation drawer item clicks
+        navigationView.setNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.nav_home) {
+                // Already on home, no action needed
+            } else if (id == R.id.nav_vocabulary) {
+                startActivity(new Intent(MainActivity.this, VocabularyActivity.class));
+            } else if (id == R.id.nav_phrasal_verbs) {
+                startActivity(new Intent(MainActivity.this, PhrasalVerbsActivity.class));
+            } else if (id == R.id.nav_idioms) {
+                startActivity(new Intent(MainActivity.this, IdiomsActivity.class));
+            } else if (id == R.id.nav_settings) {
+                // Handle Settings click (replace with SettingsActivity if exists)
+                // startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+            }
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return true;
+        });
 
         // Set up bottom navigation
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -55,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, LearnActivity.class));
         });
 
-        // Set click listeners for all cards
         CardView phrasalVerbsCard = findViewById(R.id.card_phrasal_verbs);
         phrasalVerbsCard.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, PhrasalVerbsActivity.class));
@@ -80,55 +114,55 @@ public class MainActivity extends AppCompatActivity {
         dailySentenceCard.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, DailySentenceActivity.class));
         });
+
+        // Handle window insets for edge-to-edge display
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
     }
 
     @Override
     public void onBackPressed() {
-        showExitConfirmationDialog();
+        super.onBackPressed();
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            showExitConfirmationDialog();
+        }
     }
 
     private void showExitConfirmationDialog() {
-        // Create custom dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.ExitDialogTheme);
-
-        // Inflate custom layout
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_exit_confirmation, null);
         builder.setView(dialogView);
 
-        // Initialize views
         ImageView icon = dialogView.findViewById(R.id.dialog_icon);
         TextView title = dialogView.findViewById(R.id.dialog_title);
         TextView message = dialogView.findViewById(R.id.dialog_message);
         Button positiveButton = dialogView.findViewById(R.id.positive_button);
         Button negativeButton = dialogView.findViewById(R.id.negative_button);
 
-        // Set dialog content
         title.setText(getString(R.string.exit_app_title));
         message.setText(getString(R.string.exit_app_message));
         positiveButton.setText(getString(R.string.yes));
         negativeButton.setText(getString(R.string.no));
 
-        // Add animation to icon
         Animation pulse = AnimationUtils.loadAnimation(this, R.anim.pulse_animation);
         icon.startAnimation(pulse);
 
-        // Create dialog
         AlertDialog dialog = builder.create();
         dialog.setCancelable(false);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        // Set button listeners
         positiveButton.setOnClickListener(v -> {
-            // Add button click animation
             v.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_click));
-
-            // Close app
             finishAffinity();
             System.exit(0);
         });
 
         negativeButton.setOnClickListener(v -> {
-            // Add button click animation
             v.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_click));
             dialog.dismiss();
         });

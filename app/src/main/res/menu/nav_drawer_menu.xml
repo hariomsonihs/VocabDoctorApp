@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_settings"
+            android:title="Home"
+            android:iconTint="@color/nav_item_color" />
+        <item
+            android:id="@+id/nav_vocabulary"
+            android:icon="@drawable/ic_settings"
+            android:title="Vocabulary"
+            android:iconTint="@color/nav_item_color" />
+        <item
+            android:id="@+id/nav_phrasal_verbs"
+            android:icon="@drawable/ic_phrasal_verbs"
+            android:title="Phrasal Verbs"
+            android:iconTint="@color/nav_item_color" />
+        <item
+            android:id="@+id/nav_idioms"
+            android:icon="@drawable/ic_idioms"
+            android:title="Idioms"
+            android:iconTint="@color/nav_item_color" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings"
+            android:title="Settings"
+            android:iconTint="@color/nav_item_color" />
+    </group>
+</menu>
